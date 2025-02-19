@@ -4,12 +4,17 @@ import { Typography, Card, CardContent, Grid, Container, Button, Checkbox, FormG
 import RecipeList from '../components/apiData'
 import {GradientSection, CustomCard, CustomCardContent, CustomCardMedia } from "../components/styled";
 import LoadMore from '../components/loadMore'
+import { useLocation } from 'react-router-dom';
 
 
 
 // maybe include gluten and seafood free options 
 
-export default function Breakfast() {
+export default function SearchPage() {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const mealType = queryParams.get("mealType") || ""; // Extract mealType from URL
+    
     return (
         <>
             <TopBar />
@@ -20,7 +25,7 @@ export default function Breakfast() {
                     <Container maxWidth='md' style={{ marginTop: '30px' }}>
                     <Grid container justifyContent="center">
                         <Typography variant='h4' align='center' style={{ color: '#FFFFFF', fontWeight: 600}} gutterBottom>
-                            Lunch:
+                            {mealType}
                         </Typography>
                     </Grid>
                     </Container>
@@ -79,7 +84,7 @@ export default function Breakfast() {
                     </GradientSection>
                 </div>
             </main>
-            <RecipeList mealType={"Lunch"}/>
+            <RecipeList mealType={mealType}/>
             <LoadMore />
         </>
     );

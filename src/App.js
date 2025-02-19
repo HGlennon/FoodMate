@@ -9,6 +9,8 @@ import Dinner from './pages/Dinner'
 import Dessert from './pages/Dessert'
 import Recipe from './pages/Recipe'
 import NoPage from './pages/NoPage'
+import SearchPage from './pages/SearchPage'
+
 
 export default function App() {
     return (
@@ -24,6 +26,7 @@ export default function App() {
                     <Route path ="/recipe" element={<Recipe />} />
                     <Route path ="/settings" element={<Settings />} />
                     <Route path ="/advancedsettings" element={<AdvancedSettings />} />
+                    <Route path ="/search" element={<SearchPage />} />
                     <Route path ="*" element={<NoPage />} />
                 </Routes>
             </BrowserRouter>

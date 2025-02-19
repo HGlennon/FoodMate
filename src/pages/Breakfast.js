@@ -2,7 +2,10 @@ import React from 'react';
 import TopBar from '../components/topbar';
 import { Typography, Card, CardContent, Grid, Container, Button, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import RecipeList from '../components/apiData'
-import GradientSection from '../components/gradientSection';
+import {GradientSection, CustomCard, CustomCardContent, CustomCardMedia } from "../components/styled";
+import LoadMore from '../components/loadMore'
+
+
 
 // maybe include gluten and seafood free options 
 
@@ -10,10 +13,10 @@ export default function Breakfast() {
     return (
         <>
             <TopBar />
-            <GradientSection/>
 
             <main>
                 <div>
+                <GradientSection>
                     <Container maxWidth='md' style={{ marginTop: '30px' }}>
                     <Grid container justifyContent="center">
                         <Typography variant='h4' align='center' style={{ color: '#FFFFFF', fontWeight: 600}} gutterBottom>
@@ -24,7 +27,7 @@ export default function Breakfast() {
                     <div>            
                         <Container maxWidth='md' style={{ marginTop: '35px' }}>
                         <Grid container spacing={2}>
-                                <Card>
+                                <CustomCard>
                                 <CardContent>
                                 <Typography variant="h6" align='center' style={{ color: '#FFFFFF', fontWeight: 600}} gutterBottom>
                                         Diet Options:
@@ -37,12 +40,12 @@ export default function Breakfast() {
                                     <FormControlLabel control={<Checkbox  style={{color: '#FFFFFF'}}/>} label="Low-Sugar"/>
                                 </FormGroup>
                                 </CardContent>
-                            </Card>
+                            </CustomCard>
                             </Grid>
                         </Container>
                         <Container maxWidth='md' style={{ marginTop: '60px' }}>
                         <Grid>
-                            <Card>
+                            <CustomCard>
                                 <CardContent>
                                     <Typography variant="h6" align='center' style={{ color: '#FFFFFF', fontWeight: 600}} gutterBottom>
                                         Health Options:
@@ -55,7 +58,7 @@ export default function Breakfast() {
                                         <FormControlLabel control={<Checkbox  style={{color: '#FFFFFF'}}/>} label="Lactose-Free"/>
                                     </FormGroup>
                                 </CardContent>
-                            </Card>
+                            </CustomCard>
                         </Grid>
                         </Container>
                         <Container maxWidth='md' style={{ marginBottom: '20px', marginTop:'20px'}}>
@@ -73,9 +76,11 @@ export default function Breakfast() {
                             </Grid>
                         </Container>
                     </div>    
+                    </GradientSection>
                 </div>
             </main>
-            <RecipeList />
+            <RecipeList mealType={"Breakfast"}/>
+            <LoadMore />
         </>
     );
 }

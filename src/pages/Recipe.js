@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardMedia, CardContent, Typography, Button, Grid, Container, CardActionArea } from '@mui/material';
 import TopBar from '../components/topbar';
-import GradientSection from '../components/gradientSection';
+import { GradientSection } from '../components/styled';
 
 const APP_ID = "837155ce"; 
 const APP_KEY = "76b054a6c99b380eda97058ec73f6069";
@@ -11,9 +11,10 @@ export default function Recipe() {
     return (
         <>
         <TopBar />
-        <GradientSection/>
         <div>
-        <h2>Recipe Page</h2>
+            <GradientSection>
+                <h2>Recipe Page</h2>
+            </GradientSection>
         </div>
         </>
     )
