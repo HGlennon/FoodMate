@@ -1,14 +1,35 @@
-import React from 'react';
-import {Typography} from '@mui/material';
+import React, { useContext } from 'react';
+import {Typography, Box, Container, Grid} from '@mui/material';
 import TopBar from '../components/topbar';
+import { CustomBackground, GradientSection } from '../components/styled';
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import { CssBaseline } from "@mui/material";
 
 export default function NoPage() {
+
     return (
         <>
+        <CssBaseline />
         <main>
-            <TopBar/>
             <div>
-            <Typography>Error 404: No page found</Typography>
+                <TopBar/>
+                <GradientSection>
+                    <Container maxWidth='md' sx={{ marginTop: "20px" }}>
+                        <Grid container justifyContent="center" alignItems="center"  direction="column"> 
+                            <SentimentVeryDissatisfiedIcon sx={{ fontSize: 150, color: 'white' }} />
+                            <Typography variant="h4" sx={{ mt: 2, fontWeight: 'bold', color: 'white'}}>
+                                Error: 404
+                            </Typography>
+                            <Typography variant="h6" sx={{ mt: 1, color: 'white'}}>
+                                Page not found.
+                            </Typography>
+                            <Typography variant="subtitle 1" sx={{ mt: 1, color: '#e0dcda', maxWidth: '600px'}}>
+                                The link you have followed could be broken, or the page may have been removed or moved somewhere else.
+                            </Typography>
+                        </Grid>
+                    </Container>
+                </GradientSection>
+                <CustomBackground/>
             </div>
         </main>
         </>

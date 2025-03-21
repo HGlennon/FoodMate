@@ -3,33 +3,28 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Settings from './pages/Settings'
 import AdvancedSettings from './pages/AdvancedSettings'
-import Breakfast from './pages/Breakfast'
-import Lunch from './pages/Lunch'
-import Dinner from './pages/Dinner'
-import Dessert from './pages/Dessert'
+import Meals from './pages/Meals'
 import Recipe from './pages/Recipe'
 import NoPage from './pages/NoPage'
-import SearchPage from './pages/SearchPage'
+import { ThemeProviderWrapper } from "./components/themeProvider.js";
 
-
+// Gives all the links that lead to the pages in this site
 export default function App() {
     return (
         <div>
+            <ThemeProviderWrapper>
             <BrowserRouter>
                 <Routes>
                     <Route index element={<Home />} />
                     <Route path ="/home" element={<Home />} />
-                    <Route path ="/breakfast" element={<Breakfast/>}/>
-                    <Route path ="/lunch" element={<Lunch />} />
-                    <Route path ="/dinner" element={<Dinner />} />
-                    <Route path ="/dessert" element={<Dessert />} />
+                    <Route path ="/search" element={<Meals />}/>
                     <Route path ="/recipe" element={<Recipe />} />
                     <Route path ="/settings" element={<Settings />} />
                     <Route path ="/advancedsettings" element={<AdvancedSettings />} />
-                    <Route path ="/search" element={<SearchPage />} />
                     <Route path ="*" element={<NoPage />} />
                 </Routes>
             </BrowserRouter>
+            </ThemeProviderWrapper>
         </div>
     )
 }

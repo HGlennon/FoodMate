@@ -1,14 +1,15 @@
 import React, { useState } from 'react'; 
-import { Typography, AppBar, CssBaseline, Toolbar, Button, InputBase, IconButton, Menu, MenuItem } from '@mui/material';
+import { Typography, AppBar, CssBaseline, Toolbar, Button, InputBase, IconButton, Menu, MenuItem, Box } from '@mui/material';
 import FoodmateLogo from './icons';
 import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function TopBar() {
     const [open, SetOpen] = useState(null);
     const [searchQuery, setSearchQuery] = useState(""); // Search query state
-    const navigate = useNavigate(); // React Router navigation
+    const navigate = useNavigate(); // React Router navigation    
 
     const close = () => {
         SetOpen(null);
@@ -31,30 +32,33 @@ export default function TopBar() {
     return (
     <>
         <CssBaseline />
-        <AppBar position='relative' color='white'>
+        <AppBar position='relative' sx={{ zIndex: 10, backgroundColor: theme => theme.palette.background.paper }}>            
             <Toolbar>
                 <Button href="/home" sx={{ backgroundColor: 'transparent' }} disableRipple>
                     <FoodmateLogo/>
-                    <Typography variant='h5' sx={{ color: 'black', textTransform: 'none' }}>
+                    <Typography variant='h5' sx={{ color: theme => theme.palette.text.primary, textTransform: 'none' }}>
                         FoodMate
                     </Typography>
                 </Button>
-                <InputBase placeholder="Search for products, brands and more" value={searchQuery} onChange={handleSearchChange} onKeyPress={handleSearchSubmit} 
-                        sx={{
-                        flexGrow: 1, 
-                        mx: 'auto', // Center it horizontally
-                        border: "1px solid gray",
-                        px: 2, // Padding left & right
-                        py: 0.5, // Padding top & bottom
-                        borderRadius: 1,
-                        width: "150px",
-                        minWidth: "100px"
-                    }}
-                />
-                <Button href="/advancedsettings" sx={{ mr: '400px', backgroundColor: 'transparent', color: 'black', textTransform: 'none' }} disableRipple>
-                    Advanced Search
-                </Button>
-                <IconButton onClick={handleClick}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'center', marginLeft: '45px' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', border: "1px solid #ccc", padding: '5px 10px', borderRadius: 1, width: '600px', backgroundColor: '#e8e8e8', backgroundColor: theme => theme.palette.background.default,  '&:focus-within': {
+                        outline: 'none', // Removes focus outline
+                        borderColor: theme => theme.palette.primary.main, // Optional: Change color when focused
+                    }}}>
+                        <SearchIcon sx={{ color: 'gray', marginRight: '5px' }} />
+                        <InputBase
+                            placeholder="Search for meals, ingredients and more"
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            onKeyPress={handleSearchSubmit}
+                            sx={{ flexGrow: 1, color: theme => theme.palette.text.primary }}                            
+                        />
+                    </Box>
+                    <Button href="/advancedsettings" variant="contained" sx={{ backgroundColor: 'transparent', color: 'black', textTransform: 'none', marginLeft: '10px', color: theme => theme.palette.text.primary }} disableRipple>
+                        Advanced Search
+                    </Button>
+                </Box>
+                <IconButton onClick={handleClick} justifyContent='flex-end'>
                     <MenuIcon/>
                 </IconButton>
                 <Menu 
