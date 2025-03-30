@@ -1,8 +1,8 @@
-import React, { useState} from "react";
-import { Typography, Container, Grid, Card, CardActionArea, CardContent, CardMedia, Box, CssBaseline } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import React from "react";
+import { Typography, Container, Grid, CardActionArea, CssBaseline } from "@mui/material";
 import {GradientSection, CustomCard, CustomCardContent, CustomCardMedia, CustomBackground } from "../components/styled";
 import TopBar from "../components/topbar";
+import { theme } from '../components/themes';
 
 const cards = [
   { title: "Breakfast", image: "https://simply-delicious-food.com/wp-content/uploads/2022/09/Breakfast-board28-500x375.jpg", link: "http://localhost:3000/search?mealType=Breakfast" },
@@ -17,18 +17,18 @@ export default function Home() {
     <CssBaseline/>
       <TopBar />
       <GradientSection>
-        <Container maxWidth="md" sx={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center', marginTop: '63px'}}>
-          <Typography variant="h3" align="center" sx={{ color: "#FFFFFF", fontWeight: 600 }} gutterBottom>
+        <Container maxWidth="md" sx={{ marginTop: "63px", justifyContent: "center", alignItems: "center", textAlign: "center"}}>
+          <Typography variant="h3" sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' } }}>
             Meals for the day.
           </Typography>
           <Grid container spacing={4} sx={{ marginTop: 3 }}>
             {cards.map((card, index) => (
-              <Grid item key={index} xs={12} sm={6} md={3}>
+              <Grid item key={index} xs={6} sm={4} md={3}>
                 <CustomCard>
-                  <CardActionArea href={card.link}>
-                    <CustomCardMedia image={card.image} title={card.title} />
+                  <CardActionArea href={card.link} sx={{ height: '100%' }}>
+                    <CustomCardMedia image={card.image} title={card.title} sx={{   [theme.breakpoints.down('sm')]: {paddingTop: "75%", },}}/>
                     <CustomCardContent>
-                      <Typography gutterBottom variant="h5" align="center" sx={{ color: "#FFFFFF", fontWeight: 600 }}>
+                      <Typography variant="h5" sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: { xs: '1.3rem', sm: '1.8rem' } }}>
                         {card.title}
                       </Typography>
                     </CustomCardContent>

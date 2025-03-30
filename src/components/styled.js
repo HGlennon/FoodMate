@@ -6,10 +6,35 @@ export const CustomCard = styled(Card)(({ theme }) => ({
   height: "100%",
   display: "flex",
   flexDirection: "column",
-  background: theme.palette.mode === "dark" ? "#333" : "#00E265",
+  background: theme.palette.mode === "dark" ? "#333131" : "#00E265",
   color: theme.palette.text.primary,
   borderRadius: 3,
   boxShadow: 3,
+}));
+
+// Custom Card Content
+export const CustomCardContent = styled(CardContent)({
+  flexGrow: 1,
+});
+
+export const CustomCardMedia = styled(CardMedia)(({ theme }) => ({
+  paddingTop: "56.25%",
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  [theme.breakpoints.down('sm')]: {paddingTop: "75%"}
+}));
+
+export const GradientSection = styled(Box)(({ theme }) => ({
+  backgroundImage: theme.palette.background.gradient,
+  minHeight: "50vh",
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  zIndex: 1,
+  borderRadius: 3,
+  boxShadow: 3,
+  overflow: 'hidden', // Prevent content from bleeding out
+  padding: theme.spacing(4, 0), [theme.breakpoints.down('sm')]: { minHeight: "auto", padding: theme.spacing(3, 0)}
 }));
 
 // Custom Background (Changes with Theme)
@@ -20,30 +45,6 @@ export const CustomBackground = styled(Box)(({ theme }) => ({
   minHeight: "100vh",
   flexDirection: "column",
 }));
-
-// Card Media
-export const CustomCardMedia = styled(CardMedia)({
-  paddingTop: "56.25%",
-});
-
-// Custom Card Content
-export const CustomCardContent = styled(CardContent)({
-  flexGrow: 1,
-});
-
-// Gradient Section (Switches Between Light & Dark Mode)
-export const GradientSection = styled(Box)(({ theme }) => ({
-  backgroundImage: theme.palette.background.gradient,
-  minHeight: "50vh",
-  display: "flex",
-  flexDirection: "column",
-  width: "100%",
-  zIndex: 1,
-  borderRadius: 3,
-  boxShadow: 3,
-}));
-
-
 
 
   

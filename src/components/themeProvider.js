@@ -1,11 +1,11 @@
 import React, { createContext, useState, useEffect } from "react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
-import { lightTheme, darkTheme, highContrastTheme } from "./themes";
+import { theme, darkTheme, highContrastTheme } from "./themes";
 import { setAppliedFontSize, setTempFontSize } from "../pages/Settings";
 
 export const ThemeContext = createContext();
 
-export const ThemeProviderWrapper = ({ children }) => {
+export const ThemeSetting = ({ children }) => {
   const [themeMode, setThemeMode] = useState(() => {
     return localStorage.getItem("themeMode") || "light"; // Default to light mode
   });
@@ -17,7 +17,7 @@ export const ThemeProviderWrapper = ({ children }) => {
   const getTheme = () => {
     if (themeMode === "highContrast") return highContrastTheme;
     if (themeMode === "dark") return darkTheme;
-    return lightTheme;
+    return theme;
   };
 
   return (

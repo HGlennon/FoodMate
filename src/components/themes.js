@@ -1,21 +1,21 @@
 import { createTheme } from "@mui/material/styles";
 
-export const lightTheme = createTheme({
+export const theme = createTheme({
   palette: {
     mode: "light",
-    background: {
+    background: { 
       default: "#e8e8e8",
-      gradient: "linear-gradient(135deg, #00C85B 30%, #008C3A 100%)",
+      gradient: "linear-gradient(135deg, #00C85B 30%, #008C3A 100%)", // Sets a CSS gradient as the background colour
     },
     text: {
-      primary: "#010101",
+      primary: "#010101", // Black text
     },
   },
   components: {
     MuiFormControlLabel: {
       styleOverrides: {
         label: {
-          color: "#FFFFFF !important", // Force white text for checkboxes
+          color: "white !important", // Checkboxes will be  https://stackoverflow.com/a/72193292
         },
       },
     }}});
@@ -28,7 +28,7 @@ export const darkTheme = createTheme({
       gradient: "linear-gradient(135deg, #333 30%, #111 100%)",
     },
     text: {
-      primary: "#ffffff",
+      primary: "#ffffff", // White text
     },
   },
 });

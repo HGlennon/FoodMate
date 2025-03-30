@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import TopBar from '../components/topbar';
-import { Typography, Grid, Button, Switch, Slider, Container, Box, CssBaseline } from '@mui/material';
+import { Typography, Grid, Button, Switch, Slider, Container, Box, CssBaseline, useMediaQuery } from '@mui/material';
 import { GradientSection, CustomBackground } from '../components/styled';
 import { ThemeContext } from '../components/themeProvider';
+import { theme } from '../components/themes';
 
 export default function Settings() {
     const { themeMode, setThemeMode } = useContext(ThemeContext);
@@ -22,6 +23,7 @@ export default function Settings() {
     const [tempFontSize, setTempFontSize] = useState(getSavedFontSize());
     const [appliedFontSize, setAppliedFontSize] = useState(getSavedFontSize());
     const [useDyslexicFont, setUseDyslexicFont] = useState(getSavedDyslexicFont());
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
     
     // Save font size to localStorage when applied
     const handleApplySettings = () => {
@@ -67,7 +69,7 @@ export default function Settings() {
             <CssBaseline/>
             <TopBar/>
                 <GradientSection>
-                    <Container maxWidth='md' style={{ marginTop: '45px'}}>
+                    <Container maxWidth='md' sx={{ marginTop: { xs: '30px', sm: '45px' }, px: { xs: 2, sm: 3 } }}>                        
                         <Grid sx={{ alignItems: "center"}}>
                             <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${26 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  }} mb={2}>
                                 Settings
@@ -97,13 +99,19 @@ export default function Settings() {
                             <Switch checked={useDyslexicFont} onChange={handleDyslexicFontChange} color="default"/>
                             </Box>
                             <Grid container alignItems="center" justifyContent="space-between" mb={2}>
+                                {!isSmallScreen && (
                                 <Typography sx={{ color: 'white', fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
                                     Make text bigger
                                 </Typography>
+                                )}
                                 <Box sx={{  display: "flex", alignItems: "center", gap: 2  }}>
+                                {!isSmallScreen && (
+
                                     <Typography sx={{ color: 'white', fontSize: `17px` }}>
                                         A        
                                     </Typography>
+                                )}
+                                {!isSmallScreen && (
                                     <Slider
                                         size="small"
                                         value={tempFontSize}
@@ -111,16 +119,20 @@ export default function Settings() {
                                         max={16}
                                         step={1}
                                         onChange={(_, newValue) => setTempFontSize(newValue)}
-                                        sx={{ width: "200px", color: "#FFF" }} // Adjust width as needed
+                                        sx={{ width: "200px", color: "white" }}
                                     />
+                                )}
+                                {!isSmallScreen && (
                                     <Typography sx={{ color: 'white', fontSize: `33px` }}>
                                         A        
                                     </Typography>
-                                    <Box sx={{ display: "inline-block",  border: "2px solid white", borderRadius: "6px", padding: "4px 8px"}}>
-                                        <Typography sx={{ color: 'white', fontSize: `${17 + tempFontSize}px` }}>
+                                )}
+                                {!isSmallScreen && (
+                                    <Box sx={{ display: "inline-block",  border: "2px solid white", borderRadius: "6px", padding: "4px 8px"}}>                                        <Typography sx={{ color: 'white', fontSize: `${17 + tempFontSize}px` }}>
                                             Sample text
                                         </Typography>
                                     </Box>
+                                )}
                                 </Box>
                             </Grid>
                         </Grid>
@@ -128,8 +140,8 @@ export default function Settings() {
                 </GradientSection>
             <CustomBackground>
                 <Container maxWidth='md' style={{ marginTop: '10px'}}>
-                    <Grid container spacing={2}>
-                        <Grid item>
+                    <Grid container spacing={2} alignItems="center" justifyContent="flex-start">
+                        <Grid item xs="auto">
                             <Button 
                                 sx={{ 
                                     backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#b2b3cc' : '#00E265', 
@@ -137,14 +149,15 @@ export default function Settings() {
                                     padding: '8px 16px', 
                                     boxShadow: 2, 
                                     borderRadius: 1,
-                                    fontSize: `${14 + appliedFontSize}px` 
+                                    fontSize: `${14 + appliedFontSize}px`,
+                                    whiteSpace: 'nowrap'
                                 }} 
                                 onClick={handleApplySettings}
                             >
                                 Apply Settings
                             </Button>
                         </Grid>
-                        <Grid item>
+                        <Grid item xs="auto">
                             <Button 
                                 sx={{ 
                                     backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#ff1919', 
@@ -152,7 +165,8 @@ export default function Settings() {
                                     padding: '8px 16px', 
                                     boxShadow: 2, 
                                     borderRadius: 1,
-                                    fontSize: `${14 + appliedFontSize}px` 
+                                    fontSize: `${14 + appliedFontSize}px`,
+                                    whiteSpace: 'nowrap'
                                 }} 
                                 onClick={() => {
                                     setAppliedFontSize(0); // Reset to 0

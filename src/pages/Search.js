@@ -1,0 +1,185 @@
+import React, { useState, useEffect, useContext  } from "react";
+import TopBar from "../components/topbar";
+import { Typography, Card, CardContent, Grid, Container, Button, Checkbox, FormGroup, FormControlLabel, CssBaseline } from "@mui/material";
+import RecipeList from "../components/apiData"
+import {GradientSection, CustomCard, CustomCardContent, CustomCardMedia, CustomBackground } from "../components/styled";
+import { useLocation } from "react-router-dom";
+import { ThemeContext } from "../components/themeProvider";
+
+
+// maybe include gluten and seafood free options 
+
+export default function Search() {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const mealType = queryParams.get("mealType") || ""; // Extract mealType from URL
+    const minCalories = queryParams.get("minCalories") || ""; 
+    const maxCalories = queryParams.get("maxCalories") || ""; 
+    const minProtein = queryParams.get("minProtein") || ""; 
+    const maxProtein = queryParams.get("maxProtein") || ""; 
+    const minCholesterol = queryParams.get("minCholesterol") || ""; 
+    const maxCholesterol = queryParams.get("maxCholesterol") || ""; 
+    const minSugar = queryParams.get("minSugar") || ""; 
+    const maxSugar = queryParams.get("maxSugar") || ""; 
+    const minFat = queryParams.get("minFat") || ""; 
+    const maxFat = queryParams.get("maxFat") || ""; 
+    const cuisineType = queryParams.get("cuisineType")?.split(",") || [];
+    const mealTypes = queryParams.get("mealTypes")?.split(",") || [];
+    const healthType = queryParams.get("healthType")?.split(",") || [];
+
+    const { themeMode, setThemeMode } = useContext(ThemeContext);
+    const { recipeTerm } = location.state || {};
+    
+    const [filters, setFilters] = useState({
+        balanced: false,
+        highProtein: false,
+        lowCarb: false,
+        lowFat: false,
+        lowSodium: false,
+        vegan: false,
+        vegetarian: false,
+        alcoholFree: false,
+        nutFree: false,
+        lactoseFree: false
+    });
+
+    const [appliedFilters, setAppliedFilters] = useState({}); // Stores filters applied after clicking "Submit"
+
+    // Handle checkbox change
+    const handleFilterChange = (event) => {
+        setFilters({ ...filters, [event.target.name]: event.target.checked });
+    };
+
+    // Apply filters when clicking "Submit"
+    const submitFilters = () => {
+        setAppliedFilters({ ...filters });
+    };
+
+    // Reset filters when clicking "Clear Filter"
+    const clearFilters = () => {
+        const clearedFilters = {
+            balanced: false,
+            highProtein: false,
+            lowCarb: false,
+            lowFat: false,
+            lowSodium: false,
+            vegan: false,
+            vegetarian: false,
+            alcoholFree: false,
+            nutFree: false,
+            lactoseFree: false
+        };
+        setFilters(clearedFilters);
+        setAppliedFilters(clearedFilters); // Also reset applied filters to fetch all recipes
+    };
+    return (
+        <>
+            <CssBaseline/>
+            <TopBar />
+            <main>
+                <div>
+                <GradientSection sx={{ py: { xs: 2, sm: 3 } }}>
+                    <Container maxWidth='md' sx={{ mt: { xs: 2, sm: 3 } }}>
+                    <Grid container justifyContent="center">
+                        <Typography variant="h4" align="center" style={{ color: "white", fontWeight: "bold", ontSize: { xs: '1.5rem', sm: '1.75rem', md: '2.125rem' }, textAlign: "center", mb:3}}>
+                            {recipeTerm || mealType || "Recipes"}
+                        </Typography>
+                    </Grid>
+                    </Container>
+                    <div>            
+                        {/* Will give a group of diet filters that the user can select via checkboxes that turn on/off the filter [https://react.school/material-ui/checkbox] */}
+                        <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
+                        <Grid container justifyContent="center">
+                                <CustomCard sx={{ width: "100%", maxWidth: { xs: "95%", sm: "700px" } }}>
+                                <CardContent>
+                                <Typography variant="h6" align="center" sx={{ color: "white", fontWeight: "bold", mb:1}}>
+                                        Diet Options:
+                                </Typography>
+                                <FormGroup row sx={{ justifyContent: 'center', flexWrap: { xs: 'wrap', sm: 'nowrap' }}}>
+                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="balanced" checked={filters.balanced} onChange={handleFilterChange} sx={{ color: "#FFFFFF", "&.Mui-checked": { color: "#FFFFFF" } }} />} label="Balanced" />
+                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="highProtein" checked={filters.highProtein} onChange={handleFilterChange} sx={{ color: "#FFFFFF", "&.Mui-checked": { color: "#FFFFFF" } }} />} label="High-Protein" />
+                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lowCarb" checked={filters.lowCarb} onChange={handleFilterChange} sx={{ color: "#FFFFFF", "&.Mui-checked": { color: "#FFFFFF" } }} />} label="Low-Carb" />
+                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lowFat" checked={filters.lowFat} onChange={handleFilterChange} sx={{ color: "#FFFFFF", "&.Mui-checked": { color: "#FFFFFF" } }} />} label="Low-Fat" />
+                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lowSodium" checked={filters.lowSugar} onChange={handleFilterChange} sx={{ color: "#FFFFFF", "&.Mui-checked": { color: "#FFFFFF" } }} />} label="Low-Sodium"/>
+                                </FormGroup>
+                                </CardContent>
+                            </CustomCard>
+                            </Grid>
+                        </Container>
+                        
+                         {/* Will give a provide health filters for the recipes*/}
+                        <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
+                        <Grid container justifyContent="center">
+                            <CustomCard sx={{ width: "100%", maxWidth: { xs: "95%", sm: "700px" } }}>
+                                <CardContent>
+                                    <Typography variant="h6" align="center" sx={{ color: "white", fontWeight: "bold", mb:1}}>
+                                        Health Options:
+                                    </Typography>
+                                    <FormGroup row sx={{ justifyContent: 'center', flexWrap: { xs: 'wrap', sm: 'nowrap' }}}>
+                                        <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }}  control={<Checkbox name="vegan" checked={filters.vegan} onChange={handleFilterChange} sx={{ color: "#FFFFFF", "&.Mui-checked": { color: "#FFFFFF" } }} />} label="Vegan" />
+                                        <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="vegetarian" checked={filters.vegetarian} onChange={handleFilterChange} sx={{ color: "#FFFFFF", "&.Mui-checked": { color: "#FFFFFF" } }} />} label="Vegetarian" />
+                                        <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="alcoholFree" checked={filters.alcoholFree} onChange={handleFilterChange} sx={{ color: "#FFFFFF", "&.Mui-checked": { color: "#FFFFFF" } }} />} label="Alcohol-Free" />
+                                        <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="nutFree" checked={filters.nutFree} onChange={handleFilterChange} sx={{ color: "#FFFFFF", "&.Mui-checked": { color: "#FFFFFF" } }} />} label="Nut-Free" />
+                                        <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lactoseFree" checked={filters.lactoseFree} onChange={handleFilterChange} style={{ color: "#FFFFFF", "&.Mui-checked": { color: "#FFFFFF" } }} />} label="Lactose-Free" />
+                                    </FormGroup>
+                                </CardContent>
+                            </CustomCard>
+                        </Grid>
+                        </Container>
+                        <Container maxWidth="md" sx={{ mb: 3, mt: 2 }}>
+                            <Grid 
+                                container 
+                                justifyContent="space-between"
+                                sx={{
+                                width: "100%",
+                                maxWidth: { xs: "95%", sm: "700px" }, // Match card width
+                                mx: "auto", // Center the container
+                                px: 0 // Remove horizontal padding
+                                }}
+                            >
+                                <Button 
+                                sx={{ 
+                                    width: { xs: "48%", sm: "auto" }, // Responsive width
+                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : 
+                                                themeMode === "dark" ? "#b2b3cc" : "#00E265",
+                                    color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
+                                    py: 1,
+                                    px: { xs: 1, sm: 3 },
+                                    boxShadow: 2,
+                                    borderRadius: 1,
+                                    minWidth: "120px" // Ensure minimum width
+                                }} 
+                                onClick={submitFilters}
+                                >
+                                Submit
+                                </Button>
+                                <Button 
+                                sx={{ 
+                                    width: { xs: "48%", sm: "auto" }, // Responsive width
+                                    backgroundColor: themeMode === "highContrast" ? "#FFD700" : 
+                                                themeMode === "dark" ? "#6B6B6B" : "#ff1919",
+                                    color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
+                                    py: 1,
+                                    px: { xs: 1, sm: 3 },
+                                    boxShadow: 2,
+                                    borderRadius: 1,
+                                    minWidth: "120px" // Ensure minimum width
+                                }} 
+                                onClick={clearFilters}
+                                >
+                                Clear Filter
+                                </Button>
+                            </Grid>
+                        </Container>
+                    </div>    
+                    </GradientSection>
+                </div>
+            </main>
+
+            {/* Will display the search results at the bottom half of the page by calling RecipeList and sending specific filters to it */}
+            <CustomBackground>
+                <RecipeList mealType={mealType} filters={appliedFilters} minCalories={minCalories} maxCalories={maxCalories} minProtein={minProtein} maxProtein={maxProtein} minCholesterol={minCholesterol} maxCholesterol={maxCholesterol} minSugar={minSugar} maxSugar={maxSugar} minFat={minFat} maxFat={maxFat} healthType={healthType} cuisineType={cuisineType} mealTypes={mealTypes}/>   
+            </CustomBackground>
+        </>
+    );
+}
