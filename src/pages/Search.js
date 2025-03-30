@@ -12,7 +12,7 @@ import { ThemeContext } from "../components/themeProvider";
 export default function Search() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const mealType = queryParams.get("mealType") || ""; // Extract mealType from URL
+    const mealType = queryParams.get("mealType") || ""; 
     const minCalories = queryParams.get("minCalories") || ""; 
     const maxCalories = queryParams.get("maxCalories") || ""; 
     const minProtein = queryParams.get("minProtein") || ""; 
@@ -132,14 +132,14 @@ export default function Search() {
                                 justifyContent="space-between"
                                 sx={{
                                 width: "100%",
-                                maxWidth: { xs: "95%", sm: "700px" }, // Match card width
-                                mx: "auto", // Center the container
-                                px: 0 // Remove horizontal padding
+                                maxWidth: { xs: "95%", sm: "700px" }, 
+                                mx: "auto", 
+                                px: 0
                                 }}
                             >
                                 <Button 
                                 sx={{ 
-                                    width: { xs: "48%", sm: "auto" }, // Responsive width
+                                    width: { xs: "48%", sm: "auto" }, 
                                     backgroundColor: themeMode === "highContrast" ? "#FFFF00" : 
                                                 themeMode === "dark" ? "#b2b3cc" : "#00E265",
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
@@ -147,7 +147,7 @@ export default function Search() {
                                     px: { xs: 1, sm: 3 },
                                     boxShadow: 2,
                                     borderRadius: 1,
-                                    minWidth: "120px" // Ensure minimum width
+                                    minWidth: "120px"
                                 }} 
                                 onClick={submitFilters}
                                 >
@@ -155,7 +155,7 @@ export default function Search() {
                                 </Button>
                                 <Button 
                                 sx={{ 
-                                    width: { xs: "48%", sm: "auto" }, // Responsive width
+                                    width: { xs: "48%", sm: "auto" },
                                     backgroundColor: themeMode === "highContrast" ? "#FFD700" : 
                                                 themeMode === "dark" ? "#6B6B6B" : "#ff1919",
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
@@ -163,7 +163,7 @@ export default function Search() {
                                     px: { xs: 1, sm: 3 },
                                     boxShadow: 2,
                                     borderRadius: 1,
-                                    minWidth: "120px" // Ensure minimum width
+                                    minWidth: "120px"
                                 }} 
                                 onClick={clearFilters}
                                 >
