@@ -17,7 +17,7 @@ export default function Home() {
     <CssBaseline/>
       <TopBar />
       <GradientSection>
-        <Container maxWidth="md" sx={{ marginTop: "63px", justifyContent: "center", alignItems: "center", textAlign: "center"}}>
+        <Container maxWidth="md" sx={{ marginTop: { xs: "40px", sm: "63px" }, justifyContent: "center", alignItems: "center", textAlign: "center"}}>
           <Typography variant="h3" sx={{ color: "white", textAlign: "center", fontWeight: "bold", fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' } }}>
             Meals for the day.
           </Typography>
