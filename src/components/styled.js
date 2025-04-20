@@ -3,13 +3,8 @@ import { Card, CardContent, CardMedia, Box } from "@mui/material";
 
 // Custom Card
 export const CustomCard = styled(Card)(({ theme }) => ({
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
   background: theme.palette.mode === "dark" ? "#333131" : "#00E265",
   color: theme.palette.text.primary,
-  borderRadius: 3,
-  boxShadow: 3,
 }));
 
 // Custom Card Content

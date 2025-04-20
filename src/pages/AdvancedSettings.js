@@ -109,43 +109,36 @@ export default function AdvancedSettings() {
         }
       };
 
-
-    // Handle submit button click
+    // Handles submit button click
     const handleSubmit = () => {
         if (recipeTerm.trim() !== "") {
             const queryParams = new URLSearchParams();
             queryParams.append("mealType", encodeURIComponent(recipeTerm + " " + ingredientTerm));
-
-            // Add calorie range to query if both min and max are provided
+            // Adds calorie range to query if both min and max are provided
             if (minCalories && maxCalories) {
                 queryParams.append("minCalories", encodeURIComponent(minCalories));
                 queryParams.append("maxCalories", encodeURIComponent(maxCalories));
             }
-
             if (minProtein && maxProtein) {
                 queryParams.append("minProtein", encodeURIComponent(minProtein));
                 queryParams.append("maxProtein", encodeURIComponent(maxProtein));
             }
-
             if (minCholesterol && maxCholesterol) {
                 queryParams.append("minCholesterol", encodeURIComponent(minCholesterol));
                 queryParams.append("maxCholesterol", encodeURIComponent(maxCholesterol));
             }
-
             if (minSugar && maxSugar) {
                 queryParams.append("minSugar", encodeURIComponent(minSugar));
                 queryParams.append("maxSugar", encodeURIComponent(maxSugar));
             }
-
             if (minFat && maxFat) {
                 queryParams.append("minFat", encodeURIComponent(minFat));
                 queryParams.append("maxFat", encodeURIComponent(maxFat));
             }
-            
+        
             if (selectedHealth.length > 0) {
                 queryParams.append("healthType", encodeURIComponent(selectedHealth.join(",")));
             }
-
             if (selectedCuisine.length > 0) {
                 queryParams.append("cuisineType", encodeURIComponent(selectedCuisine.join(",")));
             }
@@ -153,7 +146,6 @@ export default function AdvancedSettings() {
             if (selectedMeal.length > 0) {
                 queryParams.append("mealTypes", encodeURIComponent(selectedMeal.join(",")));
             }
-
             navigate(`/search?${queryParams.toString()}`, {
                 state: { recipeTerm }, // Pass recipeTerm as state
             });
@@ -161,6 +153,7 @@ export default function AdvancedSettings() {
             setSearchError(true);
         }
     };
+
 
     return (
         <>

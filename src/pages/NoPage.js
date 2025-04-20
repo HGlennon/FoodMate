@@ -4,6 +4,7 @@ import TopBar from '../components/topbar';
 import { CustomBackground, GradientSection } from '../components/styled';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import { CssBaseline } from "@mui/material";
+import { ThemeContext } from "../components/themeProvider";
 
 export default function NoPage() {
 

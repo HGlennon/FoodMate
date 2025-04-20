@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState, useContext } from 'react'; 
 import { Typography, AppBar, CssBaseline, Toolbar, Button, InputBase, IconButton, Menu, MenuItem, Box, useMediaQuery } from '@mui/material';
 import Images from './image';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -6,6 +6,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { theme } from './themes';
+import { ThemeContext } from "../components/themeProvider";
+
 
 export default function TopBar() {
     const [open, SetOpen] = useState(null);
@@ -22,6 +24,8 @@ export default function TopBar() {
         }
     };
 
+    const { themeMode, setThemeMode } = useContext(ThemeContext);
+
     return (
         <>
             <CssBaseline />
@@ -33,7 +37,7 @@ export default function TopBar() {
                     flexWrap: 'nowrap',
                     px: 2
                 }}>
-                    {/* Left: Logo */}
+                    {/* Logo */}
                     <Box onClick={() => navigate('/home')} 
                         sx={{ 
                             display: "flex", 
@@ -45,12 +49,13 @@ export default function TopBar() {
                         }}
                     >
                         <Images/>
-                        {!isSmallScreen && (
+                        {/* Foodmate title */}
+                        {!isSmallScreen && ( 
                             <Typography variant='h4' sx={{ 
                                     color: theme => theme.palette.text.primary, 
                                     textTransform: 'none', 
                                     fontSize: { xs: '1.5rem', md: '2rem' },
-                                    mb: '3px' // Small margin-bottom to fine-tune alignment
+                                    mb: '3px'
                                 }}
                             >
                                 FoodMate
@@ -58,13 +63,13 @@ export default function TopBar() {
                         )}
                     </Box>
                     
-                    {/* Center: Search with Advanced Search button */}
+                    {/* Search and advanced search button */}
                     <Box sx={{ 
                         display: 'flex',
                         alignItems: 'center',
                         flexGrow: 1,
                         justifyContent: 'center',
-                        maxWidth: { md: '800px' } // Increased to accommodate both
+                        maxWidth: { md: '800px' }
                     }}>
                         {/* Search Bar */}
                         <Box sx={{ 
@@ -99,29 +104,33 @@ export default function TopBar() {
                             />
                         </Box>
                         
-                        {/* Advanced Search Button - now adjacent to search bar */}
+                        {/* Advanced search button */}
                         {!isSmallScreen && (
                             <Button 
                                 href="/advancedsettings" 
-                                variant="contained" 
+                                variant="contained"
                                 sx={{ 
-                                    ml: 1, // Margin left to separate from search
+                                    ml: 1,
                                     backgroundColor: 'transparent', 
                                     color: theme => theme.palette.text.primary, 
                                     textTransform: 'none',
                                     whiteSpace: 'nowrap',
                                     '&:hover': {
                                         backgroundColor: 'rgba(0,0,0,0.04)'
-                                    }
+                                    },
+                                    '& .MuiTouchRipple-root .MuiTouchRipple-child': { 
+                                        backgroundColor: 'black',
+                                        opacity: 0.01                         
+                                      }
+                                    
                                 }} 
-                                disableRipple
                             >
                                 Advanced Search
                             </Button>
                         )}
                     </Box>
 
-                    {/* Right: Menu Button */}
+                    {/* Hamburger menu */}
                     <Box sx={{ 
                         display: 'flex',
                         alignItems: 'center',
@@ -133,7 +142,7 @@ export default function TopBar() {
                         </IconButton>
                     </Box>
 
-                    {/* Menu Dropdown */}
+                    {/* Menu dropdown list */}
                     <Menu 
                         anchorEl={open} 
                         open={Boolean(open)} 

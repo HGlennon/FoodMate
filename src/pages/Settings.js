@@ -5,6 +5,7 @@ import { GradientSection, CustomBackground } from '../components/styled';
 import { ThemeContext } from '../components/themeProvider';
 import { theme } from '../components/themes';
 
+
 export default function Settings() {
     const { themeMode, setThemeMode } = useContext(ThemeContext);
 

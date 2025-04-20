@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
 import { Container, Grid, Typography, CardActionArea, Button, Box, IconButton, CardMedia, Card, Tooltip } from '@mui/material';
 import { CustomCardContent } from "../components/styled";
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -9,22 +9,26 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { ThemeContext } from './themeProvider';
 import { useNavigate } from 'react-router-dom';
 
-
 const APP_ID = "837155ce"; 
 const APP_KEY = "76b054a6c99b380eda97058ec73f6069";
-const RECIPES_PER_PAGE = 9; 
 
-const RecipeList = ({ mealType, filters, minCalories, maxCalories, minProtein, maxProtein, minCholesterol, maxCholesterol, minSugar, maxSugar, minFat, maxFat, healthType, cuisineType, mealTypes}) => {
+const EDAMAM_PAGE_SIZE = 20;
+
+const RecipeList = React.memo(function RecipeList({ mealType, filters, minCalories, maxCalories, minProtein, maxProtein, minCholesterol, maxCholesterol, minSugar, maxSugar, minFat, maxFat, healthType, cuisineType, mealTypes, recipeTerm}) {
   const [recipes, setRecipes] = useState([]);
-  const [from, setFrom] = useState(0);
+  const [nextUrl, setNextUrl] = useState(null);
+  const loader = useRef(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [likedRecipes, setLikedRecipes] = useState({}); // Track likes for each recipe
-  const [copiedTooltip, setCopiedTooltip] = useState({}); // Tracks tooltip state per recipe
+  const [error, setError] = useState("");
+
+  const [likedRecipes, setLikedRecipes] = useState({});
+  const [copiedTooltip, setCopiedTooltip] = useState({});
   const [shareTooltip, setShareTooltip] = useState({});
   const [infoTooltip, setInfoTooltip] = useState({});
   const [informationTooltip, setInformationTooltip] = useState({});
-  const { themeMode, setThemeMode } = useContext(ThemeContext);
+  
+
+  const { themeMode } = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const toggleLike = (index) => {
@@ -48,10 +52,6 @@ const handleInfoClick = (index) => {
     setInformationTooltip((prev) => ({ ...prev, [index]: false }));
 };
 
-const getNutrientValue = (nutrient) => {
-    return Math.round(nutrient?.quantity * 10) / 10 || 'N/A';
-};
-
 const getHealthLabels = () => {
     const healthLabels = [];
     if (filters.vegan) healthLabels.push("vegan");
@@ -72,92 +72,127 @@ const getDietLabels = () => {
     return dietLabels;
 };
 
-const fetchRecipes = (newFrom) => {
-    setLoading(true); // Will make the 'Load More' button indicate that it is currently loading [https://mui.com/material-ui/react-button/]
+const buildFirstUrl = () => {
+  const q = encodeURIComponent(recipeTerm || mealType || "recipe");
+  let url =
+    `https://api.edamam.com/api/recipes/v2?type=public&q=${q}` +
+    `&app_id=${APP_ID}&app_key=${APP_KEY}`;
 
-    // Construct the base API URL
-    let API_URL = `https://api.edamam.com/api/recipes/v2?type=public&q=${mealType || ""}&app_id=${APP_ID}&app_key=${APP_KEY}&from=${newFrom}&to=${newFrom + RECIPES_PER_PAGE}`;
-    console.log("Final API URL:", API_URL);
+  // ──────────────────────────────────────────────── calories / nutrients
+  if (minCalories && maxCalories && !isNaN(minCalories) && !isNaN(maxCalories)) {
+    url += `&calories=${minCalories}-${maxCalories}`;
+  }
 
-    // Add calorie range if both min and max are provided and valid
-    if (minCalories && maxCalories && !isNaN(minCalories) && !isNaN(maxCalories)) {
-        API_URL += `&calories=${minCalories}-${maxCalories}`;
-    }
+  if (minProtein && maxProtein && !isNaN(minProtein) && !isNaN(maxProtein)) {
+    url += `&nutrients%5BPROCNT%5D=${minProtein}-${maxProtein}`;
+  }
+  if (minCholesterol && maxCholesterol && !isNaN(minCholesterol) && !isNaN(maxCholesterol)) {
+    url += `&nutrients%5BCHOLE%5D=${minCholesterol}-${maxCholesterol}`;
+  }
+  if (minSugar && maxSugar && !isNaN(minSugar) && !isNaN(maxSugar)) {
+    url += `&nutrients%5BSUGAR%5D=${minSugar}-${maxSugar}`;
+  }
+  if (minFat && maxFat && !isNaN(minFat) && !isNaN(maxFat)) {
+    url += `&nutrients%5BFAT%5D=${minFat}-${maxFat}`;
+  }
 
-    // Add protein range if both min and max are provided and valid
-    if (minProtein && maxProtein && !isNaN(minProtein) && !isNaN(maxProtein)) {
-        API_URL += `&nutrients%5BPROCNT%5D=${minProtein}-${maxProtein}`;
-    }
+  // ──────────────────────────────────────────────── lists
+  if (healthType?.length) {
+    url += `&health=${healthType.join("&health=")}`;
+  }
+  if (cuisineType?.length) {
+    url += `&cuisineType=${cuisineType.join("&cuisineType=")}`;
+  }
+  if (mealTypes?.length) {
+    url += `&mealType=${mealTypes.join("&mealType=")}`;
+  }
 
-      // Add protein range if both min and max are provided and valid
-    if (minCholesterol && maxCholesterol && !isNaN(minCholesterol) && !isNaN(maxCholesterol)) {
-        API_URL += `&nutrients%5BCHOLE%5D=${minCholesterol}-${maxCholesterol}`;
-    }
+  // ──────────────────────────────────────────────── dynamic check‑box filters
+  const healthQuery = getHealthLabels().map((h) => `&health=${h}`).join("");
+  const dietQuery = getDietLabels().map((d) => `&diet=${d}`).join("");
+  url += healthQuery + dietQuery;
 
-          // Add protein range if both min and max are provided and valid
-    if (minSugar && maxSugar && !isNaN(minSugar) && !isNaN(maxSugar)) {
-        API_URL += `&nutrients%5BSUGAR%5D=${minSugar}-${maxSugar}`;
-    }
+  return url;
+};
 
-    if (minFat && maxFat && !isNaN(minFat) && !isNaN(maxFat)) {
-      API_URL += `&nutrients%5BFAT%5D=${minFat}-${maxFat}`;
-    } 
+//--------------------------------------------------
+// data fetching – one function for both first & next pages
+//--------------------------------------------------
+const fetchPage = (url, replace = false) => {
+  setLoading(true);
 
-    if (healthType && healthType.length > 0) {
-      API_URL += `&health=${healthType.join("&health=")}`;
-    }
+  fetch(url)
+    .then((r) => r.json())
+    .then((data) => {
+      if (!data.hits?.length) {
+        setError("No more recipes found.");
+        setNextUrl(null);
+        return;
+      }
 
-    if (cuisineType && cuisineType.length > 0) {
-      API_URL += `&cuisineType=${cuisineType.join("&cuisineType=")}`;
-    }
-
-    if (mealTypes && mealTypes.length > 0) {
-      API_URL += `&mealType=${mealTypes.join("&mealType=")}`;
-    }
-    // Add health filters
-    const healthQuery = getHealthLabels().map(label => `&health=${label}`).join("");
-    API_URL += healthQuery;
-
-    // Add diet filters
-    const dietQuery = getDietLabels().map(label => `&diet=${label}`).join("");
-    API_URL += dietQuery;
-
-    fetch(API_URL)
-        .then((res) => res.json())
-        .then((data) => {
-            console.log("API Response:", data); // Log the API response
-            if (data.hits) {
-                setRecipes((prevRecipes) => [...prevRecipes, ...data.hits]);
-                setError("");
-            } else {
-                setError("No more recipes found.");
-            }
-            setLoading(false);
-        })
-        .catch((err) => {
-          console.error("Fetch error:", err);
-          setError("Failed to fetch recipes.");
-          setLoading(false);
+      // dedupe using recipe.uri (unique key)
+      setRecipes((prev) => {
+        const list = replace ? [] : prev;
+        const seen = new Set(list.map((h) => h.recipe.uri));
+        const fresh = data.hits.filter((h) => !seen.has(h.recipe.uri));
+        return [...list, ...fresh];
       });
-    };
 
-    useEffect(() => {
-        if (mealType) {
-            setRecipes([]); // Reset recipes when mealType changes
-            setFrom(0);
-            fetchRecipes(0);
-        }
-    }, [mealType, filters, minCalories, maxCalories, minProtein, maxProtein, minCholesterol, maxCholesterol, minSugar, maxSugar, minFat, maxFat, healthType, cuisineType, mealTypes]);
+      setNextUrl(data._links?.next?.href ?? null);
+      setError("");
+    })
+    .catch(() => setError("Failed to fetch recipes."))
+    .finally(() => setLoading(false));
+};
 
-    const loadMoreRecipes = () => {
-        const newFrom = from + RECIPES_PER_PAGE;
-        setFrom(newFrom);
-        fetchRecipes(newFrom);
-    };
+//--------------------------------------------------
+// initial page whenever the search / filters change
+//--------------------------------------------------
+useEffect(() => {
+  const firstUrl = buildFirstUrl();
+  setRecipes([]);
+  setNextUrl(null);
+  fetchPage(firstUrl, true); // replace = true clears old hits
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [
+  mealType,
+  filters,
+  minCalories,
+  maxCalories,
+  minProtein,
+  maxProtein,
+  minCholesterol,
+  maxCholesterol,
+  minSugar,
+  maxSugar,
+  minFat,
+  maxFat,
+  healthType,
+  cuisineType,
+  mealTypes,
+  recipeTerm,
+]);
 
-    const handleRecipeClick = (recipe) => {
-        navigate('/recipe', { state: { recipe } });
-    };
+const loadMoreRecipes = useCallback(() => {
+  if (nextUrl) fetchPage(nextUrl);
+});
+
+useEffect(() => {
+  if (!loader.current) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting && !loading && !error) {
+        loadMoreRecipes();
+      }
+    },
+    { root: null, rootMargin: "200px", threshold: 0 }  // rootMargin gives a small pre‑fetch buffer
+  );
+
+  observer.observe(loader.current);
+
+  return () => observer.disconnect();
+}, [loader, loading, error, loadMoreRecipes]);
 
   return (
     <Container maxWidth='md' sx={{ marginTop: '20px' }}>
@@ -172,7 +207,10 @@ const fetchRecipes = (newFrom) => {
           return (
             <Grid item key={index} xs={12} sm={6} md={4}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: 3, boxShadow: 3, minHeight: '400px', backgroundColor: theme => theme.palette.background.default   }}>
-                <CardActionArea onClick={() => handleRecipeClick(item.recipe) } disableRipple sx={{ display: "flex", flexDirection: "column", height: "100%" }}>  
+                <CardActionArea                   onClick={() => navigate("/recipe", { state: { recipe: item.recipe } })}
+                  disableRipple
+                  sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+                >
                   <CardMedia component="img" height="180" image={image} alt={label}/>
                   <CustomCardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", maxHeight: '100px', textOverflow: 'ellipsis' }}>
                     <Typography variant="h6" fontWeight="bold">{label}</Typography>
@@ -212,6 +250,8 @@ const fetchRecipes = (newFrom) => {
         })}
       </Grid>
 
+      <div ref={loader} />
+
       <Grid container justifyContent="center" sx={{ marginTop: '20px', marginBottom: '20px' }}>
         <Button onClick={loadMoreRecipes} variant="contained" sx={{backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#b2b3cc' : '#00a146', color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",}} disabled={loading}>
           {loading ? "Loading..." : "Load More"}
@@ -219,6 +259,6 @@ const fetchRecipes = (newFrom) => {
       </Grid>
     </Container>
   );
-};
+});
 
 export default RecipeList;
