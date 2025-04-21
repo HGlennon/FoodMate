@@ -2,10 +2,10 @@
 
 @font-face {
     font-family: 'OpenDyslexic';
-    src: url('/fonts/OpenDyslexic-Regular.woff') format('woff');
+    src: url('/fonts/woff/OpenDyslexic-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-  }
+}
   
   :root {
     --app-font-family: 'OpenDyslexic', 'Roboto', sans-serif;
