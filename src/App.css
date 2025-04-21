@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
 @font-face {
     font-family: 'OpenDyslexic';
-    src: url('/fonts/OpenDyslexic-Regular.woff') format('woff');
+    src: url('./assets/fonts/OpenDyslexic-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
+  }
   
   :root {
     --app-font-family: 'OpenDyslexic', 'Roboto', sans-serif;
