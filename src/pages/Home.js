@@ -1,4 +1,4 @@
-import React, { useContext }from "react";
+import React, { useContext, useState }from "react";
 import { Typography, Container, Grid, CardActionArea, CssBaseline } from "@mui/material";
 import {GradientSection, CustomCard, CustomCardContent, CustomCardMedia, CustomBackground } from "../components/styled";
 import TopBar from "../components/topbar";
@@ -7,14 +7,23 @@ import { ThemeContext } from "../components/themeProvider";
 
 export default function Home() {
 
-  const cards = [
-    { title: "Breakfast", image: "https://simply-delicious-food.com/wp-content/uploads/2022/09/Breakfast-board28-500x375.jpg", link: "http://foodmate.dev/search?mealType=Breakfast" },
-    { title: "Lunch", image: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/HF_Y23_M_W27_UK_03_3_low-6510a59e.jpg", link: "http://foodmate.dev/search?mealType=Lunch" },
-    { title: "Dinner", image: "https://assets.epicurious.com/photos/59a48f237e283157d14a5a6a/16:9/w_2560%2Cc_limit/How-to-Throw-a-Grocery-Store-Dinner-Party-hero-with-hands-15082017.jpg", link: "http://foodmate.dev/search?mealType=Dinner" },
-    { title: "Dessert", image: "https://imageio.forbes.com/specials-images/imageserve/5dd31d942c886a0007ec71bd/Harry---David-Dessert-of-the-Month-Club/960x0.jpg?height=529&width=711&fit=bounds", link: "http://foodmate.dev/search?mealType=Dessert" },
-  ];
+  const { themeMode } = useContext(ThemeContext);
+  
+  const getSavedFontSize = () =>
+    parseInt(localStorage.getItem("fontSize") || "0", 10);
+        
+  const getSavedDyslexicFont = () =>
+    localStorage.getItem("useDyslexicFont") === "true";
+  
+  const [appliedFontSize] = useState(getSavedFontSize());
+  const [useDyslexicFont] = useState(getSavedDyslexicFont())
 
-  const { themeMode, setThemeMode } = useContext(ThemeContext);
+  const cards = [
+    { title: "Breakfast", image: "https://simply-delicious-food.com/wp-content/uploads/2022/09/Breakfast-board28-500x375.jpg", link: "http://localhost:3000/search?mealType=Breakfast" },
+    { title: "Lunch", image: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/HF_Y23_M_W27_UK_03_3_low-6510a59e.jpg", link: "http://localhost:3000/search?mealType=Lunch" },
+    { title: "Dinner", image: "https://assets.epicurious.com/photos/59a48f237e283157d14a5a6a/16:9/w_2560%2Cc_limit/How-to-Throw-a-Grocery-Store-Dinner-Party-hero-with-hands-15082017.jpg", link: "http://localhost:3000/search?mealType=Dinner" },
+    { title: "Dessert", image: "https://imageio.forbes.com/specials-images/imageserve/5dd31d942c886a0007ec71bd/Harry---David-Dessert-of-the-Month-Club/960x0.jpg?height=529&width=711&fit=bounds", link: "http://localhost:3000/search?mealType=Dessert" },
+  ];
 
   return (
     <>
@@ -22,22 +31,17 @@ export default function Home() {
       <TopBar />
       <GradientSection>
         <Container maxWidth="md" sx={{ marginTop: { xs: "40px", sm: "63px" }, justifyContent: "center", alignItems: "center", textAlign: "center"}}>
-          <Typography variant="h3" sx={{ color: themeMode === "highContrast" ? "yellow" : "white", textAlign: "center", fontWeight: "bold", fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' } }}>
+          <Typography variant="h3" sx={{ fontSize: { xs: `${32 + appliedFontSize}px`, sm: `${40 + appliedFontSize}px`, md: `${48 + appliedFontSize}px` }, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", textAlign: "center", fontWeight: "bold" }}>
             Meals for the day.
           </Typography>
           <Grid container spacing={4} sx={{ marginTop: 3 }}>
             {cards.map((card, index) => (
               <Grid item key={index} xs={6} sm={4} md={3}>
-                <CustomCard sx={{   height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  borderRadius: 3,
-  boxShadow: 3,
-}}>
+                <CustomCard sx={{   height: "100%", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
                   <CardActionArea href={card.link} sx={{ height: '100%' }}>
                     <CustomCardMedia image={card.image} title={card.title} sx={{   [theme.breakpoints.down('sm')]: {paddingTop: "75%", },}}/>
                     <CustomCardContent>
-                      <Typography variant="h5" sx={{ color: themeMode === "highContrast" ? "yellow" : "white", textAlign: "center", fontWeight: "bold", fontSize: { xs: '1.3rem', sm: '1.8rem' } }}>
+                      <Typography variant="h5" sx={{ fontSize: { xs: `${21 + appliedFontSize}px`, sm: `${29 + appliedFontSize}px` }, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", textAlign: "center", fontWeight: "bold" }}>
                         {card.title}
                       </Typography>
                     </CustomCardContent>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useMemo  } from "react";
 import TopBar from "../components/topbar";
-import { Typography, Card, CardContent, Grid, Container, Button, Checkbox, FormGroup, FormControlLabel, CssBaseline } from "@mui/material";
+import { Typography, Card, CardContent, Grid, Container, Button, Checkbox, FormGroup, FormControlLabel, CssBaseline, collapseClasses } from "@mui/material";
 import RecipeList from "../components/apiData"
 import {GradientSection, CustomCard, CustomCardContent, CustomCardMedia, CustomBackground } from "../components/styled";
 import { useLocation } from "react-router-dom";
@@ -11,6 +11,7 @@ import { ThemeContext } from "../components/themeProvider";
 export default function Search() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
+
     const mealType = queryParams.get("mealType") || ""; 
     const minCalories = queryParams.get("minCalories") || ""; 
     const maxCalories = queryParams.get("maxCalories") || ""; 
@@ -22,6 +23,7 @@ export default function Search() {
     const maxSugar = queryParams.get("maxSugar") || ""; 
     const minFat = queryParams.get("minFat") || ""; 
     const maxFat = queryParams.get("maxFat") || ""; 
+
     const cuisineType = useMemo(
         () => queryParams.get("cuisineType")?.split(",") || [],
         [location.search]        // ← only when the URL actually changes
@@ -34,7 +36,17 @@ export default function Search() {
         () => queryParams.get("healthType")?.split(",") || [],
         [location.search]
       );
-    const { themeMode, setThemeMode } = useContext(ThemeContext);
+    
+    const getSavedFontSize = () =>
+        parseInt(localStorage.getItem("fontSize") || "0", 10);
+            
+    const getSavedDyslexicFont = () =>
+        localStorage.getItem("useDyslexicFont") === "true";
+      
+    const [appliedFontSize] = useState(getSavedFontSize());
+    const [useDyslexicFont] = useState(getSavedDyslexicFont())
+
+    const { themeMode } = useContext(ThemeContext);
     const { recipeTerm } = location.state || {};
     
     const [filters, setFilters] = useState({
@@ -83,7 +95,7 @@ export default function Search() {
                 <GradientSection sx={{ py: { xs: 2, sm: 3 } }}>
                     <Container maxWidth='md' sx={{ mt: { xs: 2, sm: 3 } }}>
                     <Grid container justifyContent="center">
-                        <Typography variant="h4" align="center" style={{ color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: "bold", ontSize: { xs: '1.5rem', sm: '1.75rem', md: '2.125rem' }, textAlign: "center", mb:3}}>
+                        <Typography variant="h4" align="center" style={{fontWeight: "bold", fontSize: { xs: `${24 + appliedFontSize}px`, sm: `${28 + appliedFontSize}px`, md: `${34 + appliedFontSize}px` }, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", textAlign: "center", mb:3}}>
                             {recipeTerm || mealType || "Recipes"}
                         </Typography>
                     </Grid>
@@ -92,22 +104,17 @@ export default function Search() {
                         {/* Will give a group of diet filters that the user can select via checkboxes that turn on/off the filter [https://react.school/material-ui/checkbox] */}
                         <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
                         <Grid container justifyContent="center">
-                                <CustomCard sx={{ width: "100%", maxWidth: { xs: "95%", sm: "700px" },   height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  borderRadius: 3,
-  boxShadow: 3,
- }}>
+                                <CustomCard sx={{ width: "100%", maxWidth: { xs: "95%", sm: "700px" },   height: "100%", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
                                 <CardContent>
-                                <Typography variant="h6" align="center" sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: "bold", mb:1}}>
+                                <Typography variant="h6" align="center" sx={{ fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: "bold", mb:1}}>
                                         Diet Options:
                                 </Typography>
                                 <FormGroup row sx={{ justifyContent: 'center', flexWrap: { xs: 'wrap', sm: 'nowrap' }}}>
-                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="balanced" checked={filters.balanced} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label="Balanced" />
-                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="highProtein" checked={filters.highProtein} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label="High-Protein" />
-                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lowCarb" checked={filters.lowCarb} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label="Low-Carb" />
-                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lowFat" checked={filters.lowFat} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label="Low-Fat" />
-                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lowSodium" checked={filters.lowSodium} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label="Low-Sodium"/>
+                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="balanced" checked={filters.balanced} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white"}}>Balanced</Typography>}/>
+                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="highProtein" checked={filters.highProtein} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white"}}>High-Protein</Typography>}/>
+                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lowCarb" checked={filters.lowCarb} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white"}}>Low-Carb</Typography>}/>
+                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lowFat" checked={filters.lowFat} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white"}}>Low-Fat</Typography>}/>
+                                    <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lowSodium" checked={filters.lowSodium} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white"}}>Low-Salt</Typography>}/>
                                 </FormGroup>
                                 </CardContent>
                             </CustomCard>
@@ -117,14 +124,9 @@ export default function Search() {
                          {/* Will give a provide health filters for the recipes*/}
                         <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
                         <Grid container justifyContent="center">
-                            <CustomCard sx={{ width: "100%", maxWidth: { xs: "95%", sm: "700px" },   height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  borderRadius: 3,
-  boxShadow: 3,
- }}>
+                            <CustomCard sx={{ width: "100%", maxWidth: { xs: "95%", sm: "700px" },   height: "100%", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
                                 <CardContent>
-                                    <Typography variant="h6" align="center" sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: "bold", mb:1}}>
+                                    <Typography variant="h6" align="center" sx={{ fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: "bold", mb:1}}>
                                         Health Options:
                                     </Typography>
                                     <FormGroup row sx={{ justifyContent: 'center', flexWrap: { xs: 'wrap', sm: 'nowrap' }}}>
@@ -132,7 +134,7 @@ export default function Search() {
                                         <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="vegetarian" checked={filters.vegetarian} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white"} }} />} label="Vegetarian" />
                                         <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="alcoholFree" checked={filters.alcoholFree} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label="Alcohol-Free" />
                                         <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="nutFree" checked={filters.nutFree} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label="Nut-Free" />
-                                        <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lactoseFree" checked={filters.lactoseFree} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label="Lactose-Free" />
+                                        <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lactoseFree" checked={filters.lactoseFree} onChange={handleFilterChange} sx={{ fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label="Lactose-Free" />
                                     </FormGroup>
                                 </CardContent>
                             </CustomCard>
@@ -159,6 +161,8 @@ export default function Search() {
                                     px: { xs: 1, sm: 3 },
                                     boxShadow: 2,
                                     borderRadius: 1,
+                                    fontSize: `${15 + appliedFontSize}px`, 
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     minWidth: "120px"
                                 }} 
                                 onClick={clearFilters}
@@ -175,6 +179,8 @@ export default function Search() {
                                     px: { xs: 1, sm: 3 },
                                     boxShadow: 2,
                                     borderRadius: 1,
+                                    fontSize: `${15 + appliedFontSize}px`, 
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     minWidth: "120px"
                                 }} 
                                 onClick={submitFilters}

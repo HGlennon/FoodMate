@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { ScrollRestoration, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Typography, Card, CardMedia, Box, CssBaseline, Container, Grid } from '@mui/material';
 import TopBar from '../components/topbar';
 import { CustomBackground, GradientSection, CustomCard } from '../components/styled';
@@ -13,7 +13,7 @@ export default function Recipe() {
     const [showNutrient, setShowNutrient] = useState(false);
     const navigate = useNavigate();
     const emptyFilters = React.useMemo(() => ({}), []);
-    const { themeMode, setThemeMode } = useContext(ThemeContext);
+    const { themeMode } = useContext(ThemeContext);
 
     useEffect(() => {
         if (recipe) {

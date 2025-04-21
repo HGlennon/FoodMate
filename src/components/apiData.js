@@ -27,6 +27,14 @@ const RecipeList = React.memo(function RecipeList({ mealType, filters, minCalori
   const [infoTooltip, setInfoTooltip] = useState({});
   const [informationTooltip, setInformationTooltip] = useState({});
   
+  const getSavedFontSize = () =>
+      parseInt(localStorage.getItem("fontSize") || "0", 10);
+              
+  const getSavedDyslexicFont = () =>
+      localStorage.getItem("useDyslexicFont") === "true";
+        
+  const [appliedFontSize] = useState(getSavedFontSize());
+  const [useDyslexicFont] = useState(getSavedDyslexicFont())
 
   const { themeMode } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -207,18 +215,17 @@ useEffect(() => {
           return (
             <Grid item key={index} xs={12} sm={6} md={4}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: 3, boxShadow: 3, minHeight: '400px', backgroundColor: theme => theme.palette.background.default   }}>
-                <CardActionArea                   onClick={() => navigate("/recipe", { state: { recipe: item.recipe } })}
+                <CardActionArea onClick={() => navigate("/recipe", { state: { recipe: item.recipe } })}
                   disableRipple
-                  sx={{ display: "flex", flexDirection: "column", height: "100%" }}
-                >
+                  sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
                   <CardMedia component="img" height="180" image={image} alt={label}/>
                   <CustomCardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", maxHeight: '100px', textOverflow: 'ellipsis' }}>
-                    <Typography variant="h6" fontWeight="bold">{label}</Typography>
-                    <Typography variant="subtitle1" color="text.secondary" sx={{ flexGrow: 1 }}>By {source}</Typography>
+                    <Typography variant="h6" sx={{fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }} fontWeight="bold">{label}</Typography>
+                    <Typography variant="subtitle1" color="text.secondary" sx={{ fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", flexGrow: 1 }}>By {source}</Typography>
                   </CustomCardContent>
                   <Box sx={{ backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#08aa4d', color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", padding: 1, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 'auto', width: '100%', minHeight: '40px'}}>
                     <AccessTimeIcon sx={{ marginRight: 0.5 }} />
-                    <Typography variant="body2" sx={{ color: themeMode === "highContrast" ? "#000000" : "#FFFFFF"}}>
+                    <Typography variant="body2" sx={{fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "#000000" : "#FFFFFF"}}>
                       {totalTime ? `${totalTime} mins` : "Time N/A"}
                     </Typography>
                   </Box>

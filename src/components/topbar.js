@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'; 
+import React, { useState, useContext, useEffect } from 'react'; 
 import { Typography, AppBar, CssBaseline, Toolbar, Button, InputBase, IconButton, Menu, MenuItem, Box, useMediaQuery } from '@mui/material';
 import Images from './image';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -10,6 +10,30 @@ import { ThemeContext } from "../components/themeProvider";
 
 
 export default function TopBar() {
+
+    const getSavedFontSize = () =>
+        parseInt(localStorage.getItem("fontSize") || "0", 10);
+            
+    const getSavedDyslexicFont = () =>
+        localStorage.getItem("useDyslexicFont") === "true";
+      
+    const [appliedFontSize, setAppliedFontSize] = useState(getSavedFontSize());
+const [useDyslexicFont, setUseDyslexicFont] = useState(getSavedDyslexicFont());
+
+useEffect(() => {
+  const handleStorage = () => {
+    setAppliedFontSize(getSavedFontSize());
+    setUseDyslexicFont(getSavedDyslexicFont());
+  };
+
+  window.addEventListener("storage", handleStorage);
+
+  return () => {
+    window.removeEventListener("storage", handleStorage);
+  };
+}, []);
+
+
     const [open, SetOpen] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
@@ -54,10 +78,10 @@ export default function TopBar() {
                             <Typography variant='h4' sx={{ 
                                     color: theme => theme.palette.text.primary, 
                                     textTransform: 'none', 
-                                    fontSize: { xs: '1.5rem', md: '2rem' },
-                                    mb: '3px'
-                                }}
-                            >
+                                    fontSize: { xs: `${24 + (appliedFontSize/2)}px`, md: `${32 + (appliedFontSize/2)}px`},
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
+                                    mb: '3px',
+                                }}>
                                 FoodMate
                             </Typography>
                         )}
@@ -95,6 +119,8 @@ export default function TopBar() {
                                 sx={{ 
                                     flexGrow: 1, 
                                     color: theme => theme.palette.text.primary,
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
+                                    fontSize: `${17 + (appliedFontSize/3)}px`,
                                     '& .MuiInputBase-input': {
                                         overflow: 'hidden',
                                         textOverflow: 'clip',
@@ -121,8 +147,9 @@ export default function TopBar() {
                                     '& .MuiTouchRipple-root .MuiTouchRipple-child': { 
                                         backgroundColor: 'black',
                                         opacity: 0.01                         
-                                      }
-                                    
+                                      },
+                                    fontSize: { xs: `${15 + (appliedFontSize/3)}px`, md: `${15 + (appliedFontSize/3)}px`}, 
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
                                 }} 
                             >
                                 Advanced Search
@@ -135,10 +162,10 @@ export default function TopBar() {
                         display: 'flex',
                         alignItems: 'center',
                         flexShrink: 0,
-                        ml: 2
+                        ml: 2,
                     }}>
                         <IconButton onClick={handleClick}>
-                            <MenuIcon/>
+                            <MenuIcon sx={{ fontSize: `${26 + (appliedFontSize/1.5)}px`,}}/>
                         </IconButton>
                     </Box>
 
@@ -154,8 +181,10 @@ export default function TopBar() {
                             href="/settings"
                             component="a"
                             onClick={close}
+                            sx={{fontSize: `${16 + (appliedFontSize/1.5)}px`,}}
                         > 
-                            <SettingsIcon sx={{ mr: 1 }}/> Settings
+                            <SettingsIcon sx={{ mr: 1, fontSize: `${20 + (appliedFontSize/1.5)}px`}}/> 
+                            Settings
                         </MenuItem>
                     </Menu>
                 </Toolbar>

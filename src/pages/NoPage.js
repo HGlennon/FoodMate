@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Typography, Container, Grid} from '@mui/material';
 import TopBar from '../components/topbar';
 import { CustomBackground, GradientSection } from '../components/styled';
@@ -6,7 +6,15 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import { CssBaseline } from "@mui/material";
 import { ThemeContext } from "../components/themeProvider";
 
-export default function NoPage() {
+  export default function NoPage() {
+    const getSavedFontSize = () =>
+        parseInt(localStorage.getItem("fontSize") || "0", 10);
+      
+      const getSavedDyslexicFont = () =>
+        localStorage.getItem("useDyslexicFont") === "true";
+
+    const [appliedFontSize] = useState(getSavedFontSize());
+    const [useDyslexicFont] = useState(getSavedDyslexicFont())
 
     return (
         <>
@@ -17,14 +25,14 @@ export default function NoPage() {
                 <GradientSection>
                     <Container maxWidth='md' sx={{ marginTop: "20px" }}>
                         <Grid container justifyContent="center" alignItems="center"  direction="column"> 
-                            <SentimentVeryDissatisfiedIcon sx={{ fontSize: 150, color: 'white', marginTop: "30px" }}/>
-                            <Typography variant="h4" sx={{ marginTop: "10px", fontWeight: 'bold', color: 'white'}}>
+                            <SentimentVeryDissatisfiedIcon sx={{ fontSize: `${150 + (appliedFontSize * 2)}px`, color: 'white', marginTop: "30px" }}/>
+                            <Typography variant="h4" sx={{fontSize: `${34 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", marginTop: "10px", fontWeight: 'bold', color: 'white'}}>
                                 Error: 404
                             </Typography>
-                            <Typography variant="h6" sx={{ marginTop: "3px", color: 'white'}}>
+                            <Typography variant="h6" sx={{ fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", marginTop: "3px", color: 'white'}}>
                                 Page not found.
                             </Typography>
-                            <Typography variant="subtitle1" sx={{ marginTop: "5px", color: '#e0dcda', maxWidth: '600px'}}>
+                            <Typography variant="subtitle1" sx={{ fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", marginTop: "5px", color: '#e0dcda', maxWidth: '600px'}}>
                                 The link you have followed could be broken, or the page may have been removed or moved somewhere else.
                             </Typography>
                         </Grid>

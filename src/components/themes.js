@@ -1,7 +1,13 @@
 import { createTheme } from "@mui/material/styles";
 
+const baseText = {
+  typography: {
+    fontFamily: "var(--app-font-family, 'Roboto', sans-serif)",
+  },
+};
+
 export const theme = createTheme({
-  palette: {
+    palette: {
     mode: "light",
     background: { 
       default: "#e8e8e8",
@@ -21,6 +27,7 @@ export const theme = createTheme({
     }}});
 
 export const darkTheme = createTheme({
+  baseText,
   palette: {
     mode: "dark",
     background: {
@@ -34,6 +41,7 @@ export const darkTheme = createTheme({
 });
 
 export const highContrastTheme = createTheme({
+  baseText,
   palette: {
     mode: "dark",
     background: {
