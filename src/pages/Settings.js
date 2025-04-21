@@ -5,7 +5,6 @@ import { GradientSection, CustomBackground } from '../components/styled';
 import { ThemeContext } from '../components/themeProvider';
 import { theme } from '../components/themes';
 
-
 export default function Settings() {
     const { themeMode, setThemeMode } = useContext(ThemeContext);
 
@@ -30,6 +29,7 @@ export default function Settings() {
     const handleApplySettings = () => {
         setAppliedFontSize(tempFontSize);
         localStorage.setItem("fontSize", tempFontSize);
+        window.dispatchEvent(new Event("storage"));
     };
 
     // Toggle dark mode
@@ -46,6 +46,7 @@ export default function Settings() {
         const newValue = !useDyslexicFont;
         setUseDyslexicFont(newValue);
         localStorage.setItem("useDyslexicFont", newValue);
+        window.dispatchEvent(new Event("storage"));
     };
 
     // Apply font to body dynamically
@@ -75,7 +76,7 @@ export default function Settings() {
                             <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${26 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  }} mb={2}>
                                 Settings
                             </Typography>
-                            <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px` }} mb={1}>
+                            <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }} mb={1}>
                                 General
                             </Typography>
                             <Box onClick={handleDarkModeChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
@@ -84,7 +85,7 @@ export default function Settings() {
                             </Typography>
                             <Switch checked={themeMode === "dark"} onChange={handleDarkModeChange} disabled={themeMode === "highContrast"} color="default"/>
                             </Box>
-                            <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px` }} mb={1}>
+                            <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }} mb={1}>
                                 Accessibility
                             </Typography>
                             <Box onClick={handleHighContrastChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
@@ -108,7 +109,7 @@ export default function Settings() {
                                 <Box sx={{  display: "flex", alignItems: "center", gap: 2  }}>
                                 {!isSmallScreen && (
 
-                                    <Typography sx={{ color: 'white', fontSize: `17px` }}>
+                                    <Typography sx={{ color: 'white', fontSize: `17px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
                                         A        
                                     </Typography>
                                 )}
@@ -124,12 +125,13 @@ export default function Settings() {
                                     />
                                 )}
                                 {!isSmallScreen && (
-                                    <Typography sx={{ color: 'white', fontSize: `33px` }}>
+                                    <Typography sx={{ color: 'white', fontSize: `33px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
                                         A        
                                     </Typography>
                                 )}
                                 {!isSmallScreen && (
-                                    <Box sx={{ display: "inline-block",  border: "2px solid white", borderRadius: "6px", padding: "4px 8px"}}>                                        <Typography sx={{ color: 'white', fontSize: `${17 + tempFontSize}px` }}>
+                                    <Box sx={{ display: "inline-block",  border: "2px solid white", borderRadius: "6px", padding: "4px 8px"}}>                                        
+                                        <Typography sx={{ color: 'white', fontSize: `${17 + tempFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
                                             Sample text
                                         </Typography>
                                     </Box>
@@ -151,7 +153,8 @@ export default function Settings() {
                                     boxShadow: 2, 
                                     borderRadius: 1,
                                     fontSize: `${14 + appliedFontSize}px`,
-                                    whiteSpace: 'nowrap'
+                                    whiteSpace: 'nowrap',
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
                                 }} 
                                 onClick={handleApplySettings}
                             >
@@ -167,16 +170,20 @@ export default function Settings() {
                                     boxShadow: 2, 
                                     borderRadius: 1,
                                     fontSize: `${14 + appliedFontSize}px`,
-                                    whiteSpace: 'nowrap'
+                                    whiteSpace: 'nowrap',
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
                                 }} 
-                                onClick={() => {
-                                    setAppliedFontSize(0); // Reset to 0
+                                onClick={() => { // Resets settings to default
+                                    setAppliedFontSize(0); 
                                     setTempFontSize(0);
-                                    localStorage.setItem("fontSize", 0); // Store reset value
+                                    localStorage.setItem("fontSize", 0); 
                                 
-                                    setUseDyslexicFont(false); // Reset dyslexic font switch
-                                    localStorage.setItem("useDyslexicFont", false); // Store reset value
-                                    setThemeMode("light"); // Reset theme mode
+                                    setUseDyslexicFont(false); 
+                                    localStorage.setItem("useDyslexicFont", false);
+                                    
+                                    window.dispatchEvent(new Event("storage")); // Updates topbar
+                                    
+                                    setThemeMode("light");
                                 }}
                                 >
                                 Reset to Default
