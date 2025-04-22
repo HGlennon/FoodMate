@@ -185,7 +185,7 @@ export default function AdvancedSettings() {
                         width: '400px',
                     }}>
                         <InputBase
-                        sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white"}}
+                        sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}
                         value={recipeTerm}
                         onChange={(e) => {
                             setRecipeTerm(e.target.value);
@@ -220,7 +220,7 @@ export default function AdvancedSettings() {
                             borderRadius: 1, 
                             width: '400px' }}>
                             <InputBase
-                                sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white"}}
+                                sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}
                                 value={ingredientTerm}
                                 onChange={handleIngredientChange}
                                 onKeyPress={handleRecipeKeyPress}
@@ -247,6 +247,7 @@ export default function AdvancedSettings() {
                             sx={{ 
                                 height: '36px', 
                                 border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
+                                fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                 '& .MuiSelect-select': {
                                 padding: '4px 8px',
                                 minHeight: 'unset', 
@@ -262,10 +263,7 @@ export default function AdvancedSettings() {
                             >
                             {health.map((item) => (
                                 <MenuItem key={item.apiValue} value={item.apiValue} sx={{ fontSize: '12px', padding: '4px 8px', minHeight: 'unset'}}>
-                                <Checkbox
-                                    checked={selectedHealth.includes(item.apiValue)}
-                                    sx={{ transform: 'scale(0.8)', padding: '4px' }}
-                                />
+                                <Checkbox checked={selectedHealth.includes(item.apiValue)}/>
                                 <Typography sx={{ fontSize: '12px', color: '#000'}}>{item.label}</Typography>
                                 </MenuItem>
                             ))}
@@ -289,6 +287,7 @@ export default function AdvancedSettings() {
                             sx={{ 
                                 height: '36px', 
                                 border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
+                                fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                 '& .MuiSelect-select': {
                                     padding: '4px 8px',
                                     minHeight: 'unset', 
@@ -305,10 +304,7 @@ export default function AdvancedSettings() {
                         >
                             {cuisine.map((item) => (
                                 <MenuItem key={item.apiValue} value={item.apiValue} sx={{ fontSize: '12px', padding: '4px 8px', minHeight: 'unset'}}>
-                                    <Checkbox
-                                        checked={selectedCuisine.includes(item.apiValue)}
-                                        sx={{ transform: 'scale(0.8)', padding: '4px' }}
-                                    />
+                                    <Checkbox checked={selectedCuisine.includes(item.apiValue)}/>
                                     <Typography sx={{ fontSize: '12px', color: '#000'}}>{item.label}</Typography>
                                 </MenuItem>
                             ))}
@@ -332,10 +328,12 @@ export default function AdvancedSettings() {
                             sx={{ 
                                 height: '36px', 
                                 border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
+                                fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                 '& .MuiSelect-select': {
                                     padding: '4px 8px',
                                     minHeight: 'unset', 
-                                    color: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white"
+                                    color: themeMode === "highContrast" ? "yellow" : "white"
+                                    
                                 }
                             }}
                             MenuProps={{
@@ -348,10 +346,7 @@ export default function AdvancedSettings() {
                         >
                             {meals.map((item) => (
                                 <MenuItem key={item.apiValue} value={item.apiValue} sx={{ fontSize: '12px', padding: '4px 8px', minHeight: 'unset'}}>
-                                    <Checkbox
-                                        checked={selectedMeal.includes(item.apiValue)}
-                                        sx={{ transform: 'scale(0.8)', padding: '4px' }}
-                                    />
+                                    <Checkbox checked={selectedMeal.includes(item.apiValue)}/>
                                     <Typography sx={{ fontSize: '12px', color: '#000'}}>{item.label}</Typography>
                                 </MenuItem>
                             ))}
@@ -370,6 +365,7 @@ export default function AdvancedSettings() {
                             display: "flex",
                             alignItems: "center",
                             border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
+                            fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                             borderRadius: 1,
                             padding: "4px 8px",
                             width: "200px",
@@ -377,7 +373,7 @@ export default function AdvancedSettings() {
                         }}
                     >
                         <InputBase
-                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}
                             value={minCalories}
                             onChange={(e) => setMinCalories(e.target.value)} // Update minCalories state
                             onKeyPress={handleNumericKeyPress}
@@ -396,7 +392,7 @@ export default function AdvancedSettings() {
                             outline: "none",
                         }}>
                         <InputBase
-                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}
                             value={maxCalories}
                             onChange={(e) => setMaxCalories(e.target.value)} // Update maxCalories state
                             onKeyPress={handleNumericKeyPress}
@@ -419,7 +415,7 @@ export default function AdvancedSettings() {
                         }}
                     >
                         <InputBase
-                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}
                             value={minProtein}
                             onChange={(e) => setMinProtein(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
@@ -438,7 +434,7 @@ export default function AdvancedSettings() {
                             outline: "none",
                         }}>
                         <InputBase
-                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}
                             value={maxProtein}
                             onChange={(e) => setMaxProtein(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
@@ -461,7 +457,7 @@ export default function AdvancedSettings() {
                         }}
                     >
                         <InputBase
-                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}
                             value={minCholesterol}
                             onChange={(e) => setMinCholesterol(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
@@ -480,7 +476,7 @@ export default function AdvancedSettings() {
                             outline: "none",
                         }}>
                         <InputBase
-                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}
                             value={maxCholesterol}
                             onChange={(e) => setMaxCholesterol(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
@@ -503,7 +499,7 @@ export default function AdvancedSettings() {
                         }}
                     >
                         <InputBase
-                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}
                             value={minSugar}
                             onChange={(e) => setMinSugar(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
@@ -522,7 +518,7 @@ export default function AdvancedSettings() {
                             outline: "none",
                         }}>
                         <InputBase
-                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}
                             value={maxSugar}
                             onChange={(e) => setMaxSugar(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
@@ -544,7 +540,7 @@ export default function AdvancedSettings() {
                         }}
                     >
                         <InputBase
-                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}
                             value={minFat}
                             onChange={(e) => setMinFat(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
@@ -563,7 +559,7 @@ export default function AdvancedSettings() {
                             outline: "none",
                         }}>
                         <InputBase
-                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}
                             value={maxFat}
                             onChange={(e) => setMaxFat(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
@@ -580,13 +576,14 @@ export default function AdvancedSettings() {
                         <Grid item>
                             <Button
                                 sx={{
-                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#b2b3cc' : '#00E265', color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
+                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#b2b3cc' : '#00E265', 
+                                    color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     padding: '8px 16px',
                                     boxShadow: 2,
                                     borderRadius: 1,
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : 
-                                                         themeMode === "dark" ? "#9999b3" : "#02d55d",
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#9999b3" : "#02d55d",
                                       },
                                       fontSize: `${15 + appliedFontSize}px`
                                 }}
@@ -598,7 +595,9 @@ export default function AdvancedSettings() {
                         <Grid item>
                             <Button
                                 sx={{
-                                    backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#ff1919', color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
+                                    backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#ff1919', 
+                                    color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     padding: '8px 16px',
                                     boxShadow: 2,
                                     borderRadius: 1,
