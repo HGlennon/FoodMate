@@ -88,19 +88,13 @@ export default function Settings() {
                             <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }} mb={1}>
                                 Accessibility
                             </Typography>
-                            <Box onClick={handleHighContrastChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
+                            <Box onClick={handleHighContrastChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={0.5}>
                             <Typography sx={{ color: 'white', fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  }}>
                                 High-contrast mode
                             </Typography>
                             <Switch checked={themeMode === "highContrast"} onChange={handleHighContrastChange} color="default"/>
                             </Box>
-                            <Box onClick={handleDyslexicFontChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
-                            <Typography sx={{ color: 'white', fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  }}>
-                                Dyslexia font
-                            </Typography>
-                            <Switch checked={useDyslexicFont} onChange={handleDyslexicFontChange} color="default"/>
-                            </Box>
-                            <Grid container alignItems="center" justifyContent="space-between" mb={2}>
+                            <Grid container alignItems="center" justifyContent="space-between">
                                 {!isSmallScreen && (
                                 <Typography sx={{ color: 'white', fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
                                     Make text bigger
@@ -108,7 +102,6 @@ export default function Settings() {
                                 )}
                                 <Box sx={{  display: "flex", alignItems: "center", gap: 2  }}>
                                 {!isSmallScreen && (
-
                                     <Typography sx={{ color: 'white', fontSize: `17px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
                                         A        
                                     </Typography>
@@ -136,6 +129,17 @@ export default function Settings() {
                                         </Typography>
                                     </Box>
                                 )}
+                                </Box>
+                            </Grid>
+                            <Grid item>
+                                <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", mb: 1}}>
+                                    Experimental
+                                </Typography>
+                                <Box onClick={handleDyslexicFontChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
+                                <Typography sx={{ color: 'white', fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>
+                                    Dyslexia font
+                                </Typography>
+                                <Switch checked={useDyslexicFont} onChange={handleDyslexicFontChange} color="default"/>
                                 </Box>
                             </Grid>
                         </Grid>

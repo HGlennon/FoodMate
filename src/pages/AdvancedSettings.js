@@ -57,6 +57,17 @@ const cuisine = [
   ];
 
 export default function AdvancedSettings() {
+
+      const getSavedFontSize = () =>
+        parseInt(localStorage.getItem("fontSize") || "0", 10);
+            
+      const getSavedDyslexicFont = () =>
+        localStorage.getItem("useDyslexicFont") === "true";
+      
+      const [appliedFontSize] = useState(getSavedFontSize());
+      const [useDyslexicFont] = useState(getSavedDyslexicFont())
+    
+
     const { themeMode, setThemeMode } = useContext(ThemeContext);
     const [selectedCuisine, setSelectedCuisine] = useState([]);
     const [selectedHealth, setSelectedHealth] = useState([]);
@@ -161,11 +172,11 @@ export default function AdvancedSettings() {
             <TopBar />
             <GradientSection>
             <Container maxWidth="false" sx={{ marginLeft: '20px'}}>
-                <Typography variant="h5" color='white' fontWeight={'bold'} my={1}>Advanced Search</Typography>
+                <Typography variant="h5" color='white' fontWeight={'bold'} sx={{fontSize: `${24 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}} my={1}>Advanced Search</Typography>
 
-                <Typography variant="h6" color='white' my={1.5}>Find recipes by...</Typography>
+                <Typography variant="h6" color='white' sx={{fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}} my={1.5}>Find recipes by...</Typography>
                     <Box display="flex" flexDirection="row" alignItems="center" color="white" gap={2}>
-                    <Typography sx={{minWidth: '150px'}}>Recipe Search: </Typography>
+                    <Typography sx={{minWidth: '150px', fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Recipe Search: </Typography>
                     <Box sx={{ 
                         display: 'flex', 
                         border: searchError ? "2px solid red" : "1px solid white", 
@@ -190,18 +201,18 @@ export default function AdvancedSettings() {
                             bottom: '-20px',
                             left: 0,
                             color: 'red',
-                            fontSize: '0.75rem'
+                            fontSize: `${14 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
                             }}
                         >
                             Please enter a recipe search term first
                         </Typography>
                         )}
                     </Box>
-                    <Typography>Type important words related to recipe (i.e fish and chips).</Typography>
+                    <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Type important words related to recipe (i.e fish and chips).</Typography>
                     </Box>
 
                     <Box display="flex" flexDirection="row" alignItems="center" color="white" mt={2}>
-                        <Typography sx={{minWidth: '165px'}}>Ingredients: </Typography>
+                        <Typography sx={{minWidth: '165px', fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Ingredients: </Typography>
                         <Box sx={{ 
                             display: 'flex', 
                             border: "1px solid white", 
@@ -215,14 +226,14 @@ export default function AdvancedSettings() {
                                 onKeyPress={handleRecipeKeyPress}
                             />
                         </Box>
-                        <Typography sx={{marginLeft: '18px'}}>Enter specific ingredients here, separating them with a comma (i.e fish, potato).</Typography>
+                        <Typography sx={{marginLeft: '18px', fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Enter specific ingredients here, separating them with a comma (i.e fish, potato).</Typography>
                     </Box>
 
                 <Divider sx={{ backgroundColor: "white", border: "1px solid", borderRadius: 2, width: "77%", borderColor: 'divider', my: 2 }} variant='fullwidth' />
 
-                <Typography variant="h6" color='white' my={1}>Narrow recipe search here...</Typography>
+                <Typography variant="h6" color='white' my={1} sx={{fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Narrow recipe search here...</Typography>
                     <Box display="flex" flexDirection="row" alignItems="center" color="white" gap={2}>
-                        <Typography minWidth="150px">Health Restrictions: </Typography>
+                        <Typography minWidth="150px" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Health Restrictions: </Typography>
                         <FormControl sx={{ width: '300px', mr:2}}>
                         <Select
                             label="health"
@@ -260,11 +271,11 @@ export default function AdvancedSettings() {
                             ))}
                             </Select>
                         </FormControl>
-                        <Typography>Select any health restrictions/dietary needs that may apply.</Typography>
+                        <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Select any health restrictions/dietary needs that may apply.</Typography>
                     </Box>
 
                 <Box display="flex" flexDirection="row" alignItems="center" color="white" gap={2}>
-                    <Typography minWidth="150px">Cuisine type: </Typography>
+                    <Typography minWidth="150px" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Cuisine type: </Typography>
                     <FormControl sx={{ width: '300px', mr: 2, mt: 1.5 }}>
                         <Select
                             label="cuisine"
@@ -303,11 +314,11 @@ export default function AdvancedSettings() {
                             ))}
                         </Select>
                     </FormControl>
-                    <Typography sx={{mt: 1.5}}>Select any cuisine types that you may want.</Typography>
+                    <Typography sx={{mt: 1.5, fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Select any cuisine types that you may want.</Typography>
                 </Box>
 
                 <Box display="flex" flexDirection="row" alignItems="center" color="white" gap={2}>
-                    <Typography minWidth="150px">Meal type: </Typography>
+                    <Typography minWidth="150px" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Meal type: </Typography>
                     <FormControl sx={{ width: '300px', mr: 2, mt: 1.5 }}>
                         <Select
                             label="meals"
@@ -346,14 +357,14 @@ export default function AdvancedSettings() {
                             ))}
                         </Select>
                     </FormControl>
-                    <Typography sx={{mt: 1.5}}>Select any meal types that may apply.</Typography>
+                    <Typography sx={{mt: 1.5, fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Select any meal types that may apply.</Typography>
                 </Box>
 
                 <Divider sx={{ backgroundColor: "white", border: "1px solid", borderRadius: 2, width: "77%", borderColor: 'divider', my: 2 }} variant='fullwidth' />
 
-                <Typography variant="h6" color='white' my={1}>Make your meal healthier with...</Typography>
+                <Typography variant="h6" color='white' my={1} sx={{fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Make your meal healthier with...</Typography>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: 'white' }}>
-                    <Typography minWidth={"285px"}>Calorie amount (kcal) ranging from: </Typography>
+                    <Typography minWidth={"285px"} sx={{ fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Calorie amount (kcal) ranging from: </Typography>
                     <Box
                         sx={{
                             display: "flex",
@@ -372,7 +383,7 @@ export default function AdvancedSettings() {
                             onKeyPress={handleNumericKeyPress}
                         />
                     </Box>
-                    <Typography variant="body1">to</Typography>
+                    <Typography variant="body1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>to</Typography>
                     <Box
                         sx={{
                             display: "flex",
@@ -391,11 +402,11 @@ export default function AdvancedSettings() {
                             onKeyPress={handleNumericKeyPress}
                         />
                     </Box>
-                    <Typography>Give the range of calories for the recipes you want from lowest possible amount to highest.</Typography>
+                    <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Give the range of calories for the recipes you want from lowest possible amount to highest.</Typography>
                 </Box>
 
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: 'white', mt: 1.5 }}>
-                    <Typography minWidth={"285px"}>Protein amount (g) ranging from: </Typography>
+                    <Typography minWidth={"285px"} sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Protein amount (g) ranging from: </Typography>
                     <Box
                         sx={{
                             display: "flex",
@@ -414,7 +425,7 @@ export default function AdvancedSettings() {
                             onKeyPress={handleNumericKeyPress}
                         />
                     </Box>
-                    <Typography variant="body1">to</Typography>
+                    <Typography variant="body1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>to</Typography>
                     <Box
                         sx={{
                             display: "flex",
@@ -433,11 +444,11 @@ export default function AdvancedSettings() {
                             onKeyPress={handleNumericKeyPress}
                         />
                     </Box>
-                    <Typography>Enter the range of protein amount for a recipe, from lowest possible amount to highest.</Typography>
+                    <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Enter the range of protein amount for a recipe, from lowest possible amount to highest.</Typography>
                 </Box>
 
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: 'white', mt: 1.5 }}>
-                    <Typography minWidth={"285px"}>Cholesterol amount (mg) ranging from: </Typography>
+                    <Typography minWidth={"285px"} sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Cholesterol amount (mg) ranging from: </Typography>
                     <Box
                         sx={{
                             display: "flex",
@@ -456,7 +467,7 @@ export default function AdvancedSettings() {
                             onKeyPress={handleNumericKeyPress}
                         />
                     </Box>
-                    <Typography variant="body1">to</Typography>
+                    <Typography variant="body1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>to</Typography>
                     <Box
                         sx={{
                             display: "flex",
@@ -475,11 +486,11 @@ export default function AdvancedSettings() {
                             onKeyPress={handleNumericKeyPress}
                         />
                     </Box>
-                    <Typography>Input the range of cholesterol amount for a recipe, from lowest possible amount to highest.</Typography>
+                    <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Input the range of cholesterol amount for a recipe, from lowest possible amount to highest.</Typography>
                 </Box>
 
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: 'white', mt: 1.5 }}>
-                    <Typography minWidth={"285px"}>Sugar amount (g) ranging from: </Typography>
+                    <Typography minWidth={"285px"} sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Sugar amount (g) ranging from: </Typography>
                     <Box
                         sx={{
                             display: "flex",
@@ -498,7 +509,7 @@ export default function AdvancedSettings() {
                             onKeyPress={handleNumericKeyPress}
                         />
                     </Box>
-                    <Typography variant="body1">to</Typography>
+                    <Typography variant="body1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>to</Typography>
                     <Box
                         sx={{
                             display: "flex",
@@ -517,11 +528,10 @@ export default function AdvancedSettings() {
                             onKeyPress={handleNumericKeyPress}
                         />
                     </Box>
-                    <Typography>Select the range of sugar amount for a recipe, from lowest possible amount to highest.</Typography>
+                    <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Select the range of sugar amount for a recipe, from lowest possible amount to highest.</Typography>
                 </Box>
-
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: 'white', mt: 1.5, mb: 1.5 }}>
-                    <Typography minWidth={"285px"}>Fat amount (g) ranging from: </Typography>
+                    <Typography minWidth={"285px"} sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Fat amount (g) ranging from: </Typography>
                     <Box
                         sx={{
                             display: "flex",
@@ -540,7 +550,7 @@ export default function AdvancedSettings() {
                             onKeyPress={handleNumericKeyPress}
                         />
                     </Box>
-                    <Typography variant="body1">to</Typography>
+                    <Typography variant="body1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>to</Typography>
                     <Box
                         sx={{
                             display: "flex",
@@ -559,7 +569,7 @@ export default function AdvancedSettings() {
                             onKeyPress={handleNumericKeyPress}
                         />
                     </Box>
-                    <Typography>Enter the range of fat amount for a recipe, from lowest possible amount to highest.</Typography>
+                    <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Enter the range of fat amount for a recipe, from lowest possible amount to highest.</Typography>
                 </Box>
             </Container>
             </GradientSection>
