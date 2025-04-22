@@ -172,20 +172,20 @@ export default function AdvancedSettings() {
             <TopBar />
             <GradientSection>
             <Container maxWidth="false" sx={{ marginLeft: '20px'}}>
-                <Typography variant="h5" color='white' fontWeight={'bold'} sx={{fontSize: `${24 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}} my={1}>Advanced Search</Typography>
+                <Typography variant="h5" fontWeight={'bold'} sx={{color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `${24 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}} my={1}>Advanced Search</Typography>
 
-                <Typography variant="h6" color='white' sx={{fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}} my={1.5}>Find recipes by...</Typography>
+                <Typography variant="h6" sx={{color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}} my={1.5}>Find recipes by...</Typography>
                     <Box display="flex" flexDirection="row" alignItems="center" color="white" gap={2}>
                     <Typography sx={{minWidth: '150px', fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Recipe Search: </Typography>
                     <Box sx={{ 
                         display: 'flex', 
-                        border: searchError ? "2px solid red" : "1px solid white", 
+                        border: searchError ? "2px solid red" : themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                         padding: '4px 8px', 
                         borderRadius: 1, 
                         width: '400px',
                     }}>
                         <InputBase
-                        sx={{ flexGrow: 1, color: "white"}}
+                        sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white"}}
                         value={recipeTerm}
                         onChange={(e) => {
                             setRecipeTerm(e.target.value);
@@ -215,12 +215,12 @@ export default function AdvancedSettings() {
                         <Typography sx={{minWidth: '165px', fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Ingredients: </Typography>
                         <Box sx={{ 
                             display: 'flex', 
-                            border: "1px solid white", 
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",  
                             padding: '4px 8px', 
                             borderRadius: 1, 
                             width: '400px' }}>
                             <InputBase
-                                sx={{ flexGrow: 1, color: "white"}}
+                                sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white"}}
                                 value={ingredientTerm}
                                 onChange={handleIngredientChange}
                                 onKeyPress={handleRecipeKeyPress}
@@ -229,9 +229,9 @@ export default function AdvancedSettings() {
                         <Typography sx={{marginLeft: '18px', fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Enter specific ingredients here, separating them with a comma (i.e fish, potato).</Typography>
                     </Box>
 
-                <Divider sx={{ backgroundColor: "white", border: "1px solid", borderRadius: 2, width: "77%", borderColor: 'divider', my: 2 }} variant='fullwidth' />
+                <Divider sx={{ backgroundColor: themeMode === "highContrast" ? "yellow" : "white", border: "1px solid", borderRadius: 2, width: "77%", borderColor: 'divider', my: 2 }} variant='fullwidth' />
 
-                <Typography variant="h6" color='white' my={1} sx={{fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Narrow recipe search here...</Typography>
+                <Typography variant="h6" my={1} sx={{color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Narrow recipe search here...</Typography>
                     <Box display="flex" flexDirection="row" alignItems="center" color="white" gap={2}>
                         <Typography minWidth="150px" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Health Restrictions: </Typography>
                         <FormControl sx={{ width: '300px', mr:2}}>
@@ -246,11 +246,11 @@ export default function AdvancedSettings() {
                             }).join(', ')}
                             sx={{ 
                                 height: '36px', 
-                                border: '1px solid white',
+                                border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                                 '& .MuiSelect-select': {
                                 padding: '4px 8px',
                                 minHeight: 'unset', 
-                                color: 'white'
+                                color: themeMode === "highContrast" ? "yellow" : "white"
                                 }
                             }}
                             MenuProps={{
@@ -288,11 +288,11 @@ export default function AdvancedSettings() {
                             }).join(', ')}
                             sx={{ 
                                 height: '36px', 
-                                border: '1px solid white',
+                                border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                                 '& .MuiSelect-select': {
                                     padding: '4px 8px',
                                     minHeight: 'unset', 
-                                    color: 'white'
+                                    color: themeMode === "highContrast" ? "yellow" : "white"
                                 }
                             }}
                             MenuProps={{
@@ -331,11 +331,11 @@ export default function AdvancedSettings() {
                             }).join(', ')}
                             sx={{ 
                                 height: '36px', 
-                                border: '1px solid white',
+                                border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                                 '& .MuiSelect-select': {
                                     padding: '4px 8px',
                                     minHeight: 'unset', 
-                                    color: 'white'
+                                    color: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white"
                                 }
                             }}
                             MenuProps={{
@@ -360,16 +360,16 @@ export default function AdvancedSettings() {
                     <Typography sx={{mt: 1.5, fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Select any meal types that may apply.</Typography>
                 </Box>
 
-                <Divider sx={{ backgroundColor: "white", border: "1px solid", borderRadius: 2, width: "77%", borderColor: 'divider', my: 2 }} variant='fullwidth' />
+                <Divider sx={{ backgroundColor: themeMode === "highContrast" ? "yellow" : "white", border: "1px solid", borderRadius: 2, width: "77%", borderColor: 'divider', my: 2 }} variant='fullwidth' />
 
-                <Typography variant="h6" color='white' my={1} sx={{fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Make your meal healthier with...</Typography>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: 'white' }}>
+                <Typography variant="h6" my={1} sx={{color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Make your meal healthier with...</Typography>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: themeMode === "highContrast" ? "yellow" : "white" }}>
                     <Typography minWidth={"285px"} sx={{ fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Calorie amount (kcal) ranging from: </Typography>
                     <Box
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            border: "1px solid white",
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                             borderRadius: 1,
                             padding: "4px 8px",
                             width: "200px",
@@ -377,7 +377,7 @@ export default function AdvancedSettings() {
                         }}
                     >
                         <InputBase
-                            sx={{ flexGrow: 1, color: 'white' }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
                             value={minCalories}
                             onChange={(e) => setMinCalories(e.target.value)} // Update minCalories state
                             onKeyPress={handleNumericKeyPress}
@@ -388,7 +388,7 @@ export default function AdvancedSettings() {
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            border: "1px solid white",
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                             borderColor: 'grey',
                             borderRadius: 1,
                             padding: "4px 8px",
@@ -396,7 +396,7 @@ export default function AdvancedSettings() {
                             outline: "none",
                         }}>
                         <InputBase
-                            sx={{ flexGrow: 1, color: 'white' }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
                             value={maxCalories}
                             onChange={(e) => setMaxCalories(e.target.value)} // Update maxCalories state
                             onKeyPress={handleNumericKeyPress}
@@ -405,13 +405,13 @@ export default function AdvancedSettings() {
                     <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Give the range of calories for the recipes you want from lowest possible amount to highest.</Typography>
                 </Box>
 
-                <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: 'white', mt: 1.5 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: themeMode === "highContrast" ? "yellow" : "white", mt: 1.5 }}>
                     <Typography minWidth={"285px"} sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Protein amount (g) ranging from: </Typography>
                     <Box
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            border: "1px solid white",
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                             borderRadius: 1,
                             padding: "4px 8px",
                             width: "200px",
@@ -419,7 +419,7 @@ export default function AdvancedSettings() {
                         }}
                     >
                         <InputBase
-                            sx={{ flexGrow: 1, color: 'white' }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
                             value={minProtein}
                             onChange={(e) => setMinProtein(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
@@ -430,7 +430,7 @@ export default function AdvancedSettings() {
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            border: "1px solid white",
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                             borderColor: 'grey',
                             borderRadius: 1,
                             padding: "4px 8px",
@@ -438,7 +438,7 @@ export default function AdvancedSettings() {
                             outline: "none",
                         }}>
                         <InputBase
-                            sx={{ flexGrow: 1, color: 'white' }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
                             value={maxProtein}
                             onChange={(e) => setMaxProtein(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
@@ -447,13 +447,13 @@ export default function AdvancedSettings() {
                     <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Enter the range of protein amount for a recipe, from lowest possible amount to highest.</Typography>
                 </Box>
 
-                <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: 'white', mt: 1.5 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: themeMode === "highContrast" ? "yellow" : "white", mt: 1.5 }}>
                     <Typography minWidth={"285px"} sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Cholesterol amount (mg) ranging from: </Typography>
                     <Box
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            border: "1px solid white",
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                             borderRadius: 1,
                             padding: "4px 8px",
                             width: "200px",
@@ -461,7 +461,7 @@ export default function AdvancedSettings() {
                         }}
                     >
                         <InputBase
-                            sx={{ flexGrow: 1, color: 'white' }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
                             value={minCholesterol}
                             onChange={(e) => setMinCholesterol(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
@@ -472,7 +472,7 @@ export default function AdvancedSettings() {
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            border: "1px solid white",
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                             borderColor: 'grey',
                             borderRadius: 1,
                             padding: "4px 8px",
@@ -480,7 +480,7 @@ export default function AdvancedSettings() {
                             outline: "none",
                         }}>
                         <InputBase
-                            sx={{ flexGrow: 1, color: 'white' }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
                             value={maxCholesterol}
                             onChange={(e) => setMaxCholesterol(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
@@ -489,13 +489,13 @@ export default function AdvancedSettings() {
                     <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Input the range of cholesterol amount for a recipe, from lowest possible amount to highest.</Typography>
                 </Box>
 
-                <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: 'white', mt: 1.5 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: themeMode === "highContrast" ? "yellow" : "white", mt: 1.5 }}>
                     <Typography minWidth={"285px"} sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Sugar amount (g) ranging from: </Typography>
                     <Box
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            border: "1px solid white",
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                             borderRadius: 1,
                             padding: "4px 8px",
                             width: "200px",
@@ -503,7 +503,7 @@ export default function AdvancedSettings() {
                         }}
                     >
                         <InputBase
-                            sx={{ flexGrow: 1, color: 'white' }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
                             value={minSugar}
                             onChange={(e) => setMinSugar(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
@@ -514,7 +514,7 @@ export default function AdvancedSettings() {
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            border: "1px solid white",
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                             borderColor: 'grey',
                             borderRadius: 1,
                             padding: "4px 8px",
@@ -522,7 +522,7 @@ export default function AdvancedSettings() {
                             outline: "none",
                         }}>
                         <InputBase
-                            sx={{ flexGrow: 1, color: 'white' }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
                             value={maxSugar}
                             onChange={(e) => setMaxSugar(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
@@ -530,13 +530,13 @@ export default function AdvancedSettings() {
                     </Box>
                     <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Select the range of sugar amount for a recipe, from lowest possible amount to highest.</Typography>
                 </Box>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: 'white', mt: 1.5, mb: 1.5 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2, color: themeMode === "highContrast" ? "yellow" : "white", mt: 1.5, mb: 1.5 }}>
                     <Typography minWidth={"285px"} sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Fat amount (g) ranging from: </Typography>
                     <Box
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            border: "1px solid white",
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                             borderRadius: 1,
                             padding: "4px 8px",
                             width: "200px",
@@ -544,7 +544,7 @@ export default function AdvancedSettings() {
                         }}
                     >
                         <InputBase
-                            sx={{ flexGrow: 1, color: 'white' }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
                             value={minFat}
                             onChange={(e) => setMinFat(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
@@ -555,7 +555,7 @@ export default function AdvancedSettings() {
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            border: "1px solid white",
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                             borderColor: 'grey',
                             borderRadius: 1,
                             padding: "4px 8px",
@@ -563,7 +563,7 @@ export default function AdvancedSettings() {
                             outline: "none",
                         }}>
                         <InputBase
-                            sx={{ flexGrow: 1, color: 'white' }}
+                            sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white" }}
                             value={maxFat}
                             onChange={(e) => setMaxFat(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
@@ -584,6 +584,11 @@ export default function AdvancedSettings() {
                                     padding: '8px 16px',
                                     boxShadow: 2,
                                     borderRadius: 1,
+                                    '&:hover': {
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : 
+                                                         themeMode === "dark" ? "#9999b3" : "#02d55d",
+                                      },
+                                      fontSize: `${15 + appliedFontSize}px`
                                 }}
                                 onClick={handleSubmit} // Add the submit handler here
                             >
@@ -597,6 +602,11 @@ export default function AdvancedSettings() {
                                     padding: '8px 16px',
                                     boxShadow: 2,
                                     borderRadius: 1,
+                                    '&:hover': {
+                                        backgroundColor: themeMode === "highContrast" ? "#f0b801" : 
+                                                         themeMode === "dark" ? "#555555" : "#e71818",
+                                      },
+                                      fontSize: `${15 + appliedFontSize}px`
                                 }}
                                 onClick={() => {
                                     setRecipeTerm(""); // Clear the search term

@@ -31,17 +31,34 @@ export default function Home() {
       <TopBar />
       <GradientSection>
         <Container maxWidth="md" sx={{ marginTop: { xs: "40px", sm: "63px" }, justifyContent: "center", alignItems: "center", textAlign: "center"}}>
-          <Typography variant="h3" sx={{ fontSize: { xs: `${32 + appliedFontSize}px`, sm: `${40 + appliedFontSize}px`, md: `${48 + appliedFontSize}px` }, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", textAlign: "center", fontWeight: "bold" }}>
+          <Typography variant="h3" 
+          sx={{ 
+            fontSize: { xs: `${32 + appliedFontSize}px`, 
+            sm: `${40 + appliedFontSize}px`, 
+            md: `${48 + appliedFontSize}px` }, 
+            fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", 
+            color: themeMode === "highContrast" ? "yellow" : "white", 
+            textAlign: "center", 
+            fontWeight: "bold" 
+          }}>
             Meals for the day.
           </Typography>
           <Grid container spacing={4} sx={{ marginTop: 3 }}>
             {cards.map((card, index) => (
               <Grid item key={index} xs={6} sm={4} md={3}>
-                <CustomCard sx={{   height: "100%", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
+                <CustomCard sx={{ height: "100%", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
                   <CardActionArea href={card.link} sx={{ height: '100%' }}>
-                    <CustomCardMedia image={card.image} title={card.title} sx={{   [theme.breakpoints.down('sm')]: {paddingTop: "75%", },}}/>
-                    <CustomCardContent>
-                      <Typography variant="h5" sx={{ fontSize: { xs: `${21 + appliedFontSize}px`, sm: `${29 + appliedFontSize}px` }, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", textAlign: "center", fontWeight: "bold" }}>
+                    <CustomCardMedia image={card.image} title={card.title} sx={{[theme.breakpoints.down('sm')]:{paddingTop: "75%"},}}/>
+                    <CustomCardContent sx={{flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 1}}>
+                      <Typography variant="h5" 
+                      sx={{ 
+                        fontSize: { xs: `${(useDyslexicFont ? 21 + (appliedFontSize/1.5) : 21 + (appliedFontSize/1.5))}px`, 
+                        sm: `${(useDyslexicFont ? 25 + (appliedFontSize / 1.5) : 29 + (appliedFontSize/1.5))}px` }, 
+                        fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", 
+                        textAlign: "center", 
+                        fontWeight: "bold", 
+                        wordBreak: "break-word" 
+                      }}>
                         {card.title}
                       </Typography>
                     </CustomCardContent>

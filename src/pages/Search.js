@@ -95,7 +95,7 @@ export default function Search() {
                 <GradientSection sx={{ py: { xs: 2, sm: 3 } }}>
                     <Container maxWidth='md' sx={{ mt: { xs: 2, sm: 3 } }}>
                     <Grid container justifyContent="center">
-                        <Typography variant="h4" align="center" style={{fontWeight: "bold", fontSize: { xs: `${24 + appliedFontSize}px`, sm: `${28 + appliedFontSize}px`, md: `${34 + appliedFontSize}px` }, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", textAlign: "center", mb:3}}>
+                        <Typography variant="h4" align="center" sx={{fontWeight: "bold", fontSize: { xs: `${24 + appliedFontSize}px`, sm: `${28 + appliedFontSize}px`, md: `${34 + appliedFontSize}px` }, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", textAlign: "center", mb:2}}>
                             {recipeTerm || mealType || "Recipes"}
                         </Typography>
                     </Grid>
@@ -104,12 +104,12 @@ export default function Search() {
                         {/* Will give a group of diet filters that the user can select via checkboxes that turn on/off the filter [https://react.school/material-ui/checkbox] */}
                         <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
                         <Grid container justifyContent="center">
-                                <CustomCard sx={{ width: "100%", maxWidth: { xs: "95%", sm: "700px" },   height: "100%", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
+                                <CustomCard sx={{ width: "100%", maxWidth: { xs: "95%", sm: "740px" }, height: "100%", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
                                 <CardContent>
                                 <Typography variant="h6" align="center" sx={{ fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: "bold", mb:1}}>
                                         Diet Options:
                                 </Typography>
-                                <FormGroup row sx={{ justifyContent: 'center', flexWrap: { xs: 'wrap', sm: 'nowrap' }}}>
+                                <FormGroup row sx={{ justifyContent: 'center',  flexWrap: 'wrap', gap: `${6 + appliedFontSize / 2}px`}}>
                                     <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="balanced" checked={filters.balanced} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontSize: `${17 + appliedFontSize}px`,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", whiteSpace: "normal"}}>Balanced</Typography>}/>
                                     <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="highProtein" checked={filters.highProtein} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontSize: `${17 + appliedFontSize}px`,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", whiteSpace: "normal"}}>High-Protein</Typography>}/>
                                     <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="lowCarb" checked={filters.lowCarb} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontSize: `${17 + appliedFontSize}px`,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", whiteSpace: "normal"}}>Low-Carb</Typography>}/>
@@ -124,12 +124,12 @@ export default function Search() {
                          {/* Will give a provide health filters for the recipes*/}
                         <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
                         <Grid container justifyContent="center">
-                            <CustomCard sx={{ width: "auto", maxWidth: { xs: "95%", sm: "700px" }, height: "auto", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
+                            <CustomCard sx={{ width: "100%", maxWidth: { xs: "95%", sm: "740px" }, height: "auto", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
                                 <CardContent>
                                     <Typography variant="h6" align="center" sx={{ fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: "bold", mb:1}}>
                                         Health Options:
                                     </Typography>
-                                    <FormGroup row sx={{ justifyContent: 'center', flexWrap: { xs: 'wrap', sm: 'nowrap' }}}>
+                                    <FormGroup row sx={{ justifyContent: 'center',  flexWrap: 'wrap', gap: `${6 + appliedFontSize / 2}px`}}>
                                         <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }}  control={<Checkbox name="vegan" checked={filters.vegan} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontSize: `${17 + appliedFontSize}px`,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", whiteSpace: "normal"}}>Vegan</Typography>} />
                                         <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="vegetarian" checked={filters.vegetarian} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white"} }} />} label={ <Typography sx={{fontSize: `${17 + appliedFontSize}px`,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", whiteSpace: "normal"}}>Vegetarian</Typography>} />
                                         <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="alcoholFree" checked={filters.alcoholFree} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontSize: `${17 + appliedFontSize}px`,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", whiteSpace: "normal"}}>Alcohol-Free</Typography>} />
@@ -146,7 +146,7 @@ export default function Search() {
                                 justifyContent="space-between"
                                 sx={{
                                 width: "100%",
-                                maxWidth: { xs: "95%", sm: "700px" }, 
+                                maxWidth: { xs: "95%", sm: "740px" }, 
                                 mx: "auto", 
                                 px: 0
                                 }}
@@ -163,7 +163,11 @@ export default function Search() {
                                     borderRadius: 1,
                                     fontSize: `${15 + appliedFontSize}px`, 
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
-                                    minWidth: "120px"
+                                    minWidth: "120px",
+                                    '&:hover': {
+                                        backgroundColor: themeMode === "highContrast" ? "#f0b801" : 
+                                                         themeMode === "dark" ? "#555555" : "#e71818",
+                                      }
                                 }} 
                                 onClick={clearFilters}
                                 >
@@ -181,7 +185,11 @@ export default function Search() {
                                     borderRadius: 1,
                                     fontSize: `${15 + appliedFontSize}px`, 
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
-                                    minWidth: "120px"
+                                    minWidth: "120px",
+                                    '&:hover': {
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : 
+                                                         themeMode === "dark" ? "#9999b3" : "#02d55d",
+                                      }
                                 }} 
                                 onClick={submitFilters}
                                 >

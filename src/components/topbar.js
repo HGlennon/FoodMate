@@ -11,13 +11,15 @@ import { ThemeContext } from "../components/themeProvider";
 
 export default function TopBar() {
 
-    const getSavedFontSize = () =>
-        parseInt(localStorage.getItem("fontSize") || "0", 10);
+const { themeMode } = useContext(ThemeContext);
+
+const getSavedFontSize = () =>
+    parseInt(localStorage.getItem("fontSize") || "0", 10);
             
-    const getSavedDyslexicFont = () =>
-        localStorage.getItem("useDyslexicFont") === "true";
+const getSavedDyslexicFont = () =>
+    localStorage.getItem("useDyslexicFont") === "true";
       
-    const [appliedFontSize, setAppliedFontSize] = useState(getSavedFontSize());
+const [appliedFontSize, setAppliedFontSize] = useState(getSavedFontSize());
 const [useDyslexicFont, setUseDyslexicFont] = useState(getSavedDyslexicFont());
 
 useEffect(() => {
@@ -47,8 +49,6 @@ useEffect(() => {
             navigate(`/search?mealType=${encodeURIComponent(searchQuery)}`);
         }
     };
-
-    const { themeMode, setThemeMode } = useContext(ThemeContext);
 
     return (
         <>
@@ -99,7 +99,7 @@ useEffect(() => {
                         <Box sx={{ 
                             display: 'flex', 
                             alignItems: 'center', 
-                            border: "1px solid #ccc", 
+                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid #ccc",
                             padding: '4px 8px', 
                             borderRadius: 2,
                             flexGrow: 1,
@@ -110,7 +110,7 @@ useEffect(() => {
                                 borderColor: theme => theme.palette.primary.main,
                             },
                         }}>
-                            <SearchIcon sx={{ color: 'gray', marginRight: '5px' }} />
+                            <SearchIcon sx={{ color: themeMode === "highContrast" ? "#808000" : "gray", marginRight: '5px' }} />
                             <InputBase
                                 placeholder="Search for meals, ingredients and more"
                                 value={searchQuery}
@@ -165,7 +165,7 @@ useEffect(() => {
                         ml: 2,
                     }}>
                         <IconButton onClick={handleClick}>
-                            <MenuIcon sx={{ fontSize: `${26 + (appliedFontSize/1.5)}px`,}}/>
+                            <MenuIcon sx={{ fontSize: `${26 + (appliedFontSize/1.5)}px`, color: themeMode === "highContrast" ? "yellow" : themeMode === "dark" ? "white" : "gray"}}/>
                         </IconButton>
                     </Box>
 
@@ -181,10 +181,10 @@ useEffect(() => {
                             href="/settings"
                             component="a"
                             onClick={close}
-                            sx={{fontSize: `${16 + (appliedFontSize/1.5)}px`,}}
+                            sx={{fontSize: `${16 + (appliedFontSize/1.5)}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}
                         > 
                             <SettingsIcon sx={{ mr: 1, fontSize: `${20 + (appliedFontSize/1.5)}px`}}/> 
-                            Settings
+                                Settings
                         </MenuItem>
                     </Menu>
                 </Toolbar>

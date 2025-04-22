@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
-const baseText = {
+const baseText = { // Will (hopefully) control how fonts are changed
   typography: {
     fontFamily: "var(--app-font-family, 'Roboto', sans-serif)",
   },
@@ -21,7 +21,7 @@ export const theme = createTheme({
     MuiFormControlLabel: {
       styleOverrides: {
         label: {
-          color: "white !important", // Checkboxes will be  https://stackoverflow.com/a/72193292
+          color: "white !important", // Checkbox text will be made white [https://stackoverflow.com/a/72193292]
         },
       },
     }}});
@@ -49,16 +49,34 @@ export const highContrastTheme = createTheme({
       gradient: "linear-gradient(135deg, #000 30%, #222 100%)",
     },
     text: {
-      primary: "#FFFF00", // Bright yellow text for high contrast
+      primary: "#FFFF00", // Yellow text for high contrast
     },
   },
   components: {
     MuiTypography: {
       styleOverrides: {
         root: {
-          color: "#FFFF00", // Bright yellow text
+          color: "#FFFF00", // Yellow text
         },
       },
     },
-  },
+    MuiSwitch: { // controls how the switches look in high contrast mode [https://stackoverflow.com/a/63250102]
+      styleOverrides: { 
+        switchBase: { // Controls default (unchecked) color for the thumb
+          color: "yellow"
+        },
+        colorPrimary: {
+          "&.Mui-checked": { // Controls checked color for the thumb
+            color: "yellow"
+          }
+        },
+        track: {
+          backgroundColor: "white",
+          ".Mui-checked.Mui-checked + &": { // Controls checked color for the track
+            backgroundColor: "white"
+          }
+        }
+      }
+    }
+},
 });

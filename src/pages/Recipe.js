@@ -74,7 +74,7 @@ export default function Recipe() {
                                 </Box>
                                 <Box sx={{ padding: 1.5 }}>
                                     <Typography variant="subtitle1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}} >Preparation instructions can be found in the source below:</Typography>
-                                    <Box onClick={handleLinkChange} sx={{ backgroundColor: themeMode === "highContrast" ? "#292727": themeMode === "dark" ? "#2f2b2b" : "#08af4e", cursor: "pointer", padding: '8px 12px', borderRadius: 2, textAlign: 'center', marginTop: '5px', '&:hover': { backgroundColor: '#2b2929'}  }}>
+                                    <Box onClick={handleLinkChange} sx={{ backgroundColor: themeMode === "highContrast" ? "#292727": themeMode === "dark" ? "#2f2b2b" : "#08af4e", cursor: "pointer", padding: '8px 12px', borderRadius: 2, textAlign: 'center', marginTop: '5px', '&:hover': {backgroundColor: themeMode === "highContrast"? "#3c3c3c": themeMode === "dark"? "#3D3A3A": "#06a144"}  }}>
                                         <Typography variant="subtitle1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", fontWeight: "bold"}}>
                                             Full Recipe Instruction
                                         </Typography>
@@ -101,11 +101,11 @@ export default function Recipe() {
                                         : themeMode === 'highContrast'
                                         ? '#545454' /* High contrast inactive */
                                         : themeMode === 'dark'
-                                        ? '#3c3a3a' /* Dark mode inactive */
+                                        ? '#4f4d4d' /* Dark mode inactive */
                                         : '#6fffa6' /* Light mode inactive */    
                                         }`,"&:hover": { backgroundColor: 
-                                        themeMode === "highContrast" ? "#292727": 
-                                        themeMode === "dark" ? "#2f2b2b" : "#089f48", 
+                                        themeMode === "highContrast" ? "#3c3c3c": 
+                                        themeMode === "dark" ? "#3D3A3A" : "#089f48", 
                                         borderTopLeftRadius: 6, 
                                         borderTopRightRadius: 6 
                                     }}}>
@@ -127,10 +127,10 @@ export default function Recipe() {
                                         : themeMode === 'highContrast'
                                         ? '#545454'
                                         : themeMode === 'dark'
-                                        ? '#3c3a3a'
+                                        ? '#4f4d4d'
                                         : '#6fffa6'    }`, 
-                                        "&:hover": { backgroundColor: themeMode === "highContrast" ? "#292727":
-                                        themeMode === "dark" ? "#2f2b2b" : "#089f48", 
+                                        "&:hover": { backgroundColor: themeMode === "highContrast" ? "#3c3c3c":
+                                        themeMode === "dark" ? "#3D3A3A" : "#089f48", 
                                         borderTopLeftRadius: 6, 
                                         borderTopRightRadius: 6 
                                     }}}>

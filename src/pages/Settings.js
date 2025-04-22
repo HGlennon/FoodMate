@@ -73,36 +73,36 @@ export default function Settings() {
                 <GradientSection>
                     <Container maxWidth='md' sx={{ marginTop: { xs: '30px', sm: '45px' }, px: { xs: 2, sm: 3 } }}>                        
                         <Grid sx={{ alignItems: "center"}}>
-                            <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${26 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  }} mb={2}>
+                            <Typography sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: 'bold', fontSize: `${26 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",  }} mb={2}>
                                 Settings
                             </Typography>
-                            <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }} mb={1}>
+                            <Typography sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }} mb={1}>
                                 General
                             </Typography>
                             <Box onClick={handleDarkModeChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
-                            <Typography sx={{ color: 'white', fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  }}>
+                            <Typography sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  }}>
                                 Dark mode
                             </Typography>
                             <Switch checked={themeMode === "dark"} onChange={handleDarkModeChange} disabled={themeMode === "highContrast"} color="default"/>
                             </Box>
-                            <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }} mb={1}>
+                            <Typography sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }} mb={1}>
                                 Accessibility
                             </Typography>
                             <Box onClick={handleHighContrastChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={0.5}>
-                            <Typography sx={{ color: 'white', fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  }}>
+                            <Typography sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  }}>
                                 High-contrast mode
                             </Typography>
-                            <Switch checked={themeMode === "highContrast"} onChange={handleHighContrastChange} color="default"/>
+                            <Switch checked={themeMode === "highContrast"} onChange={handleHighContrastChange} disabled={themeMode === "dark"} color="default"/>
                             </Box>
                             <Grid container alignItems="center" justifyContent="space-between">
                                 {!isSmallScreen && (
-                                <Typography sx={{ color: 'white', fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
+                                <Typography sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
                                     Make text bigger
                                 </Typography>
                                 )}
                                 <Box sx={{  display: "flex", alignItems: "center", gap: 2  }}>
                                 {!isSmallScreen && (
-                                    <Typography sx={{ color: 'white', fontSize: `17px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
+                                    <Typography sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `17px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
                                         A        
                                     </Typography>
                                 )}
@@ -114,17 +114,17 @@ export default function Settings() {
                                         max={16}
                                         step={1}
                                         onChange={(_, newValue) => setTempFontSize(newValue)}
-                                        sx={{ width: "200px", color: "white" }}
+                                        sx={{ width: "200px", color: themeMode === "highContrast" ? "yellow" : "white" }}
                                     />
                                 )}
                                 {!isSmallScreen && (
-                                    <Typography sx={{ color: 'white', fontSize: `33px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
+                                    <Typography sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `33px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
                                         A        
                                     </Typography>
                                 )}
                                 {!isSmallScreen && (
-                                    <Box sx={{ display: "inline-block",  border: "2px solid white", borderRadius: "6px", padding: "4px 8px"}}>                                        
-                                        <Typography sx={{ color: 'white', fontSize: `${17 + tempFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
+                                    <Box sx={{ display: "inline-block",  border: themeMode === "highContrast" ? "2px solid yellow" : "2px solid white", borderRadius: "6px", padding: "4px 8px"}}>                                        
+                                        <Typography sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `${17 + tempFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}>
                                             Sample text
                                         </Typography>
                                     </Box>
@@ -132,11 +132,11 @@ export default function Settings() {
                                 </Box>
                             </Grid>
                             <Grid item>
-                                <Typography sx={{ color: 'white', fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", mb: 1}}>
+                                <Typography sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", mb: 1}}>
                                     Experimental
                                 </Typography>
                                 <Box onClick={handleDyslexicFontChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
-                                <Typography sx={{ color: 'white', fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>
+                                <Typography sx={{ color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `${17 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>
                                     Dyslexia font
                                 </Typography>
                                 <Switch checked={useDyslexicFont} onChange={handleDyslexicFontChange} color="default"/>
@@ -158,7 +158,11 @@ export default function Settings() {
                                     borderRadius: 1,
                                     fontSize: `${14 + appliedFontSize}px`,
                                     whiteSpace: 'nowrap',
-                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
+                                    '&:hover': {
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : 
+                                                         themeMode === "dark" ? "#9999b3" : "#02d55d",
+                                      }
                                 }} 
                                 onClick={handleApplySettings}
                             >
@@ -175,7 +179,11 @@ export default function Settings() {
                                     borderRadius: 1,
                                     fontSize: `${14 + appliedFontSize}px`,
                                     whiteSpace: 'nowrap',
-                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
+                                    '&:hover': {
+                                        backgroundColor: themeMode === "highContrast" ? "#f0b801" : 
+                                                         themeMode === "dark" ? "#555555" : "#e71818",
+                                      }
                                 }} 
                                 onClick={() => { // Resets settings to default
                                     setAppliedFontSize(0); 

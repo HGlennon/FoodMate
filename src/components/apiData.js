@@ -214,28 +214,23 @@ useEffect(() => {
 
           return (
             <Grid item key={index} xs={12} sm={6} md={4}>
-              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: 3, boxShadow: 3, minHeight: '400px', backgroundColor: theme => theme.palette.background.default   }}>
+              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: 3, boxShadow: 3, minHeight: `${400 + (appliedFontSize * 12)}px`, backgroundColor: theme => theme.palette.background.default   }}>
                 <CardActionArea onClick={() => navigate("/recipe", { state: { recipe: item.recipe } })}
                   disableRipple
                   sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
                   <CardMedia component="img" height="180" image={image} alt={label}/>
-                  <CustomCardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", maxHeight: '100px', textOverflow: 'ellipsis' }}>
-                    <Typography variant="h6" sx={{fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }} fontWeight="bold">{label}</Typography>
-                    <Typography variant="subtitle1" color="text.secondary" sx={{ fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", flexGrow: 1 }}>By {source}</Typography>
+                  <CustomCardContent sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" sx={{fontSize: `${20 + appliedFontSize}px` ,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", fontWeight: "bold" }}>{label}</Typography>
+                    <Typography variant="subtitle1" color="text.secondary" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", flexGrow: 1 }}>By {source}</Typography>
                   </CustomCardContent>
                   <Box sx={{ backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#08aa4d', color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", padding: 1, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 'auto', width: '100%', minHeight: '40px'}}>
                     <AccessTimeIcon sx={{ marginRight: 0.5 }} />
-                    <Typography variant="body2" sx={{fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "#000000" : "#FFFFFF"}}>
+                    <Typography variant="body2" sx={{fontSize: `${15 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "#000000" : "#FFFFFF"}}>
                       {totalTime ? `${totalTime} mins` : "Time N/A"}
                     </Typography>
                   </Box>
                 </CardActionArea>                
                 <Box sx={{ display: 'flex'}}>
-                  <Tooltip title={"I like this"} enterDelay={575} enterNextDelay={1000}> {/* Will show the user information about what the icon does when hovering over it [https://mui.com/material-ui/react-tooltip/] */}
-                    <IconButton onClick={() => toggleLike(index)} color={liked ? "error" : "default"}>
-                      {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                    </IconButton>
-                  </Tooltip>
                   <Tooltip title="Copied to clipboard"  open={copiedTooltip[index] || false} disableFocusListener disableHoverListener disableTouchListener arrow>
                   <Tooltip title='Share'enterDelay={1000} disableTouchListener open={shareTooltip[index] ?? false}>
                     <IconButton sx={{ marginLeft: '8px'}} onClick={() =>  handleCopyClick(url, index)} onMouseEnter={() => setShareTooltip((prev) => ({ ...prev, [index]: true }), 1000)} onMouseLeave={() => setShareTooltip((prev) => ({ ...prev, [index]: false }))}>
@@ -245,7 +240,7 @@ useEffect(() => {
                   </Tooltip>
                   <Tooltip title='Information' enterDelay={800} open={informationTooltip[index] ?? false}>
                     <Tooltip  title={<>Total calories: {Math.round(calories)}kcal<br/>Serving size: {servings}<br/>Calories per serving: {Math.round(calories/servings)}kcal</>} open={infoTooltip[index] ?? false} disableHoverListener onClose={() => setInfoTooltip((prev) => ({ ...prev, [index]: false }))} onMouseEnter={() => setInformationTooltip((prev) => ({ ...prev, [index]: true }), 1000)} onMouseLeave={() => setInformationTooltip((prev) => ({ ...prev, [index]: false }))} placement="right" arrow>
-                      <IconButton sx={{marginLeft: '137px' }} onClick={() => handleInfoClick(index)}>
+                      <IconButton sx={{marginLeft: '172px' }} onClick={() => handleInfoClick(index)}>
                         <InfoIcon/>
                       </IconButton>
                     </Tooltip>
