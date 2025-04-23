@@ -176,15 +176,20 @@ export default function TopBar() {
                         flexShrink: 0,
                         ml: 2,
                     }}>
-                        <IconButton onClick={handleClick}>
-                            <MenuIcon 
-                                aria-label="Open navigation menu"
+                        <IconButton                                 
+                                // Gives the menu a description to the screenreader and tells them it can open it
+                                id="main-menu-button"
+                                aria-label="Open navigation menu"      
                                 aria-haspopup="true"
-                                aria-controls={Boolean(open) ? "topbar-menu" : undefined}
-                                sx={{ 
-                                    fontSize: `${26 + (appliedFontSize/1.5)}px`, 
-                                    color: themeMode === "highContrast" ? "yellow" : themeMode === "dark" ? "white" : "gray"
-                                }}/>
+                                aria-controls={Boolean(open) ? "topbar-menu" : undefined}onClick={handleClick}
+                            >
+                                <MenuIcon 
+                                    aria-hidden="true" 
+                                    focusable="false"  
+                                    sx={{ 
+                                        fontSize: `${26 + (appliedFontSize/1.5)}px`,
+                                        color: themeMode === "highContrast" ? "yellow" : themeMode === "dark" ? "white" : "gray"
+                                    }}/>
                         </IconButton>
                     </Box>
 
