@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useContext, useMemo  } from "react";
+import React, { useState, useContext, useMemo  } from "react";
 import TopBar from "../components/topbar";
-import { Typography, Card, CardContent, Grid, Container, Button, Checkbox, FormGroup, FormControlLabel, CssBaseline, collapseClasses } from "@mui/material";
+import { Typography, CardContent, Grid, Container, Button, Checkbox, FormGroup, FormControlLabel, CssBaseline } from "@mui/material";
 import RecipeList from "../components/apiData"
-import {GradientSection, CustomCard, CustomCardContent, CustomCardMedia, CustomBackground } from "../components/styled";
+import {GradientSection, CustomCard, CustomBackground } from "../components/styled";
 import { useLocation } from "react-router-dom";
 import { ThemeContext } from "../components/themeProvider";
 
 // maybe include gluten and seafood free options 
 
 export default function Search() {
+    {/* Search functions */}
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
 
@@ -23,32 +24,8 @@ export default function Search() {
     const maxSugar = queryParams.get("maxSugar") || ""; 
     const minFat = queryParams.get("minFat") || ""; 
     const maxFat = queryParams.get("maxFat") || ""; 
-
-    const cuisineType = useMemo(
-        () => queryParams.get("cuisineType")?.split(",") || [],
-        [location.search]        // ← only when the URL actually changes
-      );  
-      const mealTypes = useMemo(
-        () => queryParams.get("mealTypes")?.split(",") || [],
-        [location.search]
-      );    
-      const healthType = useMemo(
-        () => queryParams.get("healthType")?.split(",") || [],
-        [location.search]
-      );
-    
-    const getSavedFontSize = () =>
-        parseInt(localStorage.getItem("fontSize") || "0", 10);
-            
-    const getSavedDyslexicFont = () =>
-        localStorage.getItem("useDyslexicFont") === "true";
-      
-    const [appliedFontSize] = useState(getSavedFontSize());
-    const [useDyslexicFont] = useState(getSavedDyslexicFont())
-
-    const { themeMode } = useContext(ThemeContext);
-    const { recipeTerm } = location.state || {};
-    
+        
+    {/* Filters */}
     const [filters, setFilters] = useState({
         balanced: false,
         highProtein: false,
@@ -64,28 +41,44 @@ export default function Search() {
 
     const [appliedFilters, setAppliedFilters] = useState({}); // Stores filters applied after clicking "Submit"
 
-    // Handle checkbox change
+    // Handles checkbox change
     const handleFilterChange = (event) => {
         setFilters({ ...filters, [event.target.name]: event.target.checked });
     };
 
-    // Apply filters when clicking "Submit"
+    // Apply filters when clicking "submit"
     const submitFilters = () => {
         setAppliedFilters(filters);
     };
-
-            // Search.jsx
-            const empty = {
-                balanced:false, highProtein:false, lowCarb:false, lowFat:false,
-                lowSodium:false, vegan:false, vegetarian:false,
-                alcoholFree:false, nutFree:false, lactoseFree:false,
-            };
             
-    // Reset filters when clicking "Clear Filter"
+    // Resets filters when clicking "clear filter"
     const clearFilters = () => {
             setFilters(empty);
             setAppliedFilters(empty);
-        };
+    };
+
+    // Empties filters
+    const empty = {
+        balanced:false, highProtein:false, lowCarb:false, lowFat:false,
+        lowSodium:false, vegan:false, vegetarian:false,
+        alcoholFree:false, nutFree:false, lactoseFree:false,
+    };
+
+    {/* User preferences */}
+    const { themeMode } = useContext(ThemeContext);
+
+    const getSavedFontSize = () =>
+        parseInt(localStorage.getItem("fontSize") || "0", 10);
+                
+    const getSavedDyslexicFont = () =>
+        localStorage.getItem("useDyslexicFont") === "true";
+          
+    const [appliedFontSize] = useState(getSavedFontSize());
+    const [useDyslexicFont] = useState(getSavedDyslexicFont())
+
+    // Retrieves user search value
+    const { recipeTerm } = location.state || {};
+
     return (
         <>
             <CssBaseline/>
@@ -95,18 +88,46 @@ export default function Search() {
                 <GradientSection sx={{ py: { xs: 2, sm: 3 } }}>
                     <Container maxWidth='md' sx={{ mt: { xs: 2, sm: 3 } }}>
                     <Grid container justifyContent="center">
-                        <Typography variant="h4" align="center" sx={{fontWeight: "bold", fontSize: { xs: `${24 + appliedFontSize}px`, sm: `${28 + appliedFontSize}px`, md: `${34 + appliedFontSize}px` }, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", textAlign: "center", mb:2}}>
+                        <Typography 
+                            variant="h4" 
+                            align="center" 
+                            sx={{
+                                fontWeight: "bold", 
+                                fontSize: { xs: `${24 + appliedFontSize}px`, 
+                                sm: `${28 + appliedFontSize}px`, 
+                                md: `${34 + appliedFontSize}px` }, 
+                                fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", 
+                                color: themeMode === "highContrast" ? "yellow" : "white", 
+                                textAlign: "center", 
+                                mb:2
+                            }}>
                             {recipeTerm || mealType || "Recipes"}
                         </Typography>
                     </Grid>
                     </Container>
                     <div>            
-                        {/* Will give a group of diet filters that the user can select via checkboxes that turn on/off the filter [https://react.school/material-ui/checkbox] */}
+                        {/* Diet Filters [https://react.school/material-ui/checkbox] */}
                         <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
                         <Grid container justifyContent="center">
-                                <CustomCard sx={{ width: "100%", maxWidth: { xs: "95%", sm: "740px" }, height: "100%", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
+                                <CustomCard 
+                                sx={{ 
+                                    width: "100%", 
+                                    maxWidth: { xs: "95%", sm: "740px" }, 
+                                    height: "100%", 
+                                    display: "flex", 
+                                    flexDirection: "column", 
+                                    borderRadius: 3, 
+                                    boxShadow: 3
+                                }}>
                                 <CardContent>
-                                <Typography variant="h6" align="center" sx={{ fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: "bold", mb:1}}>
+                                <Typography variant="h6" align="center" 
+                                sx={{ 
+                                    fontSize: `${20 + appliedFontSize}px`, 
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", 
+                                    color: themeMode === "highContrast" ? "yellow" : "white", 
+                                    fontWeight: "bold",
+                                     mb:1
+                                }}>
                                         Diet Options:
                                 </Typography>
                                 <FormGroup row sx={{ justifyContent: 'center',  flexWrap: 'wrap', gap: `${6 + appliedFontSize / 2}px`}}>
@@ -121,12 +142,29 @@ export default function Search() {
                             </Grid>
                         </Container>
                         
-                         {/* Will give a provide health filters for the recipes*/}
+                         {/* Health Options */}
                         <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
                         <Grid container justifyContent="center">
-                            <CustomCard sx={{ width: "100%", maxWidth: { xs: "95%", sm: "740px" }, height: "auto", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
+                            <CustomCard 
+                            sx={{ 
+                                width: "100%", 
+                                maxWidth: { xs: "95%", sm: "740px" }, 
+                                height: "auto", 
+                                display: "flex", 
+                                flexDirection: "column",
+                                borderRadius: 3, 
+                                boxShadow: 3
+                            }}>
                                 <CardContent>
-                                    <Typography variant="h6" align="center" sx={{ fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: "bold", mb:1}}>
+                                    <Typography 
+                                        variant="h6" 
+                                        align="center" 
+                                        sx={{ fontSize: `${20 + appliedFontSize}px`, 
+                                        fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", 
+                                        color: themeMode === "highContrast" ? "yellow" : "white", 
+                                        fontWeight: "bold", 
+                                        mb:1
+                                    }}>
                                         Health Options:
                                     </Typography>
                                     <FormGroup row sx={{ justifyContent: 'center',  flexWrap: 'wrap', gap: `${6 + appliedFontSize / 2}px`}}>
@@ -154,8 +192,7 @@ export default function Search() {
                                 <Button 
                                 sx={{ 
                                     width: { xs: "48%", sm: "auto" },
-                                    backgroundColor: themeMode === "highContrast" ? "#FFD700" : 
-                                                themeMode === "dark" ? "#6B6B6B" : "#ff1919",
+                                    backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? "#6B6B6B" : "#ff1919",
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
                                     py: 1,
                                     px: { xs: 1, sm: 3 },
@@ -165,9 +202,8 @@ export default function Search() {
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     minWidth: "120px",
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#f0b801" : 
-                                                         themeMode === "dark" ? "#555555" : "#e71818",
-                                      }
+                                        backgroundColor: themeMode === "highContrast" ? "#f0b801" : themeMode === "dark" ? "#555555" : "#e71818",
+                                    }
                                 }} 
                                 onClick={clearFilters}
                                 >
@@ -176,8 +212,7 @@ export default function Search() {
                                 <Button 
                                 sx={{ 
                                     width: { xs: "48%", sm: "auto" }, 
-                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : 
-                                                themeMode === "dark" ? "#b2b3cc" : "#00E265",
+                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? "#b2b3cc" : "#00E265",
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
                                     py: 1,
                                     px: { xs: 1, sm: 3 },
@@ -187,9 +222,8 @@ export default function Search() {
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     minWidth: "120px",
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : 
-                                                         themeMode === "dark" ? "#9999b3" : "#02d55d",
-                                      }
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#9999b3" : "#02d55d",
+                                    }
                                 }} 
                                 onClick={submitFilters}
                                 >
@@ -204,7 +238,7 @@ export default function Search() {
 
             {/* Will display the search results at the bottom half of the page by calling RecipeList and sending specific filters to it */}
             <CustomBackground>
-                <RecipeList mealType={mealType} filters={appliedFilters} minCalories={minCalories} maxCalories={maxCalories} minProtein={minProtein} maxProtein={maxProtein} minCholesterol={minCholesterol} maxCholesterol={maxCholesterol} minSugar={minSugar} maxSugar={maxSugar} minFat={minFat} maxFat={maxFat} healthType={healthType} cuisineType={cuisineType} mealTypes={mealTypes} recipeTerm={recipeTerm}/>   
+                <RecipeList mealType={mealType} filters={appliedFilters} minCalories={minCalories} maxCalories={maxCalories} minProtein={minProtein} maxProtein={maxProtein} minCholesterol={minCholesterol} maxCholesterol={maxCholesterol} minSugar={minSugar} maxSugar={maxSugar} minFat={minFat} maxFat={maxFat} recipeTerm={recipeTerm}/>   
             </CustomBackground>
         </>
     );

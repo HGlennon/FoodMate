@@ -7,6 +7,7 @@ import { ThemeContext } from "../components/themeProvider";
 
 export default function Home() {
 
+  {/* User preferences */}
   const { themeMode } = useContext(ThemeContext);
   
   const getSavedFontSize = () =>
@@ -18,11 +19,12 @@ export default function Home() {
   const [appliedFontSize] = useState(getSavedFontSize());
   const [useDyslexicFont] = useState(getSavedDyslexicFont())
 
+  // Card titles and images mapped to home page [https://www.youtube.com/watch?v=GmuSz6wGW2E&ab_channel=CalebCurry]
   const cards = [
-    { title: "Breakfast", image: "https://simply-delicious-food.com/wp-content/uploads/2022/09/Breakfast-board28-500x375.jpg", link: "http://foodmate.dev/search?mealType=Breakfast" },
-    { title: "Lunch", image: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/HF_Y23_M_W27_UK_03_3_low-6510a59e.jpg", link: "http://foodmate.dev/search?mealType=Lunch" },
-    { title: "Dinner", image: "https://assets.epicurious.com/photos/59a48f237e283157d14a5a6a/16:9/w_2560%2Cc_limit/How-to-Throw-a-Grocery-Store-Dinner-Party-hero-with-hands-15082017.jpg", link: "http://foodmate.dev/search?mealType=Dinner" },
-    { title: "Dessert", image: "https://imageio.forbes.com/specials-images/imageserve/5dd31d942c886a0007ec71bd/Harry---David-Dessert-of-the-Month-Club/960x0.jpg?height=529&width=711&fit=bounds", link: "http://foodmate.dev/search?mealType=Dessert" },
+    { title: "Breakfast", image: "https://simply-delicious-food.com/wp-content/uploads/2022/09/Breakfast-board28-500x375.jpg", link: "http://localhost:3000/search?mealType=Breakfast" },
+    { title: "Lunch", image: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/HF_Y23_M_W27_UK_03_3_low-6510a59e.jpg", link: "http://localhost:3000/search?mealType=Lunch" },
+    { title: "Dinner", image: "https://assets.epicurious.com/photos/59a48f237e283157d14a5a6a/16:9/w_2560%2Cc_limit/How-to-Throw-a-Grocery-Store-Dinner-Party-hero-with-hands-15082017.jpg", link: "http://localhost:3000/search?mealType=Dinner" },
+    { title: "Dessert", image: "https://imageio.forbes.com/specials-images/imageserve/5dd31d942c886a0007ec71bd/Harry---David-Dessert-of-the-Month-Club/960x0.jpg?height=529&width=711&fit=bounds", link: "http://localhost:3000/search?mealType=Dessert" },
   ];
 
   return (
@@ -31,7 +33,7 @@ export default function Home() {
       <TopBar />
       <GradientSection>
         <Container maxWidth="md" sx={{ marginTop: { xs: "40px", sm: "63px" }, justifyContent: "center", alignItems: "center", textAlign: "center"}}>
-          <Typography variant="h3" 
+          <Typography variant="h1" 
           sx={{ 
             fontSize: { xs: `${32 + appliedFontSize}px`, 
             sm: `${40 + appliedFontSize}px`, 
@@ -50,7 +52,7 @@ export default function Home() {
                   <CardActionArea href={card.link} sx={{ height: '100%' }}>
                     <CustomCardMedia image={card.image} title={card.title} sx={{[theme.breakpoints.down('sm')]:{paddingTop: "75%"},}}/>
                     <CustomCardContent sx={{flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 1}}>
-                      <Typography variant="h5" 
+                      <Typography variant="h2" 
                       sx={{ 
                         fontSize: { xs: `${(useDyslexicFont ? 21 + (appliedFontSize/1.5) : 21 + (appliedFontSize/1.5))}px`, 
                         sm: `${(useDyslexicFont ? 25 + (appliedFontSize / 1.5) : 29 + (appliedFontSize/1.5))}px` }, 

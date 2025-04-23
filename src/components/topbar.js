@@ -11,39 +11,40 @@ import { ThemeContext } from "../components/themeProvider";
 
 export default function TopBar() {
 
-const { themeMode } = useContext(ThemeContext);
+    {/* User settings */}
+    const { themeMode } = useContext(ThemeContext);
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-const getSavedFontSize = () =>
-    parseInt(localStorage.getItem("fontSize") || "0", 10);
-            
-const getSavedDyslexicFont = () =>
-    localStorage.getItem("useDyslexicFont") === "true";
-      
-const [appliedFontSize, setAppliedFontSize] = useState(getSavedFontSize());
-const [useDyslexicFont, setUseDyslexicFont] = useState(getSavedDyslexicFont());
+    const getSavedFontSize = () =>
+        parseInt(localStorage.getItem("fontSize") || "0", 10);
+                
+    const getSavedDyslexicFont = () =>
+        localStorage.getItem("useDyslexicFont") === "true";
+        
+    const [appliedFontSize, setAppliedFontSize] = useState(getSavedFontSize());
+    const [useDyslexicFont, setUseDyslexicFont] = useState(getSavedDyslexicFont());
 
-useEffect(() => {
-  const handleStorage = () => {
-    setAppliedFontSize(getSavedFontSize());
-    setUseDyslexicFont(getSavedDyslexicFont());
-  };
+    // Topbar is constantly active so has to update in-sync with when it is changed in the settings page too
+    useEffect(() => {
+    const handleStorage = () => {
+        setAppliedFontSize(getSavedFontSize());
+        setUseDyslexicFont(getSavedDyslexicFont());
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => {
+        window.removeEventListener("storage", handleStorage);
+    };
+    }, []);
 
-  window.addEventListener("storage", handleStorage);
-
-  return () => {
-    window.removeEventListener("storage", handleStorage);
-  };
-}, []);
-
-
+    {/* Helper functions */}
     const [open, SetOpen] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const close = () => SetOpen(null);
     const handleClick = (e) => SetOpen(e.currentTarget);
     const handleSearchChange = (e) => setSearchQuery(e.target.value);
+    
     const handleSearchSubmit = (e) => {
         if (e.key === "Enter" && searchQuery.trim() !== "") {
             navigate(`/search?mealType=${encodeURIComponent(searchQuery)}`);
@@ -53,8 +54,11 @@ useEffect(() => {
     return (
         <>
             <CssBaseline />
-            <AppBar position='relative' sx={{ zIndex: 10, backgroundColor: theme => theme.palette.background.paper }}>
-                <Toolbar sx={{ 
+            <AppBar role="banner" position='relative' sx={{ zIndex: 10, backgroundColor: theme => theme.palette.background.paper }}>
+                <Toolbar 
+                component="nav"
+                aria-label="Primary"
+                sx={{ 
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -71,11 +75,15 @@ useEffect(() => {
                             mr: 2,
                             mb: 0.5
                         }}
+                        role="link"
+                        aria-label="Go to FoodMate home"
+                        tabIndex={0}
+                        onKeyPress={(e) => e.key === "Enter" && navigate("/home")}
                     >
                         <Images/>
                         {/* Foodmate title */}
                         {!isSmallScreen && ( 
-                            <Typography variant='h4' sx={{ 
+                            <Typography variant='h1' sx={{ 
                                     color: theme => theme.palette.text.primary, 
                                     textTransform: 'none', 
                                     fontSize: { xs: `${24 + (appliedFontSize/2)}px`, md: `${32 + (appliedFontSize/2)}px`},
@@ -85,10 +93,12 @@ useEffect(() => {
                                 FoodMate
                             </Typography>
                         )}
-                    </Box>
-                    
+                    </Box>                   
                     {/* Search and advanced search button */}
-                    <Box sx={{ 
+                    <Box 
+                    component="form"
+                    role="search"
+                    sx={{ 
                         display: 'flex',
                         alignItems: 'center',
                         flexGrow: 1,
@@ -110,12 +120,15 @@ useEffect(() => {
                                 borderColor: theme => theme.palette.primary.main,
                             },
                         }}>
-                            <SearchIcon sx={{ color: themeMode === "highContrast" ? "#808000" : "gray", marginRight: '5px' }} />
+                            <SearchIcon aria-hidden="true" sx={{ color: themeMode === "highContrast" ? "#808000" : "gray", marginRight: '5px' }} />
                             <InputBase
                                 placeholder="Search for meals, ingredients and more"
                                 value={searchQuery}
                                 onChange={handleSearchChange}
                                 onKeyPress={handleSearchSubmit}
+                                inputProps={{ // Gives purpose of searchbar to screen reader
+                                    "aria-label": "Search recipes",
+                                }}
                                 sx={{ 
                                     flexGrow: 1, 
                                     color: theme => theme.palette.text.primary,
@@ -129,12 +142,12 @@ useEffect(() => {
                                 }}
                             />
                         </Box>
-                        
                         {/* Advanced search button */}
                         {!isSmallScreen && (
                             <Button 
                                 href="/advancedsettings" 
                                 variant="contained"
+                                aria-label="Go to advanced recipe search"
                                 sx={{ 
                                     ml: 1,
                                     backgroundColor: 'transparent', 
@@ -156,7 +169,6 @@ useEffect(() => {
                             </Button>
                         )}
                     </Box>
-
                     {/* Hamburger menu */}
                     <Box sx={{ 
                         display: 'flex',
@@ -165,12 +177,20 @@ useEffect(() => {
                         ml: 2,
                     }}>
                         <IconButton onClick={handleClick}>
-                            <MenuIcon sx={{ fontSize: `${26 + (appliedFontSize/1.5)}px`, color: themeMode === "highContrast" ? "yellow" : themeMode === "dark" ? "white" : "gray"}}/>
+                            <MenuIcon 
+                                aria-label="Open navigation menu"
+                                aria-haspopup="true"
+                                aria-controls={Boolean(open) ? "topbar-menu" : undefined}
+                                sx={{ 
+                                    fontSize: `${26 + (appliedFontSize/1.5)}px`, 
+                                    color: themeMode === "highContrast" ? "yellow" : themeMode === "dark" ? "white" : "gray"
+                                }}/>
                         </IconButton>
                     </Box>
 
                     {/* Menu dropdown list */}
                     <Menu 
+                        id="topbar-menu"
                         anchorEl={open} 
                         open={Boolean(open)} 
                         onClose={close} 

@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
 import { Container, Grid, Typography, CardActionArea, Button, Box, IconButton, CardMedia, Card, Tooltip } from '@mui/material';
 import { CustomCardContent } from "../components/styled";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+//import FavoriteIcon from '@mui/icons-material/Favorite';
+//import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import InfoIcon from '@mui/icons-material/Info';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { ThemeContext } from './themeProvider';
 import { useNavigate } from 'react-router-dom';
 
+// API apps and keys that are used to access Edamam API [https://www.edamam.com/]
 const APP_ID = "837155ce"; 
 const APP_KEY = "76b054a6c99b380eda97058ec73f6069";
 
-const EDAMAM_PAGE_SIZE = 20;
-
-const RecipeList = React.memo(function RecipeList({ mealType, filters, minCalories, maxCalories, minProtein, maxProtein, minCholesterol, maxCholesterol, minSugar, maxSugar, minFat, maxFat, healthType, cuisineType, mealTypes, recipeTerm}) {
+const RecipeList = function RecipeList({ mealType, filters, minCalories, maxCalories, minProtein, maxProtein, minCholesterol, maxCholesterol, minSugar, maxSugar, minFat, maxFat, healthType, cuisineType, mealTypes, recipeTerm}) {
   const [recipes, setRecipes] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
   const loader = useRef(null);
@@ -39,12 +38,6 @@ const RecipeList = React.memo(function RecipeList({ mealType, filters, minCalori
   const { themeMode } = useContext(ThemeContext);
   const navigate = useNavigate();
 
-  const toggleLike = (index) => {
-    setLikedRecipes((prev) => ({
-        ...prev,
-        [index]: !prev[index],
-    }));
-};
 
 const handleCopyClick = (url, index) => {
     navigator.clipboard.writeText(url);
@@ -261,6 +254,6 @@ useEffect(() => {
       </Grid>
     </Container>
   );
-});
+};
 
 export default RecipeList;
