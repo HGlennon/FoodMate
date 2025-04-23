@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import TopBar from '../components/topbar';
-import { Typography, Grid, Button, Switch, Slider, Container, Box, CssBaseline, useMediaQuery } from '@mui/material';
+import { Typography, Grid, Button, Switch, Slider, Container, Box, CssBaseline, useMediaQuery, FormControlLabel } from '@mui/material';
 import { GradientSection, CustomBackground } from '../components/styled';
 import { ThemeContext } from '../components/themeProvider';
 import { theme } from '../components/themes';
@@ -72,38 +72,43 @@ export default function Settings() {
                 <GradientSection>
                     <Container maxWidth='md' sx={{ marginTop: { xs: '30px', sm: '45px' }, px: { xs: 2, sm: 3 } }}>                        
                         <Grid sx={{ alignItems: "center"}}>
-                            <Typography 
-                            sx={{ 
-                                color: themeMode === "highContrast" ? "yellow" : "white", 
-                                fontWeight: 'bold', fontSize: `${26 + appliedFontSize}px`, 
-                                fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  
-                            }} mb={2}>
+                            <Typography
+                                variant="h1"
+                                sx={{ 
+                                    color: themeMode === "highContrast" ? "yellow" : "white", 
+                                    fontWeight: 'bold', fontSize: `${26 + appliedFontSize}px`, 
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  
+                                }} mb={2}>
                                 Settings
                             </Typography>
                             <Typography 
-                            sx={{ 
-                                color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: 'bold', 
-                                fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" 
-                            }} mb={1}>
+                                variant="h2"
+                                sx={{ 
+                                    color: themeMode === "highContrast" ? "yellow" : "white", fontWeight: 'bold', 
+                                    fontSize: `${19 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" 
+                                }} mb={1}>
                                 General
                             </Typography>
                             <Box onClick={handleDarkModeChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
                             <Typography 
-                            sx={{ 
-                                color: themeMode === "highContrast" ? "yellow" : "white", 
-                                fontSize: `${17 + appliedFontSize}px`, 
-                                fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  
-                            }}>
+                                sx={{ 
+                                    color: themeMode === "highContrast" ? "yellow" : "white", 
+                                    fontSize: `${17 + appliedFontSize}px`, 
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"  
+                                }}>
                                 Dark mode
                             </Typography>
-                            <Switch checked={themeMode === "dark"} onChange={handleDarkModeChange} disabled={themeMode === "highContrast"} color="default"/>
+                                <FormControlLabel control = {
+                                    <Switch checked={themeMode === "dark"} onChange={handleDarkModeChange} disabled={themeMode === "highContrast"} color="default"/>}>
+                                </FormControlLabel>
                             </Box>
                             <Typography 
-                            sx={{ 
-                                color: themeMode === "highContrast" ? "yellow" : "white", 
-                                fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, 
-                                fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" 
-                            }} mb={1}>
+                                variant="h2"
+                                sx={{ 
+                                    color: themeMode === "highContrast" ? "yellow" : "white", 
+                                    fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, 
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" 
+                                }} mb={1}>
                                 Accessibility
                             </Typography>
                             <Box onClick={handleHighContrastChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={0.5}>
@@ -115,7 +120,9 @@ export default function Settings() {
                             }}>
                                 High-contrast mode
                             </Typography>
-                            <Switch checked={themeMode === "highContrast"} onChange={handleHighContrastChange} disabled={themeMode === "dark"} color="default"/>
+                                <FormControlLabel control = {
+                                    <Switch checked={themeMode === "highContrast"} onChange={handleHighContrastChange} disabled={themeMode === "dark"} color="default"/>}>
+                                </FormControlLabel>
                             </Box>
                             <Grid container alignItems="center" justifyContent="space-between">
                                 {!isSmallScreen && (
@@ -166,7 +173,8 @@ export default function Settings() {
                                         display: "inline-block",  
                                         border: themeMode === "highContrast" ? "2px solid yellow" : "2px solid white", 
                                         borderRadius: "6px", 
-                                        padding: "4px 8px"
+                                        padding: "4px 8px",
+                                        mr: 2
                                     }}>                                        
                                         <Typography 
                                         sx={{ color: themeMode === "highContrast" ? "yellow" : "white", 
@@ -180,6 +188,7 @@ export default function Settings() {
                             </Grid>
                             <Grid item>
                                 <Typography 
+                                variant="h2"
                                 sx={{ 
                                     color: themeMode === "highContrast" ? "yellow" : "white", 
                                     fontWeight: 'bold', fontSize: `${19 + appliedFontSize}px`, 
@@ -197,7 +206,9 @@ export default function Settings() {
                                 }}>
                                     Dyslexia font
                                 </Typography>
-                                <Switch checked={useDyslexicFont} onChange={handleDyslexicFontChange} color="default"/>
+                                    <FormControlLabel control = {   
+                                        <Switch checked={useDyslexicFont} onChange={handleDyslexicFontChange} color="default"/>}>
+                                    </FormControlLabel>
                                 </Box>
                             </Grid>
                         </Grid>
@@ -207,7 +218,8 @@ export default function Settings() {
                 <Container maxWidth='md' style={{ marginTop: '10px'}}>
                     <Grid container spacing={2} alignItems="center" justifyContent="flex-start">
                         <Grid item xs="auto">
-                            <Button 
+                            <Button
+                                type ="submit"
                                 sx={{ 
                                     backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#b2b3cc' : '#00E265',
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", 
@@ -227,7 +239,8 @@ export default function Settings() {
                             </Button>
                         </Grid>
                         <Grid item xs="auto">
-                            <Button 
+                            <Button
+                                type="reset"
                                 sx={{ 
                                     backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#ff1919', 
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", 
