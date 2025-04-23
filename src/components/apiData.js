@@ -248,7 +248,15 @@ useEffect(() => {
       <div ref={loader} />
 
       <Grid container justifyContent="center" sx={{ marginTop: '20px', marginBottom: '20px' }}>
-        <Button onClick={loadMoreRecipes} variant="contained" sx={{backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#b2b3cc' : '#00a146', color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",}} disabled={loading}>
+        <Button 
+          onClick={loadMoreRecipes} 
+          variant="contained" 
+          sx={{
+            backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#66668A' : '#00a146', 
+            color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
+            }} 
+            disabled={loading}
+          >
           {loading ? "Loading..." : "Load More"}
         </Button>
       </Grid>

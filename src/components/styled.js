@@ -3,7 +3,7 @@ import { Card, CardContent, CardMedia, Box } from "@mui/material";
 
 // Template for some cards
 export const CustomCard = styled(Card)(({ theme }) => ({
-  background: theme.palette.mode === "dark" ? "#333131" : "#00E265",
+  background: theme.palette.mode === "dark" ? "#333131" : "#008654",
   color: theme.palette.text.primary,
 }));
 

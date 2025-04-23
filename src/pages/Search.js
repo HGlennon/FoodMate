@@ -210,9 +210,10 @@ export default function Search() {
                                 Clear Filter
                                 </Button>
                                 <Button 
+                                    type ="submit"
                                 sx={{ 
                                     width: { xs: "48%", sm: "auto" }, 
-                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? "#b2b3cc" : "#00E265",
+                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? "#66668A" : "#00E265",
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
                                     py: 1,
                                     px: { xs: 1, sm: 3 },
@@ -222,7 +223,7 @@ export default function Search() {
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     minWidth: "120px",
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#9999b3" : "#02d55d",
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#727297" : "#02d55d",
                                     }
                                 }} 
                                 onClick={submitFilters}

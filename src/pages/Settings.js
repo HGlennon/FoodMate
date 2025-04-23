@@ -98,9 +98,7 @@ export default function Settings() {
                                 }}>
                                 Dark mode
                             </Typography>
-                                <FormControlLabel control = {
-                                    <Switch checked={themeMode === "dark"} onChange={handleDarkModeChange} disabled={themeMode === "highContrast"} color="default"/>}>
-                                </FormControlLabel>
+                                    <Switch checked={themeMode === "dark"} onChange={handleDarkModeChange} disabled={themeMode === "highContrast"} color="default"/>
                             </Box>
                             <Typography 
                                 variant="h2"
@@ -120,9 +118,7 @@ export default function Settings() {
                             }}>
                                 High-contrast mode
                             </Typography>
-                                <FormControlLabel control = {
-                                    <Switch checked={themeMode === "highContrast"} onChange={handleHighContrastChange} disabled={themeMode === "dark"} color="default"/>}>
-                                </FormControlLabel>
+                                    <Switch checked={themeMode === "highContrast"} onChange={handleHighContrastChange} disabled={themeMode === "dark"} color="default"/>
                             </Box>
                             <Grid container alignItems="center" justifyContent="space-between">
                                 {!isSmallScreen && (
@@ -174,7 +170,6 @@ export default function Settings() {
                                         border: themeMode === "highContrast" ? "2px solid yellow" : "2px solid white", 
                                         borderRadius: "6px", 
                                         padding: "4px 8px",
-                                        mr: 2
                                     }}>                                        
                                         <Typography 
                                         sx={{ color: themeMode === "highContrast" ? "yellow" : "white", 
@@ -206,9 +201,7 @@ export default function Settings() {
                                 }}>
                                     Dyslexia font
                                 </Typography>
-                                    <FormControlLabel control = {   
-                                        <Switch checked={useDyslexicFont} onChange={handleDyslexicFontChange} color="default"/>}>
-                                    </FormControlLabel>
+                                        <Switch checked={useDyslexicFont} onChange={handleDyslexicFontChange} color="default"/>
                                 </Box>
                             </Grid>
                         </Grid>
@@ -221,7 +214,7 @@ export default function Settings() {
                             <Button
                                 type ="submit"
                                 sx={{ 
-                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#b2b3cc' : '#00E265',
+                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#66668A' : '#00E265',
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", 
                                     padding: '8px 16px', 
                                     boxShadow: 2, 
@@ -230,7 +223,7 @@ export default function Settings() {
                                     whiteSpace: 'nowrap',
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#9999b3" : "#02d55d"
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#727297" : "#02d55d"
                                     }
                                 }} 
                                 onClick={handleApplySettings}

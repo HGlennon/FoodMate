@@ -576,14 +576,14 @@ export default function AdvancedSettings() {
                         <Grid item>
                             <Button
                                 sx={{
-                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#b2b3cc' : '#00E265', 
+                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#66668A' : '#00E265', 
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     padding: '8px 16px',
                                     boxShadow: 2,
                                     borderRadius: 1,
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#9999b3" : "#02d55d",
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#727297" : "#02d55d",
                                       },
                                       fontSize: `${15 + appliedFontSize}px`
                                 }}

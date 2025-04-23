@@ -11,7 +11,7 @@ export const theme = createTheme({
     mode: "light",
     background: { 
       default: "#e8e8e8",
-      gradient: "linear-gradient(135deg, #00C85B 30%, #008C3A 100%)", // Sets a CSS gradient as the background colour
+      gradient: "linear-gradient(135deg, #008433 0%, #00561E 100%)"
     },
     text: {
       primary: "#010101", // Black text
