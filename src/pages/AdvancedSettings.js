@@ -576,14 +576,14 @@ export default function AdvancedSettings() {
                         <Grid item>
                             <Button
                                 sx={{
-                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#66668A' : '#00E265', 
+                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#66668A' : '#00853C', 
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     padding: '8px 16px',
                                     boxShadow: 2,
                                     borderRadius: 1,
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#727297" : "#02d55d",
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#727297" : "#028D3E",
                                       },
                                       fontSize: `${15 + appliedFontSize}px`
                                 }}
@@ -595,15 +595,14 @@ export default function AdvancedSettings() {
                         <Grid item>
                             <Button
                                 sx={{
-                                    backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#ff1919', 
+                                    backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#E00000', 
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     padding: '8px 16px',
                                     boxShadow: 2,
                                     borderRadius: 1,
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#f0b801" : 
-                                                         themeMode === "dark" ? "#555555" : "#e71818",
+                                        backgroundColor: themeMode === "highContrast" ? "#f0b801" : themeMode === "dark" ? "#555555" : "#D01616",
                                       },
                                       fontSize: `${15 + appliedFontSize}px`
                                 }}

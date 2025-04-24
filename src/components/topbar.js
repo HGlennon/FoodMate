@@ -147,7 +147,7 @@ export default function TopBar() {
                             <Button 
                                 href="/advancedsettings" 
                                 variant="contained"
-                                aria-label="Go to advanced recipe search"
+                                aria-label="Go to advanced search"
                                 sx={{ 
                                     ml: 1,
                                     backgroundColor: 'transparent', 

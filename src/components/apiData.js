@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 const APP_ID = "837155ce"; 
 const APP_KEY = "76b054a6c99b380eda97058ec73f6069";
 
+// Retrieves the search values from Search.js, passes them to Edamam API where the responses to the search query will be printed as recipe cards  
 const RecipeList = function RecipeList({ mealType, filters, minCalories, maxCalories, minProtein, maxProtein, minCholesterol, maxCholesterol, minSugar, maxSugar, minFat, maxFat, healthType, cuisineType, mealTypes, recipeTerm}) {
   const [recipes, setRecipes] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
@@ -20,7 +21,7 @@ const RecipeList = function RecipeList({ mealType, filters, minCalories, maxCalo
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const [likedRecipes, setLikedRecipes] = useState({});
+  //const [likedRecipes, setLikedRecipes] = useState({});
   const [copiedTooltip, setCopiedTooltip] = useState({});
   const [shareTooltip, setShareTooltip] = useState({});
   const [infoTooltip, setInfoTooltip] = useState({});
@@ -146,15 +147,12 @@ const fetchPage = (url, replace = false) => {
     .finally(() => setLoading(false));
 };
 
-//--------------------------------------------------
-// initial page whenever the search / filters change
-//--------------------------------------------------
+// Loads page whenever the search / filters change
 useEffect(() => {
   const firstUrl = buildFirstUrl();
   setRecipes([]);
   setNextUrl(null);
-  fetchPage(firstUrl, true); // replace = true clears old hits
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  fetchPage(firstUrl, true);
 }, [
   mealType,
   filters,
@@ -203,7 +201,7 @@ useEffect(() => {
         {recipes.map((item, index) => {
           const { label, image, source, totalTime, calories, url, yield:servings, ingredientLines, totalNutrients} = item.recipe;
           const { VITB12, VITB6A, VITC, VITD, TOCPHA, VITK1, VITA_RAE, FAT, SUGAR, PROCNT, K, CA, CHOLE, FIBTG, FE, NA, FOLDFE, MG, ZN} = totalNutrients;
-          const liked = likedRecipes[index] || false; // Get liked state for this recipe
+          //const liked = likedRecipes[index] || false; // Get liked state for this recipe
 
           return (
             <Grid item key={index} xs={12} sm={6} md={4}>
@@ -214,9 +212,9 @@ useEffect(() => {
                   <CardMedia component="img" height="180" image={image} alt={label}/>
                   <CustomCardContent sx={{ flexGrow: 1 }}>
                     <Typography variant="h6" sx={{fontSize: `${20 + appliedFontSize}px` ,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", fontWeight: "bold" }}>{label}</Typography>
-                    <Typography variant="subtitle1" color="text.secondary" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", flexGrow: 1 }}>By {source}</Typography>
+                    <Typography variant="subtitle1" color="#6E6E6E" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", flexGrow: 1 }}>By {source}</Typography>
                   </CustomCardContent>
-                  <Box sx={{ backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#08aa4d', color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", padding: 1, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 'auto', width: '100%', minHeight: '40px'}}>
+                  <Box sx={{ backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#008654', color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", padding: 1, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 'auto', width: '100%', minHeight: '40px'}}>
                     <AccessTimeIcon sx={{ marginRight: 0.5 }} />
                     <Typography variant="body2" sx={{fontSize: `${15 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "#000000" : "#FFFFFF"}}>
                       {totalTime ? `${totalTime} mins` : "Time N/A"}

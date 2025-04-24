@@ -91,6 +91,7 @@ export default function Settings() {
                             </Typography>
                             <Box onClick={handleDarkModeChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
                             <Typography 
+                                id="dark-mode-label"
                                 sx={{ 
                                     color: themeMode === "highContrast" ? "yellow" : "white", 
                                     fontSize: `${17 + appliedFontSize}px`, 
@@ -98,7 +99,7 @@ export default function Settings() {
                                 }}>
                                 Dark mode
                             </Typography>
-                                    <Switch checked={themeMode === "dark"} onChange={handleDarkModeChange} disabled={themeMode === "highContrast"} color="default"/>
+                                    <Switch aria-labelledby="dark-mode-label" checked={themeMode === "dark"} onChange={handleDarkModeChange} disabled={themeMode === "highContrast"} color="default"/>
                             </Box>
                             <Typography 
                                 variant="h2"
@@ -110,7 +111,8 @@ export default function Settings() {
                                 Accessibility
                             </Typography>
                             <Box onClick={handleHighContrastChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={0.5}>
-                            <Typography 
+                            <Typography
+                            id="high-contrast-label" 
                             sx={{ 
                                 color: themeMode === "highContrast" ? "yellow" : "white", 
                                 fontSize: `${17 + appliedFontSize}px`, 
@@ -118,7 +120,7 @@ export default function Settings() {
                             }}>
                                 High-contrast mode
                             </Typography>
-                                    <Switch checked={themeMode === "highContrast"} onChange={handleHighContrastChange} disabled={themeMode === "dark"} color="default"/>
+                                    <Switch aria-labelledby="high-contrast-label" checked={themeMode === "highContrast"} onChange={handleHighContrastChange} disabled={themeMode === "dark"} color="default"/>
                             </Box>
                             <Grid container alignItems="center" justifyContent="space-between">
                                 {!isSmallScreen && (
@@ -214,7 +216,7 @@ export default function Settings() {
                             <Button
                                 type ="submit"
                                 sx={{ 
-                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#66668A' : '#00E265',
+                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#66668A' : '#00853C',
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", 
                                     padding: '8px 16px', 
                                     boxShadow: 2, 
@@ -223,7 +225,7 @@ export default function Settings() {
                                     whiteSpace: 'nowrap',
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#727297" : "#02d55d"
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#727297" : "#028D3E"
                                     }
                                 }} 
                                 onClick={handleApplySettings}
@@ -235,7 +237,7 @@ export default function Settings() {
                             <Button
                                 type="reset"
                                 sx={{ 
-                                    backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#ff1919', 
+                                    backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#E00000', 
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", 
                                     padding: '8px 16px', 
                                     boxShadow: 2, 
@@ -244,7 +246,7 @@ export default function Settings() {
                                     whiteSpace: 'nowrap',
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#f0b801" : themeMode === "dark" ? "#555555" : "#e71818"
+                                        backgroundColor: themeMode === "highContrast" ? "#f0b801" : themeMode === "dark" ? "#555555" : "#D01616"
                                     }
                                 }} 
                                 onClick={() => { // Resets settings to default

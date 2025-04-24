@@ -192,7 +192,7 @@ export default function Search() {
                                 <Button 
                                 sx={{ 
                                     width: { xs: "48%", sm: "auto" },
-                                    backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? "#6B6B6B" : "#ff1919",
+                                    backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? "#6B6B6B" : "#E00000",
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
                                     py: 1,
                                     px: { xs: 1, sm: 3 },
@@ -202,7 +202,7 @@ export default function Search() {
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     minWidth: "120px",
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#f0b801" : themeMode === "dark" ? "#555555" : "#e71818",
+                                        backgroundColor: themeMode === "highContrast" ? "#f0b801" : themeMode === "dark" ? "#555555" : "#D01616",
                                     }
                                 }} 
                                 onClick={clearFilters}
@@ -213,7 +213,7 @@ export default function Search() {
                                     type ="submit"
                                 sx={{ 
                                     width: { xs: "48%", sm: "auto" }, 
-                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? "#66668A" : "#00E265",
+                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? "#66668A" : "#00853C",
                                     color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
                                     py: 1,
                                     px: { xs: 1, sm: 3 },
@@ -223,7 +223,7 @@ export default function Search() {
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     minWidth: "120px",
                                     '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#727297" : "#02d55d",
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#727297" : "#028D3E",
                                     }
                                 }} 
                                 onClick={submitFilters}
