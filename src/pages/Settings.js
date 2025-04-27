@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import TopBar from '../components/topbar';
-import { Typography, Grid, Button, Switch, Slider, Container, Box, CssBaseline, useMediaQuery, FormControlLabel } from '@mui/material';
+import { Typography, Grid, Button, Switch, Slider, Container, Box, CssBaseline, useMediaQuery } from '@mui/material';
 import { GradientSection, CustomBackground } from '../components/styled';
 import { ThemeContext } from '../components/themeProvider';
 import { theme } from '../components/themes';
@@ -31,17 +31,17 @@ export default function Settings() {
     };
 
     // Toggles dark mode
-    const handleDarkModeChange = () => {
+    const handleDarkMode = () => {
             setThemeMode(themeMode === "dark" ? "light" : "dark");
     };
     
     // Toggles high contrast mode
-    const handleHighContrastChange = () => {
+    const handleHighContrast = () => {
         setThemeMode(themeMode === "highContrast" ? "light" : "highContrast");
     };
 
     // Toggles OpenDyslexic font
-    const handleDyslexicFontChange = () => {
+    const handleDyslexicFont = () => {
         const toggled = !useDyslexicFont;
         setUseDyslexicFont(toggled);
         localStorage.setItem("useDyslexicFont", toggled);
@@ -64,6 +64,19 @@ export default function Settings() {
         setAppliedFontSize(getSavedFontSize());
         setUseDyslexicFont(getSavedDyslexicFont());
     }, []);
+
+    const handleReset = () => {
+        const ok = window.confirm("Are you sure you want to reset all settings to their default values?");
+        if (!ok) return;
+    
+        setAppliedFontSize(0); 
+        setTempFontSize(0);
+        localStorage.setItem("fontSize", 0);  
+        localStorage.setItem("useDyslexicFont", false);                                                                 
+        setUseDyslexicFont(false); 
+        window.dispatchEvent(new Event("storage")); // Updates topbar                        
+        setThemeMode("light");
+    };
 
     return (
         <main>
@@ -89,7 +102,7 @@ export default function Settings() {
                                 }} mb={1}>
                                 General
                             </Typography>
-                            <Box onClick={handleDarkModeChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
+                            <Box onClick={handleDarkMode} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
                             <Typography 
                                 id="dark-mode-label"
                                 sx={{ 
@@ -99,7 +112,15 @@ export default function Settings() {
                                 }}>
                                 Dark mode
                             </Typography>
-                                    <Switch aria-labelledby="dark-mode-label" checked={themeMode === "dark"} onChange={handleDarkModeChange} disabled={themeMode === "highContrast"} color="default"/>
+                                    <Switch 
+                                        checked={themeMode === "dark"} 
+                                        onChange={handleDarkMode} 
+                                        disabled={themeMode === "highContrast"} 
+                                        color="default"
+                                        inputProps={{
+                                            "aria-labelledby": "dark-mode-label"
+                                        }}
+                                    />
                             </Box>
                             <Typography 
                                 variant="h2"
@@ -110,7 +131,7 @@ export default function Settings() {
                                 }} mb={1}>
                                 Accessibility
                             </Typography>
-                            <Box onClick={handleHighContrastChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={0.5}>
+                            <Box onClick={handleHighContrast} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={0.5}>
                             <Typography
                             id="high-contrast-label" 
                             sx={{ 
@@ -120,11 +141,20 @@ export default function Settings() {
                             }}>
                                 High-contrast mode
                             </Typography>
-                                    <Switch aria-labelledby="high-contrast-label" checked={themeMode === "highContrast"} onChange={handleHighContrastChange} disabled={themeMode === "dark"} color="default"/>
+                                    <Switch 
+                                        checked={themeMode === "highContrast"} 
+                                        onChange={handleHighContrast} 
+                                        disabled={themeMode === "dark"} 
+                                        color="default"
+                                        inputProps={{
+                                            "aria-labelledby": "high-contrast-label"
+                                        }}
+                                    />
                             </Box>
                             <Grid container alignItems="center" justifyContent="space-between">
                                 {!isSmallScreen && (
                                 <Typography 
+                                id="make-text-bigger-label"
                                 sx={{ 
                                     color: themeMode === "highContrast" ? "yellow" : "white", 
                                     fontSize: `${17 + appliedFontSize}px`, 
@@ -153,6 +183,9 @@ export default function Settings() {
                                         step={1}
                                         onChange={(_, newValue) => setTempFontSize(newValue)}
                                         sx={{ width: "200px", color: themeMode === "highContrast" ? "yellow" : "white" }}
+                                        aria-labelledby="make-text-bigger-label"
+                                        getAriaValueText={(value) => `${value} pixels`}  
+                                        valueLabelDisplay="off"
                                     />
                                 )}
                                 {!isSmallScreen && (
@@ -194,16 +227,24 @@ export default function Settings() {
                                 }}>
                                     Experimental
                                 </Typography>
-                                <Box onClick={handleDyslexicFontChange} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
+                                <Box onClick={handleDyslexicFont} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer"}} mb={2}>
                                 <Typography 
-                                sx={{ 
-                                    color: themeMode === "highContrast" ? "yellow" : "white", 
-                                    fontSize: `${17 + appliedFontSize}px`, 
-                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
-                                }}>
+                                    id="dyslexia-font-label" 
+                                    sx={{ 
+                                        color: themeMode === "highContrast" ? "yellow" : "white", 
+                                        fontSize: `${17 + appliedFontSize}px`, 
+                                        fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
+                                    }}>
                                     Dyslexia font
                                 </Typography>
-                                        <Switch checked={useDyslexicFont} onChange={handleDyslexicFontChange} color="default"/>
+                                        <Switch 
+                                            checked={useDyslexicFont} 
+                                            onChange={handleDyslexicFont} 
+                                            color="default"
+                                            inputProps={{
+                                                "aria-labelledby": "dyslexia-font-label"
+                                            }}
+                                        />
                                 </Box>
                             </Grid>
                         </Grid>
@@ -249,15 +290,7 @@ export default function Settings() {
                                         backgroundColor: themeMode === "highContrast" ? "#f0b801" : themeMode === "dark" ? "#555555" : "#D01616"
                                     }
                                 }} 
-                                onClick={() => { // Resets settings to default
-                                    setAppliedFontSize(0); 
-                                    setTempFontSize(0);
-                                    localStorage.setItem("fontSize", 0);  
-                                    localStorage.setItem("useDyslexicFont", false);                                                                 
-                                    setUseDyslexicFont(false); 
-                                    window.dispatchEvent(new Event("storage")); // Updates topbar                        
-                                    setThemeMode("light");
-                                }}
+                                onClick={handleReset}
                                 >
                                 Reset to Default
                             </Button>

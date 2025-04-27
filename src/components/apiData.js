@@ -127,7 +127,7 @@ const fetchPage = (url, replace = false) => {
     .then((r) => r.json())
     .then((data) => {
       if (!data.hits?.length) {
-        setError("No more recipes found.");
+        setError("No more recipes found, please try changing your search.");
         setNextUrl(null);
         return;
       }
@@ -194,9 +194,17 @@ useEffect(() => {
 }, [loader, loading, error, loadMoreRecipes]);
 
   return (
-    <Container maxWidth='md' sx={{ marginTop: '20px' }}>
-      {error && <Typography color="error">{error}</Typography>}
-
+    <Container maxWidth='md' sx={{ mt:1.3 }}>
+      {error && (
+        <Box
+        role="alert"
+        aria-live="assertive"
+        >
+          <Typography color="red">
+            {error}
+          </Typography>
+        </Box>
+      )}
       <Grid container spacing={3}>
         {recipes.map((item, index) => {
           const { label, image, source, totalTime, calories, url, yield:servings, ingredientLines, totalNutrients} = item.recipe;
@@ -209,12 +217,12 @@ useEffect(() => {
                 <CardActionArea onClick={() => navigate("/recipe", { state: { recipe: item.recipe } })}
                   disableRipple
                   sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                  <CardMedia component="img" height="180" image={image} alt={label}/>
+                  <CardMedia component="img" height="180" alt="" aria-hidden="true" role="presentation" image={image}/>
                   <CustomCardContent sx={{ flexGrow: 1 }}>
                     <Typography variant="h6" sx={{fontSize: `${20 + appliedFontSize}px` ,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", fontWeight: "bold" }}>{label}</Typography>
                     <Typography variant="subtitle1" color="#6E6E6E" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", flexGrow: 1 }}>By {source}</Typography>
                   </CustomCardContent>
-                  <Box sx={{ backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#008654', color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", padding: 1, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 'auto', width: '100%', minHeight: '40px'}}>
+                  <Box sx={{ backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#05792d', color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", padding: 1, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 'auto', width: '100%', minHeight: '40px'}}>
                     <AccessTimeIcon sx={{ marginRight: 0.5 }} />
                     <Typography variant="body2" sx={{fontSize: `${15 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "#000000" : "#FFFFFF"}}>
                       {totalTime ? `${totalTime} mins` : "Time N/A"}
@@ -245,12 +253,12 @@ useEffect(() => {
 
       <div ref={loader} />
 
-      <Grid container justifyContent="center" sx={{ marginTop: '20px', marginBottom: '20px' }}>
+      <Grid container justifyContent="center" sx={{ marginTop: '27px', marginBottom: '20px' }}>
         <Button 
           onClick={loadMoreRecipes} 
           variant="contained" 
           sx={{
-            backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#66668A' : '#00a146', 
+            backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? '#66668A' : '#00853C', 
             color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
             }} 
             disabled={loading}

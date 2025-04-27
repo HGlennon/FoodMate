@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo  } from "react";
+import React, { useState, useContext  } from "react";
 import TopBar from "../components/topbar";
 import { Typography, CardContent, Grid, Container, Button, Checkbox, FormGroup, FormControlLabel, CssBaseline } from "@mui/material";
 import RecipeList from "../components/apiData"
@@ -110,26 +110,32 @@ export default function Search() {
                         <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
                         <Grid container justifyContent="center">
                                 <CustomCard 
-                                sx={{ 
-                                    width: "100%", 
-                                    maxWidth: { xs: "95%", sm: "740px" }, 
-                                    height: "100%", 
-                                    display: "flex", 
-                                    flexDirection: "column", 
-                                    borderRadius: 3, 
-                                    boxShadow: 3
-                                }}>
+                                    component="section"
+                                    role="region"                        
+                                    aria-labelledby="diet-options-heading"                                
+                                    sx={{ 
+                                        width: "100%", 
+                                        maxWidth: { xs: "95%", sm: "740px" }, 
+                                        height: "100%", 
+                                        display: "flex", 
+                                        flexDirection: "column", 
+                                        borderRadius: 3, 
+                                        boxShadow: 3
+                                    }}>
                                 <CardContent>
-                                <Typography variant="h6" align="center" 
-                                sx={{ 
-                                    fontSize: `${20 + appliedFontSize}px`, 
-                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", 
-                                    color: themeMode === "highContrast" ? "yellow" : "white", 
-                                    fontWeight: "bold",
-                                     mb:1
-                                }}>
+                                    <Typography 
+                                        variant="h6" 
+                                        align="center" 
+                                        id="diet-options-heading"
+                                        sx={{ 
+                                            fontSize: `${20 + appliedFontSize}px`, 
+                                            fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", 
+                                            color: themeMode === "highContrast" ? "yellow" : "white", 
+                                            fontWeight: "bold",
+                                            mb:1
+                                        }}>
                                         Diet Options:
-                                </Typography>
+                                    </Typography>
                                 <FormGroup row sx={{ justifyContent: 'center',  flexWrap: 'wrap', gap: `${6 + appliedFontSize / 2}px`}}>
                                     <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="balanced" checked={filters.balanced} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontSize: `${17 + appliedFontSize}px`,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", whiteSpace: "normal"}}>Balanced</Typography>}/>
                                     <FormControlLabel sx={{ flex: { xs: '0 0 50%', sm: 'none' }, mb: { xs: 1, sm: 0 }, ml: { xs: 1, sm: 0 } }} control={<Checkbox name="highProtein" checked={filters.highProtein} onChange={handleFilterChange} sx={{ color: themeMode === "highContrast" ? "yellow" : "white", "&.Mui-checked": { color: themeMode === "highContrast" ? "yellow" : "white" } }} />} label={ <Typography sx={{fontSize: `${17 + appliedFontSize}px`,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white", whiteSpace: "normal"}}>High-Protein</Typography>}/>
@@ -146,19 +152,23 @@ export default function Search() {
                         <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
                         <Grid container justifyContent="center">
                             <CustomCard 
-                            sx={{ 
-                                width: "100%", 
-                                maxWidth: { xs: "95%", sm: "740px" }, 
-                                height: "auto", 
-                                display: "flex", 
-                                flexDirection: "column",
-                                borderRadius: 3, 
-                                boxShadow: 3
-                            }}>
+                                component="section"
+                                role="region"                        
+                                aria-labelledby="health-options-heading"
+                                sx={{ 
+                                    width: "100%", 
+                                    maxWidth: { xs: "95%", sm: "740px" }, 
+                                    height: "auto", 
+                                    display: "flex", 
+                                    flexDirection: "column",
+                                    borderRadius: 3, 
+                                    boxShadow: 3
+                                }}>
                                 <CardContent>
                                     <Typography 
                                         variant="h6" 
-                                        align="center" 
+                                        align="center"
+                                        id="health-options-heading" 
                                         sx={{ fontSize: `${20 + appliedFontSize}px`, 
                                         fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", 
                                         color: themeMode === "highContrast" ? "yellow" : "white", 
@@ -190,6 +200,27 @@ export default function Search() {
                                 }}
                             >
                                 <Button 
+                                    type ="submit"
+                                sx={{ 
+                                    width: { xs: "48%", sm: "auto" }, 
+                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? "#66668A" : "#00853C",
+                                    color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
+                                    py: 1,
+                                    px: { xs: 1, sm: 3 },
+                                    boxShadow: 2,
+                                    borderRadius: 1,
+                                    fontSize: `${15 + appliedFontSize}px`, 
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
+                                    minWidth: "123px",
+                                    '&:hover': {
+                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#727297" : "#028D3E",
+                                    }
+                                }} 
+                                onClick={submitFilters}
+                                >
+                                Submit
+                                </Button>
+                                <Button 
                                 sx={{ 
                                     width: { xs: "48%", sm: "auto" },
                                     backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? "#6B6B6B" : "#E00000",
@@ -208,27 +239,6 @@ export default function Search() {
                                 onClick={clearFilters}
                                 >
                                 Clear Filter
-                                </Button>
-                                <Button 
-                                    type ="submit"
-                                sx={{ 
-                                    width: { xs: "48%", sm: "auto" }, 
-                                    backgroundColor: themeMode === "highContrast" ? "#FFFF00" : themeMode === "dark" ? "#66668A" : "#00853C",
-                                    color: themeMode === "highContrast" ? "#000000" : "#FFFFFF",
-                                    py: 1,
-                                    px: { xs: 1, sm: 3 },
-                                    boxShadow: 2,
-                                    borderRadius: 1,
-                                    fontSize: `${15 + appliedFontSize}px`, 
-                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
-                                    minWidth: "120px",
-                                    '&:hover': {
-                                        backgroundColor: themeMode === "highContrast" ? "#dada00" : themeMode === "dark" ? "#727297" : "#028D3E",
-                                    }
-                                }} 
-                                onClick={submitFilters}
-                                >
-                                Submit
                                 </Button>
                             </Grid>
                         </Container>

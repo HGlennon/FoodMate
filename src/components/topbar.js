@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { theme } from './themes';
 import { ThemeContext } from "../components/themeProvider";
+import { ariaHidden } from '@mui/material/Modal/ModalManager';
 
 
 export default function TopBar() {
-
     {/* User settings */}
     const { themeMode } = useContext(ThemeContext);
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -54,10 +54,8 @@ export default function TopBar() {
     return (
         <>
             <CssBaseline />
-            <AppBar role="banner" position='relative' sx={{ zIndex: 10, backgroundColor: theme => theme.palette.background.paper }}>
+            <AppBar position='relative' sx={{ zIndex: 10, backgroundColor: theme => theme.palette.background.paper }}>
                 <Toolbar 
-                component="nav"
-                aria-label="Primary"
                 sx={{ 
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -66,7 +64,7 @@ export default function TopBar() {
                     px: 2
                 }}>
                     {/* Logo */}
-                    <Box onClick={() => navigate('/home')} 
+                    <Box ariaHidden="true" onClick={() => navigate('/home')} 
                         sx={{ 
                             display: "flex", 
                             cursor: "pointer", 
@@ -76,19 +74,19 @@ export default function TopBar() {
                             mb: 0.5
                         }}
                         role="link"
-                        aria-label="Go to FoodMate home"
+                        aria-label="Foodmate banner"
                         tabIndex={0}
                         onKeyPress={(e) => e.key === "Enter" && navigate("/home")}
                     >
-                        <Images/>
+                        <Images aria-hidden="true"/>
                         {/* Foodmate title */}
                         {!isSmallScreen && ( 
-                            <Typography variant='h1' sx={{ 
+                            <Typography 
+                                sx={{ 
                                     color: theme => theme.palette.text.primary, 
                                     textTransform: 'none', 
-                                    fontSize: { xs: `${24 + (appliedFontSize/2)}px`, md: `${32 + (appliedFontSize/2)}px`},
-                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
-                                    mb: '3px',
+                                    fontSize: { xs: `${26 + (appliedFontSize/2)}px`, md: `${33 + (appliedFontSize/2)}px`},
+                                    fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"                            
                                 }}>
                                 FoodMate
                             </Typography>
@@ -96,29 +94,28 @@ export default function TopBar() {
                     </Box>                   
                     {/* Search and advanced search button */}
                     <Box 
-                    component="form"
-                    role="search"
-                    sx={{ 
-                        display: 'flex',
-                        alignItems: 'center',
-                        flexGrow: 1,
-                        justifyContent: 'center',
-                        maxWidth: { md: '800px' }
-                    }}>
-                        {/* Search Bar */}
-                        <Box sx={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid #ccc",
-                            padding: '4px 8px', 
-                            borderRadius: 2,
+                        sx={{ 
+                            display: 'flex',
+                            alignItems: 'center',
                             flexGrow: 1,
-                            maxWidth: { xs: '100%', md: '600px' },
-                            backgroundColor: theme => theme.palette.background.default,
-                            '&:focus-within': {
-                                outline: 'none',
-                                borderColor: theme => theme.palette.primary.main,
-                            },
+                            justifyContent: 'center',
+                            maxWidth: { md: '800px' }
+                        }}>
+                        {/* Search Bar */}
+                        <Box
+                            sx={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid #ccc",
+                                padding: '4px 8px', 
+                                borderRadius: 2,
+                                flexGrow: 1,
+                                maxWidth: { xs: '100%', md: '600px' },
+                                backgroundColor: theme => theme.palette.background.default,
+                                '&:focus-within': {
+                                    outline: 'none',
+                                    borderColor: theme => theme.palette.primary.main,
+                                },
                         }}>
                             <SearchIcon aria-hidden="true" sx={{ color: themeMode === "highContrast" ? "#808000" : "gray", marginRight: '5px' }} />
                             <InputBase
@@ -126,8 +123,8 @@ export default function TopBar() {
                                 value={searchQuery}
                                 onChange={handleSearchChange}
                                 onKeyPress={handleSearchSubmit}
-                                inputProps={{ // Gives purpose of searchbar to screen reader
-                                    "aria-label": "Search recipes",
+                                inputProps={{
+                                    "aria-label": "Searchbar",
                                 }}
                                 sx={{ 
                                     flexGrow: 1, 
@@ -154,13 +151,10 @@ export default function TopBar() {
                                     color: theme => theme.palette.text.primary, 
                                     textTransform: 'none',
                                     whiteSpace: 'nowrap',
-                                    '&:hover': {
-                                        backgroundColor: 'rgba(0,0,0,0.04)'
-                                    },
                                     '& .MuiTouchRipple-root .MuiTouchRipple-child': { 
                                         backgroundColor: 'black',
                                         opacity: 0.01                         
-                                      },
+                                    },
                                     fontSize: { xs: `${15 + (appliedFontSize/3)}px`, md: `${15 + (appliedFontSize/3)}px`}, 
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
                                 }} 
@@ -178,9 +172,7 @@ export default function TopBar() {
                     }}>
                         <IconButton                                 
                                 // Gives the menu a description to the screenreader and tells them it can open it
-                                id="main-menu-button"
-                                aria-label="Open navigation menu"      
-                                aria-haspopup="true"
+                                aria-label="navigation menu click to expand, contains settings"
                                 aria-controls={Boolean(open) ? "topbar-menu" : undefined}onClick={handleClick}
                             >
                                 <MenuIcon 
@@ -199,6 +191,8 @@ export default function TopBar() {
                         anchorEl={open} 
                         open={Boolean(open)} 
                         onClose={close} 
+                        aria-labelledby="main-menu-button"
+                        MenuListProps={{ 'aria-label': 'Main navigation' }}
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                     >

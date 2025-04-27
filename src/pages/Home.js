@@ -49,8 +49,8 @@ export default function Home() {
             {cards.map((card, index) => (
               <Grid item key={index} xs={6} sm={4} md={3}>
                 <CustomCard sx={{ height: "100%", display: "flex", flexDirection: "column", borderRadius: 3, boxShadow: 3}}>
-                  <CardActionArea href={card.link} sx={{ height: '100%' }}>
-                    <CustomCardMedia image={card.image} title={card.title} sx={{[theme.breakpoints.down('sm')]:{paddingTop: "75%"},}}/>
+                  <CardActionArea href={card.link} aria-label={`Browse ${card.title} recipes`} sx={{ height: '100%' }}>
+                    <CustomCardMedia image={card.image} alt="" aria-hidden="true" role="presentation" title={card.title} sx={{[theme.breakpoints.down('sm')]:{paddingTop: "75%"},}}/>
                     <CustomCardContent sx={{flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 1}}>
                       <Typography variant="h2" 
                       sx={{ 

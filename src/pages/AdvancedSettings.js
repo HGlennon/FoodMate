@@ -86,13 +86,7 @@ export default function AdvancedSettings() {
     const [maxFat, setMaxFat] = useState(""); // State for max calories
     const [searchError, setSearchError] = useState(false);
     
-
     const navigate = useNavigate(); // Hook for navigation
-
-    // Handle search term change
-    const handleSearchChange = (e) => {
-        setRecipeTerm(e.target.value);
-    };
 
     const handleIngredientChange = (e) => {
         setIngredientTerm(e.target.value);
@@ -165,7 +159,27 @@ export default function AdvancedSettings() {
         }
     };
 
+    const handleReset = () => {
+        const ok = window.confirm("Are you sure you want to reset the search?");
+        if (!ok) return;
 
+        setRecipeTerm(""); // Clear the search term
+        setIngredientTerm(""); // Clear ingredient term
+        setSelectedHealth([]); // Clear health restrictions
+        setSelectedCuisine([]); // Clear cuisine filters
+        setSelectedMeal([]); // Clear meal type filters
+        setMinCalories(""); // Clear min calories
+        setMaxCalories(""); // Clear max calories
+        setMinProtein("");
+        setMaxProtein("");
+        setMinCholesterol("");
+        setMaxCholesterol("");
+        setMinSugar("");
+        setMaxSugar("");
+        setMinFat("");
+        setMaxFat("");
+        setSearchError(false);
+    }
     return (
         <>
             <CssBaseline />
@@ -173,11 +187,46 @@ export default function AdvancedSettings() {
             <GradientSection>
             <Container maxWidth="false" sx={{ marginLeft: '20px'}}>
                 <Typography variant="h5" fontWeight={'bold'} sx={{color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `${24 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}} my={1}>Advanced Search</Typography>
-
+                {searchError && (
+                        <Typography 
+                            role="alert"
+                            aria-live="assertive"
+                            variant="caption" 
+                            sx={{
+                            position: 'absolute',
+                            left: '211px',
+                            top: '170px',
+                            color: 'red',
+                            fontSize: `${14 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
+                            }}
+                        >
+                            Please enter a recipe search term first
+                        </Typography>
+                )}
                 <Typography variant="h6" sx={{color: themeMode === "highContrast" ? "yellow" : "white", fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}} my={1.5}>Find recipes by...</Typography>
                     <Box display="flex" flexDirection="row" alignItems="center" color="white" gap={2}>
-                    <Typography sx={{minWidth: '150px', fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Recipe Search: </Typography>
-                    <Box sx={{ 
+                    <Typography
+                        component="span"
+                        sx={{
+                            minWidth: '150px',
+                            fontSize: `${16 + appliedFontSize}px`,
+                            fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : 'inherit',
+                            color: themeMode === "highContrast" ? "yellow" : "white"
+                        }}
+                        >
+                        Recipe Search:
+                        <Typography
+                            component="span"
+                            sx={{
+                            color: themeMode === "highContrast" ? "white" : themeMode === "dark" ? 'white' : 'red',
+                            ml: 0.5
+                            }}
+                        >
+                            *
+                        </Typography>
+                    </Typography>           
+                    <Box 
+                    sx={{ 
                         display: 'flex', 
                         border: searchError ? "2px solid red" : themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
                         padding: '4px 8px', 
@@ -186,27 +235,18 @@ export default function AdvancedSettings() {
                     }}>
                         <InputBase
                         sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}
-                        value={recipeTerm}
+                        value={recipeTerm}                    
                         onChange={(e) => {
                             setRecipeTerm(e.target.value);
                             setSearchError(false); // Clear error when typing
                         }}
                         onKeyPress={handleRecipeKeyPress}
+                        inputProps={{
+                            role: "searchbox",
+                            "aria-label":
+                              "Recipe search. Type important words related to recipe, for example fish and chips."
+                        }}    
                         />
-                        {searchError && (
-                        <Typography 
-                            variant="caption" 
-                            sx={{
-                            position: 'absolute',
-                            bottom: '-20px',
-                            left: 0,
-                            color: 'red',
-                            fontSize: `${14 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
-                            }}
-                        >
-                            Please enter a recipe search term first
-                        </Typography>
-                        )}
                     </Box>
                     <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Type important words related to recipe (i.e fish and chips).</Typography>
                     </Box>
@@ -224,6 +264,11 @@ export default function AdvancedSettings() {
                                 value={ingredientTerm}
                                 onChange={handleIngredientChange}
                                 onKeyPress={handleRecipeKeyPress}
+                                inputProps={{
+                                    role: "searchbox",
+                                    "aria-label":
+                                      "Ingredients search. Type specific ingredients here, separating them with a comma."
+                                }}    
                             />
                         </Box>
                         <Typography sx={{marginLeft: '18px', fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Enter specific ingredients here, separating them with a comma (i.e fish, potato).</Typography>
@@ -244,6 +289,11 @@ export default function AdvancedSettings() {
                                 const option = health.find(opt => opt.apiValue === val);
                                 return option ? option.label : val;
                             }).join(', ')}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Health Restrictions. Select any health restrictions/dietary needs in the list that may apply."
+                            }}  
                             sx={{ 
                                 height: '36px', 
                                 border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
@@ -284,6 +334,11 @@ export default function AdvancedSettings() {
                                 const option = cuisine.find(opt => opt.apiValue === val);
                                 return option ? option.label : val;
                             }).join(', ')}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Cuisine type. Select any cuisine types that you may want."
+                            }}  
                             sx={{ 
                                 height: '36px', 
                                 border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
@@ -325,6 +380,11 @@ export default function AdvancedSettings() {
                                 const option = meals.find(opt => opt.apiValue === val);
                                 return option ? option.label : val;
                             }).join(', ')}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Meal type. Select any meal types that may apply."
+                            }}  
                             sx={{ 
                                 height: '36px', 
                                 border: themeMode === "highContrast" ? "1px solid yellow" : "1px solid white",
@@ -374,6 +434,11 @@ export default function AdvancedSettings() {
                     >
                         <InputBase
                             sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Lower calorie amount. Give the range of calories for the recipe from lowest possible amount to highest."
+                            }}  
                             value={minCalories}
                             onChange={(e) => setMinCalories(e.target.value)} // Update minCalories state
                             onKeyPress={handleNumericKeyPress}
@@ -396,6 +461,11 @@ export default function AdvancedSettings() {
                             value={maxCalories}
                             onChange={(e) => setMaxCalories(e.target.value)} // Update maxCalories state
                             onKeyPress={handleNumericKeyPress}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Higher calorie amount. Give the range of calories for the recipe from lowest possible amount to highest."
+                            }}  
                         />
                     </Box>
                     <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Give the range of calories for the recipes you want from lowest possible amount to highest.</Typography>
@@ -419,6 +489,11 @@ export default function AdvancedSettings() {
                             value={minProtein}
                             onChange={(e) => setMinProtein(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Lower protein amount. Give the range of protein for the recipe from lowest possible amount to highest in grams."
+                            }}  
                         />
                     </Box>
                     <Typography variant="body1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>to</Typography>
@@ -438,6 +513,11 @@ export default function AdvancedSettings() {
                             value={maxProtein}
                             onChange={(e) => setMaxProtein(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Higher protein amount. Give the range of protein for the recipe from lowest possible amount to highest in grams."
+                            }}
                         />
                     </Box>
                     <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Enter the range of protein amount for a recipe, from lowest possible amount to highest.</Typography>
@@ -461,6 +541,11 @@ export default function AdvancedSettings() {
                             value={minCholesterol}
                             onChange={(e) => setMinCholesterol(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Lower cholesterol amount. Give the range of cholesterol amount for the recipe from lowest possible amount to highest in milligrams."
+                            }}  
                         />
                     </Box>
                     <Typography variant="body1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>to</Typography>
@@ -480,6 +565,11 @@ export default function AdvancedSettings() {
                             value={maxCholesterol}
                             onChange={(e) => setMaxCholesterol(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Higher cholesterol amount. Give the range of cholesterol amount for the recipe from lowest possible amount to highest in milligrams."
+                            }}  
                         />
                     </Box>
                     <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Input the range of cholesterol amount for a recipe, from lowest possible amount to highest.</Typography>
@@ -503,6 +593,11 @@ export default function AdvancedSettings() {
                             value={minSugar}
                             onChange={(e) => setMinSugar(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Lower sugar amount. Give the range of sugar amount for the recipe from lowest possible amount to highest in grams."
+                            }}  
                         />
                     </Box>
                     <Typography variant="body1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>to</Typography>
@@ -522,6 +617,11 @@ export default function AdvancedSettings() {
                             value={maxSugar}
                             onChange={(e) => setMaxSugar(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Higher sugar amount. Give the range of sugar amount for the recipe from lowest possible amount to highest in grams."
+                            }}  
                         />
                     </Box>
                     <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Select the range of sugar amount for a recipe, from lowest possible amount to highest.</Typography>
@@ -544,6 +644,11 @@ export default function AdvancedSettings() {
                             value={minFat}
                             onChange={(e) => setMinFat(e.target.value)} 
                             onKeyPress={handleNumericKeyPress}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Lower fat amount. Give the fat amount for the recipe from lowest possible amount to highest in grams."
+                            }}  
                         />
                     </Box>
                     <Typography variant="body1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>to</Typography>
@@ -563,6 +668,11 @@ export default function AdvancedSettings() {
                             value={maxFat}
                             onChange={(e) => setMaxFat(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
+                            inputProps={{
+                                role: "searchbox",
+                                    "aria-label":
+                                        "Higher fat amount. Give the fat amount for the recipe from lowest possible amount to highest in grams."
+                            }}  
                         />
                     </Box>
                     <Typography sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}>Enter the range of fat amount for a recipe, from lowest possible amount to highest.</Typography>
@@ -606,24 +716,7 @@ export default function AdvancedSettings() {
                                       },
                                       fontSize: `${15 + appliedFontSize}px`
                                 }}
-                                onClick={() => {
-                                    setRecipeTerm(""); // Clear the search term
-                                    setIngredientTerm(""); // Clear ingredient term
-                                    setSelectedHealth([]); // Clear health restrictions
-                                    setSelectedCuisine([]); // Clear cuisine filters
-                                    setSelectedMeal([]); // Clear meal type filters
-                                    setMinCalories(""); // Clear min calories
-                                    setMaxCalories(""); // Clear max calories
-                                    setMinProtein("");
-                                    setMaxProtein("");
-                                    setMinCholesterol("");
-                                    setMaxCholesterol("");
-                                    setMinSugar("");
-                                    setMaxSugar("");
-                                    setMinFat("");
-                                    setMaxFat("");
-                                    setSearchError(false);
-                                }}
+                                onClick={handleReset}
                             >
                                 Clear
                             </Button>

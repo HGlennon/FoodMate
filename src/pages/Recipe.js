@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Typography, Card, CardMedia, Box, CssBaseline, Container, Grid } from '@mui/material';
+import { Typography, Card, CardMedia, Box, CssBaseline, Container, Grid, Button } from '@mui/material';
 import TopBar from '../components/topbar';
 import { CustomBackground, GradientSection, CustomCard } from '../components/styled';
 import RecipeList from '../components/apiData';
@@ -30,10 +30,6 @@ export default function Recipe() {
           window.scrollTo({ top: 0 });
         }
       }, [recipe]);
-
-    const handleLinkChange = () => {
-        window.open(recipe.url, "_blank", "noopener, noreferrer");
-    }
 
     const handleShowIngredients = () => {
         setShowIngredient(true);
@@ -73,21 +69,47 @@ export default function Recipe() {
                                     <Typography variant="h6" sx={{fontSize: `${20 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", fontWeight: 'bold'}}>Preparation</Typography>
                                 </Box>
                                 <Box sx={{ padding: 1.5 }}>
-                                    <Typography variant="subtitle1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}} >Preparation instructions can be found in the source below:</Typography>
-                                    <Box 
-                                        onClick={handleLinkChange} 
-                                        sx={{ 
-                                            backgroundColor: themeMode === "highContrast" ? "#292727": themeMode === "dark" ? "#2f2b2b" : "#007047", 
-                                            cursor: "pointer", 
-                                            padding: '8px 12px', 
-                                            borderRadius: 2, textAlign: 'center', 
-                                            marginTop: '5px', 
-                                            '&:hover': {backgroundColor: themeMode === "highContrast"? "#3c3c3c": themeMode === "dark"? "#3D3A3A": "#006B44"}  
+                                    <Typography 
+                                        variant="subtitle1" 
+                                        sx={{
+                                            fontSize: `${16 + appliedFontSize}px`, 
+                                            fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"
                                         }}>
-                                        <Typography variant="subtitle1" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", fontWeight: "bold"}}>
-                                            Full Recipe Instruction
-                                        </Typography>
-                                    </Box>
+                                            Preparation instructions can be found in the source below:
+                                    </Typography>
+                                    <Button
+                                        component="a"
+                                        href={recipe.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        fullWidth
+                                        variant="contained"
+                                        sx={{
+                                            mt: 0.5,
+                                            textTransform: 'none',
+                                            borderRadius: 2,
+                                            backgroundColor:
+                                            themeMode === 'highContrast'
+                                                ? '#292727'
+                                                : themeMode === 'dark'
+                                                ? '#2f2b2b'
+                                                : '#007047',
+                                            '&:hover': {
+                                            backgroundColor:
+                                                themeMode === 'highContrast'
+                                                ? '#3c3c3c'
+                                                : themeMode === 'dark'
+                                                ? '#3D3A3A'
+                                                : '#006B44',
+                                            },
+                                            fontSize: `${16 + appliedFontSize}px`,
+                                            fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : 'inherit',
+                                            fontWeight: 'bold',
+                                            color: themeMode === "highContrast" ? "yellow" : "white"
+                                        }}
+                                        >
+                                        Full Recipe Instruction
+                                        </Button>
                                 </Box>
                             </CustomCard>
                         </Grid>
@@ -101,11 +123,15 @@ export default function Recipe() {
                                         display: "flex", 
                                         gap: 2 
                                     }}>
-                                    <Box onClick={handleShowIngredients} 
-                                    sx={{ 
-                                        flex: 1, 
-                                        textAlign: "center", 
-                                        cursor: "pointer", 
+                                    <Button
+                                    role="tab"
+                                    aria-selected={showIngredient}
+                                    onClick={handleShowIngredients}
+                                    disableRipple
+                                    sx={{
+                                        flex: 1,
+                                        textTransform: 'none',
+                                        cursor: "pointer",
                                         padding: 1, 
                                         borderBottom: `4px solid 
                                         ${showIngredient
@@ -119,23 +145,32 @@ export default function Recipe() {
                                         : themeMode === 'dark'
                                         ? '#4f4d4d' // Dark mode inactive 
                                         : '#008654' // Light mode inactive  
-                                        }`,"&:hover": { backgroundColor: themeMode === "highContrast" ? "#3c3c3c": themeMode === "dark" ? "#3D3A3A" : "#006B44", 
+                                        }`,
+                                        borderRadius: 0,
+                                        "&:hover": { backgroundColor: themeMode === "highContrast" ? "#3c3c3c": themeMode === "dark" ? "#3D3A3A" : "#006B44", 
                                         borderTopLeftRadius: 6, 
                                         borderTopRightRadius: 6 
                                     }}}>
-                                        <Typography 
-                                            variant="h6" 
-                                            sx={{
-                                                fontSize: `${20 + (appliedFontSize/3.8)}px`, 
-                                                fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", 
-                                                fontWeight: "bold"
-                                            }}>Ingredients</Typography>
-                                    </Box>
-                                    <Box onClick={handleShowNutrient} 
-                                    sx={{ 
-                                        flex: 1, 
-                                        textAlign: "center", 
-                                        cursor: "pointer", 
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                            fontSize: `${20 + appliedFontSize / 3.8}px`,
+                                            fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : 'inherit',
+                                            fontWeight: 'bold',
+                                            color: themeMode === "highContrast" ? "yellow" : "white"
+                                        }}
+                                    >
+                                        Ingredients
+                                    </Typography>
+                                    </Button>
+                                    <Button
+                                    role="tab"
+                                    aria-selected={showNutrient}
+                                    onClick={handleShowNutrient}
+                                    disableRipple
+                                    sx={{
+                                        flex: 1,
+                                        textTransform: 'none',
                                         padding: 1, 
                                         borderBottom: `4px solid 
                                         ${showNutrient
@@ -149,13 +184,24 @@ export default function Recipe() {
                                         : themeMode === 'dark'
                                         ? '#4f4d4d'
                                         : '#008654'    
-                                    }`, 
+                                        }`, 
+                                        borderRadius: 0,
                                         "&:hover": { backgroundColor: themeMode === "highContrast" ? "#3c3c3c": themeMode === "dark" ? "#3D3A3A" : "#006B44", 
                                         borderTopLeftRadius: 6, 
                                         borderTopRightRadius: 6 
                                     }}}>
-                                        <Typography variant="h6" sx={{fontSize: `${20 + (appliedFontSize/3.8)}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", fontWeight: "bold"}}>Nutrition</Typography>
-                                    </Box>
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                        fontSize: `${20 + appliedFontSize / 3.8}px`,
+                                        fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : 'inherit',
+                                        fontWeight: 'bold',
+                                        color: themeMode === "highContrast" ? "yellow" : "white"
+                                        }}
+                                    >
+                                        Nutrients
+                                    </Typography>
+                                    </Button>
                                 </Box>
                                 <Box sx={{
                                     maxHeight: '320px', 
