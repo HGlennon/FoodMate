@@ -214,9 +214,15 @@ useEffect(() => {
           return (
             <Grid item key={index} xs={12} sm={6} md={4}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: 3, boxShadow: 3, minHeight: `${400 + (appliedFontSize * 12)}px`, backgroundColor: theme => theme.palette.background.default   }}>
-                <CardActionArea onClick={() => navigate("/recipe", { state: { recipe: item.recipe } })}
-                  disableRipple
-                  sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                <CardActionArea 
+                  onClick={() => navigate("/recipe", 
+                    { state: { recipe: item.recipe } 
+                  })} 
+                  disableRipple 
+                  sx={{ 
+                    display: "flex", 
+                    flexDirection: "column", 
+                    height: "100%" }}>
                   <CardMedia component="img" height="180" alt="" aria-hidden="true" role="presentation" image={image}/>
                   <CustomCardContent sx={{ flexGrow: 1 }}>
                     <Typography variant="h6" sx={{fontSize: `${20 + appliedFontSize}px` ,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", fontWeight: "bold" }}>{label}</Typography>

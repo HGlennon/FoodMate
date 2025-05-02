@@ -23,7 +23,7 @@ export const ThemeSetting = ({ children }) => {
     <ThemeContext.Provider value={{ themeMode, setThemeMode }}>
       <ThemeProvider theme={getTheme()}>
         <CssBaseline />
-        {children}
+          {children}
       </ThemeProvider>
     </ThemeContext.Provider>
   );
