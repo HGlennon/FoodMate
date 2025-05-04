@@ -80,7 +80,7 @@ const buildFirstUrl = () => {
     `https://api.edamam.com/api/recipes/v2?type=public&q=${q}` +
     `&app_id=${APP_ID}&app_key=${APP_KEY}`;
 
-  // ──────────────────────────────────────────────── calories / nutrients
+  // calories / nutrients
   if (minCalories && maxCalories && !isNaN(minCalories) && !isNaN(maxCalories)) {
     url += `&calories=${minCalories}-${maxCalories}`;
   }
@@ -98,7 +98,7 @@ const buildFirstUrl = () => {
     url += `&nutrients%5BFAT%5D=${minFat}-${maxFat}`;
   }
 
-  // ──────────────────────────────────────────────── lists
+  // lists
   if (healthType?.length) {
     url += `&health=${healthType.join("&health=")}`;
   }
@@ -109,7 +109,7 @@ const buildFirstUrl = () => {
     url += `&mealType=${mealTypes.join("&mealType=")}`;
   }
 
-  // ──────────────────────────────────────────────── dynamic check‑box filters
+  // dynamic check‑box filters
   const healthQuery = getHealthLabels().map((h) => `&health=${h}`).join("");
   const dietQuery = getDietLabels().map((d) => `&diet=${d}`).join("");
   url += healthQuery + dietQuery;
@@ -117,9 +117,7 @@ const buildFirstUrl = () => {
   return url;
 };
 
-//--------------------------------------------------
 // data fetching – one function for both first & next pages
-//--------------------------------------------------
 const fetchPage = (url, replace = false) => {
   setLoading(true);
 
@@ -147,7 +145,7 @@ const fetchPage = (url, replace = false) => {
     .finally(() => setLoading(false));
 };
 
-// Loads page whenever the search / filters change
+// Loads page whenever the search/filters change
 useEffect(() => {
   const firstUrl = buildFirstUrl();
   setRecipes([]);
