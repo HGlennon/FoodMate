@@ -6,14 +6,14 @@ import {GradientSection, CustomCard, CustomBackground } from "../components/styl
 import { useLocation } from "react-router-dom";
 import { ThemeContext } from "../components/themeProvider";
 
-// maybe include gluten and seafood free options 
-
 export default function Search() {
-    {/* Search functions */}
+    // location and queryParams will be used to detect the link and grab specified values from it [https://stackoverflow.com/a/60044858]
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
 
+    // Extracts search query from link
     const mealType = queryParams.get("mealType") || ""; 
+    // Extracts the values from the advanced search link
     const minCalories = queryParams.get("minCalories") || ""; 
     const maxCalories = queryParams.get("maxCalories") || ""; 
     const minProtein = queryParams.get("minProtein") || ""; 
@@ -25,7 +25,7 @@ export default function Search() {
     const minFat = queryParams.get("minFat") || ""; 
     const maxFat = queryParams.get("maxFat") || ""; 
         
-    {/* Filters */}
+    {/* Filters that can be turned off an on */}
     const [filters, setFilters] = useState({
         balanced: false,
         highProtein: false,
@@ -64,7 +64,7 @@ export default function Search() {
         alcoholFree:false, nutFree:false, lactoseFree:false,
     };
 
-    {/* User preferences */}
+    {/* User settings */}
     const { themeMode } = useContext(ThemeContext);
 
     const getSavedFontSize = () =>
@@ -76,7 +76,7 @@ export default function Search() {
     const [appliedFontSize] = useState(getSavedFontSize());
     const [useDyslexicFont] = useState(getSavedDyslexicFont())
 
-    // Retrieves user search value
+    // Retrieves search value passed if user used advanced search, if not its an empty value
     const { recipeTerm } = location.state || {};
 
     return (
@@ -147,7 +147,6 @@ export default function Search() {
                             </CustomCard>
                             </Grid>
                         </Container>
-                        
                          {/* Health Options */}
                         <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
                         <Grid container justifyContent="center">
@@ -247,7 +246,7 @@ export default function Search() {
                 </div>
             </main>
 
-            {/* Will display the search results at the bottom half of the page by calling RecipeList and sending specific filters to it */}
+            {/* Will display the search results at the bottom half of the page by calling RecipeList and sending the specific filters to it */}
             <CustomBackground>
                 <RecipeList mealType={mealType} filters={appliedFilters} minCalories={minCalories} maxCalories={maxCalories} minProtein={minProtein} maxProtein={maxProtein} minCholesterol={minCholesterol} maxCholesterol={maxCholesterol} minSugar={minSugar} maxSugar={maxSugar} minFat={minFat} maxFat={maxFat} recipeTerm={recipeTerm}/>   
             </CustomBackground>

@@ -6,15 +6,15 @@ const baseText = { // Will (hopefully) control how fonts are changed
   },
 };
 
-export const theme = createTheme({
+export const theme = createTheme({ // Main theme of the website [https://www.youtube.com/watch?v=k8m_nLBH4UY&ab_channel=ridhwanio]
     palette: {
     mode: "light",
-    background: { 
-      default: "#e8e8e8",
-      gradient: "linear-gradient(135deg, #008433 0%, #00561E 100%)"
+    background: { // CSS method which will create a smooth mix of two colours for the background [https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient]
+      gradient: "linear-gradient(135deg, #008433 0%, #00561E 100%)",
+      default: "#e8e8e8"
     },
     text: {
-      primary: "#010101", // Black text
+      primary: "#010101", // Black text for toolbar
     },
   },
   components: {
@@ -31,8 +31,8 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     background: {
-      default: "#121212",
       gradient: "linear-gradient(135deg, #333 30%, #111 100%)",
+      default: "#121212"
     },
     text: {
       primary: "#ffffff", // White text
@@ -45,8 +45,8 @@ export const highContrastTheme = createTheme({
   palette: {
     mode: "dark",
     background: {
-      default: "#000000",
       gradient: "linear-gradient(135deg, #000 30%, #222 100%)",
+      default: "#000000"
     },
     text: {
       primary: "#FFFF00", // Yellow text for high contrast

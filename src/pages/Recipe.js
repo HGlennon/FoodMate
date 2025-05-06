@@ -8,6 +8,7 @@ import { ThemeContext } from "../components/themeProvider";
 
 export default function Recipe() {
 
+    // User Settings
     const getSavedFontSize = () =>
         parseInt(localStorage.getItem("fontSize") || "0", 10);
           
@@ -17,11 +18,15 @@ export default function Recipe() {
     const [appliedFontSize] = useState(getSavedFontSize());
     const [useDyslexicFont] = useState(getSavedDyslexicFont())
 
+
     const location = useLocation();
     const recipe = location.state?.recipe;
+
     const [showIngredient, setShowIngredient] = useState(true);
     const [showNutrient, setShowNutrient] = useState(false);
+
     const navigate = useNavigate();
+    
     const emptyFilters = React.useMemo(() => ({}), []);
     const { themeMode } = useContext(ThemeContext);
 
@@ -244,6 +249,7 @@ export default function Recipe() {
                                         outline: '1px solid #d1d1d1'
                                     }
                                 }}>
+                                    {/* Very inefficient method of displaying the nutrients */}
                                     {showNutrient && 
                                         <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: "column", height: '290px'}}>
                                             <Typography variant="subtitle1" sx={{ fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", color: themeMode === "highContrast" ? "yellow" : "white" }}>Calcium</Typography>

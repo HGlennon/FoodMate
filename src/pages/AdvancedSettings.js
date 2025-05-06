@@ -3,8 +3,9 @@ import TopBar from '../components/topbar';
 import { CustomBackground, GradientSection } from '../components/styled';
 import { CssBaseline, Typography, InputBase, Box, Button, MenuItem, Select, FormControl, Grid, Container, Divider, Checkbox } from '@mui/material';
 import { ThemeContext } from '../components/themeProvider';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
 
+// Contains the health labels listed in Edamam API for the dropdown lists
 const health = [
     { label: "Alcohol-free", apiValue: "alcohol-free" },
     { label: "Dairy-free", apiValue: "dairy-free" },
@@ -24,6 +25,8 @@ const health = [
     { label: "Shellfish-free", apiValue: "shellfish-free" }
   ];
 
+
+// Contains all the cuisine types listed in Edamam API
 const cuisine = [
     { label: "American", apiValue: "american" },
     { label: "Asian", apiValue: "asian" },
@@ -48,6 +51,7 @@ const cuisine = [
     { label: "World", apiValue: "world" },
   ];
 
+  // Will give the meal types stored from Edamam API
   const meals = [
     { label: "Breakfast", apiValue: "breakfast" },
     { label: "Brunch", apiValue: "brunch" },
@@ -57,36 +61,37 @@ const cuisine = [
   ];
 
 export default function AdvancedSettings() {
-
-      const getSavedFontSize = () =>
+    // User settings
+    const getSavedFontSize = () =>
         parseInt(localStorage.getItem("fontSize") || "0", 10);
             
-      const getSavedDyslexicFont = () =>
+    const getSavedDyslexicFont = () =>
         localStorage.getItem("useDyslexicFont") === "true";
       
-      const [appliedFontSize] = useState(getSavedFontSize());
-      const [useDyslexicFont] = useState(getSavedDyslexicFont())
-    
+    const [appliedFontSize] = useState(getSavedFontSize());
+    const [useDyslexicFont] = useState(getSavedDyslexicFont())
 
     const { themeMode, setThemeMode } = useContext(ThemeContext);
+    
+    // Advanced Search filters
     const [selectedCuisine, setSelectedCuisine] = useState([]);
     const [selectedHealth, setSelectedHealth] = useState([]);
     const [selectedMeal, setSelectedMeal] = useState([]);
-    const [recipeTerm, setRecipeTerm] = useState(""); // State for the search term
-    const [ingredientTerm, setIngredientTerm] = useState(""); // State for the search term
-    const [minCalories, setMinCalories] = useState(""); // State for min calories
-    const [maxCalories, setMaxCalories] = useState(""); // State for max calories
-    const [minProtein, setMinProtein] = useState(""); // State for min calories
-    const [maxProtein, setMaxProtein] = useState(""); // State for max calories
-    const [minCholesterol, setMinCholesterol] = useState(""); // State for min calories
-    const [maxCholesterol, setMaxCholesterol] = useState(""); // State for max calories
-    const [minSugar, setMinSugar] = useState(""); // State for min calories
-    const [maxSugar, setMaxSugar] = useState(""); // State for max calories
-    const [minFat, setMinFat] = useState(""); // State for min calories
-    const [maxFat, setMaxFat] = useState(""); // State for max calories
-    const [searchError, setSearchError] = useState(false);
+    const [recipeTerm, setRecipeTerm] = useState(""); 
+    const [ingredientTerm, setIngredientTerm] = useState(""); 
+    const [minCalories, setMinCalories] = useState(""); 
+    const [maxCalories, setMaxCalories] = useState(""); 
+    const [minProtein, setMinProtein] = useState("");
+    const [maxProtein, setMaxProtein] = useState(""); 
+    const [minCholesterol, setMinCholesterol] = useState(""); 
+    const [maxCholesterol, setMaxCholesterol] = useState(""); 
+    const [minSugar, setMinSugar] = useState(""); 
+    const [maxSugar, setMaxSugar] = useState(""); 
+    const [minFat, setMinFat] = useState(""); 
+    const [maxFat, setMaxFat] = useState("");
     
-    const navigate = useNavigate(); // Hook for navigation
+    const [searchError, setSearchError] = useState(false);
+    const navigate = useNavigate(); 
 
     const handleIngredientChange = (e) => {
         setIngredientTerm(e.target.value);
@@ -116,9 +121,9 @@ export default function AdvancedSettings() {
 
     // Handles submit button click
     const handleSubmit = () => {
-        if (recipeTerm.trim() !== "") {
+        if (recipeTerm.trim() !== "") { // Will submit the entire advanced search as recipeTerm
             const queryParams = new URLSearchParams();
-            queryParams.append("mealType", encodeURIComponent(recipeTerm + " " + ingredientTerm));
+            queryParams.append("mealType", encodeURIComponent(recipeTerm + " " + ingredientTerm)); 
             // Adds calorie range to query if both min and max are provided
             if (minCalories && maxCalories) {
                 queryParams.append("minCalories", encodeURIComponent(minCalories));
@@ -152,24 +157,24 @@ export default function AdvancedSettings() {
                 queryParams.append("mealTypes", encodeURIComponent(selectedMeal.join(",")));
             }
             navigate(`/search?${queryParams.toString()}`, {
-                state: { recipeTerm }, // Pass recipeTerm as state
+                state: { recipeTerm },
             });
         } else {
             setSearchError(true);
         }
     };
 
+    // Resets all the inputs in the page 
     const handleReset = () => {
-        const ok = window.confirm("Are you sure you want to reset the search?");
-        if (!ok) return;
-
-        setRecipeTerm(""); // Clear the search term
-        setIngredientTerm(""); // Clear ingredient term
-        setSelectedHealth([]); // Clear health restrictions
-        setSelectedCuisine([]); // Clear cuisine filters
-        setSelectedMeal([]); // Clear meal type filters
-        setMinCalories(""); // Clear min calories
-        setMaxCalories(""); // Clear max calories
+        const reset = window.confirm("Are you sure you want to reset the search?");
+        if (!reset) return;
+        setRecipeTerm(""); 
+        setIngredientTerm("");
+        setSelectedHealth([]);
+        setSelectedCuisine([]);
+        setSelectedMeal([]);
+        setMinCalories("");
+        setMaxCalories("");
         setMinProtein("");
         setMaxProtein("");
         setMinCholesterol("");
@@ -238,7 +243,7 @@ export default function AdvancedSettings() {
                         value={recipeTerm}                    
                         onChange={(e) => {
                             setRecipeTerm(e.target.value);
-                            setSearchError(false); // Clear error when typing
+                            setSearchError(false); 
                         }}
                         onKeyPress={handleRecipeKeyPress}
                         inputProps={{
@@ -440,7 +445,7 @@ export default function AdvancedSettings() {
                                         "Lower calorie amount. Give the range of calories for the recipe from lowest possible amount to highest."
                             }}  
                             value={minCalories}
-                            onChange={(e) => setMinCalories(e.target.value)} // Update minCalories state
+                            onChange={(e) => setMinCalories(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
                         />
                     </Box>
@@ -459,7 +464,7 @@ export default function AdvancedSettings() {
                         <InputBase
                             sx={{ flexGrow: 1, color: themeMode === "highContrast" ? "yellow" : "white", fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit" }}
                             value={maxCalories}
-                            onChange={(e) => setMaxCalories(e.target.value)} // Update maxCalories state
+                            onChange={(e) => setMaxCalories(e.target.value)}
                             onKeyPress={handleNumericKeyPress}
                             inputProps={{
                                 role: "searchbox",
@@ -697,7 +702,7 @@ export default function AdvancedSettings() {
                                       },
                                       fontSize: `${15 + appliedFontSize}px`
                                 }}
-                                onClick={handleSubmit} // Add the submit handler here
+                                onClick={handleSubmit}
                             >
                                 Submit
                             </Button>

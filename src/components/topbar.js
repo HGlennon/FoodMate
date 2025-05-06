@@ -9,11 +9,12 @@ import { theme } from './themes';
 import { ThemeContext } from "../components/themeProvider";
 import { ariaHidden } from '@mui/material/Modal/ModalManager';
 
-
-export default function TopBar() {
+export default function TopBar() { // Will display the banner at the top of the page with the search functionality and settings [https://www.youtube.com/watch?v=VRRXPKZu8w8&t=220s&ab_channel=WebDevAssist]
     {/* User settings */}
     const { themeMode } = useContext(ThemeContext);
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    // Detects if user is on mobile or not [https://muhimasri.com/blogs/mui-breakpoint/]
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     const getSavedFontSize = () =>
         parseInt(localStorage.getItem("fontSize") || "0", 10);
@@ -73,14 +74,14 @@ export default function TopBar() {
                             mr: 2,
                             mb: 0.5
                         }}
-                        role="link"
-                        aria-label="Foodmate banner"
+                        role="link" 
+                        aria-label="Foodmate banner" // // Gives ARIA Label functionality to the banner [https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference]
                         tabIndex={0}
                         onKeyPress={(e) => e.key === "Enter" && navigate("/home")}
                     >
                         <Images aria-hidden="true"/>
                         {/* Foodmate title */}
-                        {!isSmallScreen && ( 
+                        {!isMobile && ( 
                             <Typography 
                                 sx={{ 
                                     color: theme => theme.palette.text.primary, 
@@ -140,7 +141,7 @@ export default function TopBar() {
                             />
                         </Box>
                         {/* Advanced search button */}
-                        {!isSmallScreen && (
+                        {!isMobile && (
                             <Button 
                                 href="/advancedsettings" 
                                 variant="contained"

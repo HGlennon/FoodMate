@@ -16,13 +16,13 @@ export default function App() {
             <ThemeSetting>
                 <BrowserRouter>
                     <Routes>
-                        <Route index element={<Home />} />
-                        <Route path ="/home" element={<Home />} />
-                        <Route path ="/search" element={<Search />}/>
-                        <Route path ="/recipe" element={<Recipe />} />
-                        <Route path ="/settings" element={<Settings />} />
-                        <Route path ="/advancedsettings" element={<AdvancedSettings />} />
-                        <Route path ="*" element={<NoPage />} />
+                        <Route index element={<Home/>}/>
+                        <Route path ="/home" element={<Home/>}/>
+                        <Route path ="/search" element={<Search/>}/>
+                        <Route path ="/recipe" element={<Recipe/>}/>
+                        <Route path ="/settings" element={<Settings/>} />
+                        <Route path ="/advancedsettings" element={<AdvancedSettings/>}/>
+                        <Route path ="*" element={<NoPage/>}/>
                     </Routes>
                 </BrowserRouter>
             </ThemeSetting>

@@ -7,12 +7,13 @@ import { ThemeContext } from "../components/themeProvider";
 
 export default function Home() {
 
-  {/* User preferences */}
+  {/* User settings */}
   const { themeMode } = useContext(ThemeContext);
   
+  // Retrieves font size and turns it into integer [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt]
   const getSavedFontSize = () =>
     parseInt(localStorage.getItem("fontSize") || "0", 10);
-        
+  
   const getSavedDyslexicFont = () =>
     localStorage.getItem("useDyslexicFont") === "true";
   
@@ -29,7 +30,7 @@ export default function Home() {
 
   return (
     <>
-    <CssBaseline/>
+    <CssBaseline/> {/*  Resets the default browser CSS for consistency [https://mui.com/material-ui/react-css-baseline/]*/}
       <TopBar />
       <GradientSection>
         <Container maxWidth="md" sx={{ marginTop: { xs: "40px", sm: "63px" }, justifyContent: "center", alignItems: "center", textAlign: "center"}}>

@@ -10,8 +10,8 @@ import { ThemeContext } from './themeProvider';
 import { useNavigate } from 'react-router-dom';
 
 // API apps and keys that are used to access Edamam API [https://www.edamam.com/]
-const APP_ID = "837155ce"; 
-const APP_KEY = "76b054a6c99b380eda97058ec73f6069";
+const EDAMAM_APP_ID = "837155ce"; 
+const EDAMAM_APP_KEY = "76b054a6c99b380eda97058ec73f6069";
 
 // Retrieves the search values from Search.js, passes them to Edamam API where the responses to the search query will be printed as recipe cards  
 const RecipeList = function RecipeList({ mealType, filters, minCalories, maxCalories, minProtein, maxProtein, minCholesterol, maxCholesterol, minSugar, maxSugar, minFat, maxFat, healthType, cuisineType, mealTypes, recipeTerm}) {
@@ -27,6 +27,7 @@ const RecipeList = function RecipeList({ mealType, filters, minCalories, maxCalo
   const [infoTooltip, setInfoTooltip] = useState({});
   const [informationTooltip, setInformationTooltip] = useState({});
   
+  // User Settings
   const getSavedFontSize = () =>
       parseInt(localStorage.getItem("fontSize") || "0", 10);
               
@@ -74,13 +75,12 @@ const getDietLabels = () => {
     return dietLabels;
 };
 
-const buildFirstUrl = () => {
-  const q = encodeURIComponent(recipeTerm || mealType || "recipe");
-  let url =
-    `https://api.edamam.com/api/recipes/v2?type=public&q=${q}` +
-    `&app_id=${APP_ID}&app_key=${APP_KEY}`;
+// Starts building the Edamam URL based on the search inputs and filters made
+const buildUrl = () => {
+  const q = encodeURIComponent(recipeTerm || mealType);
+  let url = `https://api.edamam.com/api/recipes/v2?type=public&q=${q}&app_id=${EDAMAM_APP_ID}&app_key=${EDAMAM_APP_KEY}`;
 
-  // calories / nutrients
+  // Appends the calories / nutrients values if any
   if (minCalories && maxCalories && !isNaN(minCalories) && !isNaN(maxCalories)) {
     url += `&calories=${minCalories}-${maxCalories}`;
   }
@@ -97,8 +97,7 @@ const buildFirstUrl = () => {
   if (minFat && maxFat && !isNaN(minFat) && !isNaN(maxFat)) {
     url += `&nutrients%5BFAT%5D=${minFat}-${maxFat}`;
   }
-
-  // lists
+  // Appends the list values if any
   if (healthType?.length) {
     url += `&health=${healthType.join("&health=")}`;
   }
@@ -109,7 +108,7 @@ const buildFirstUrl = () => {
     url += `&mealType=${mealTypes.join("&mealType=")}`;
   }
 
-  // dynamic check‑box filters
+  // Appends the check‑box filters
   const healthQuery = getHealthLabels().map((h) => `&health=${h}`).join("");
   const dietQuery = getDietLabels().map((d) => `&diet=${d}`).join("");
   url += healthQuery + dietQuery;
@@ -117,12 +116,12 @@ const buildFirstUrl = () => {
   return url;
 };
 
-// data fetching – one function for both first & next pages
+// Fetches the page of recipes 
 const fetchPage = (url, replace = false) => {
   setLoading(true);
 
   fetch(url)
-    .then((r) => r.json())
+    .then((r) => r.json()) // Converts Edamam response into JSON for usability 
     .then((data) => {
       if (!data.hits?.length) {
         setError("No more recipes found, please try changing your search.");
@@ -130,7 +129,7 @@ const fetchPage = (url, replace = false) => {
         return;
       }
 
-      // dedupe using recipe.uri (unique key)
+      // Gets rid of potential duplicates in the API search 
       setRecipes((prev) => {
         const list = replace ? [] : prev;
         const seen = new Set(list.map((h) => h.recipe.uri));
@@ -138,6 +137,7 @@ const fetchPage = (url, replace = false) => {
         return [...list, ...fresh];
       });
 
+      // Sets next page URL so there's infinite scrolling
       setNextUrl(data._links?.next?.href ?? null);
       setError("");
     })
@@ -147,7 +147,7 @@ const fetchPage = (url, replace = false) => {
 
 // Loads page whenever the search/filters change
 useEffect(() => {
-  const firstUrl = buildFirstUrl();
+  const firstUrl = buildUrl();
   setRecipes([]);
   setNextUrl(null);
   fetchPage(firstUrl, true);
@@ -170,10 +170,12 @@ useEffect(() => {
   recipeTerm,
 ]);
 
+// Will load more page if scrolled down enough or load more button is pressed
 const loadMoreRecipes = useCallback(() => {
   if (nextUrl) fetchPage(nextUrl);
 });
 
+// Allows for infinite scrolling through IntersectionObserver
 useEffect(() => {
   if (!loader.current) return;
 
@@ -183,7 +185,7 @@ useEffect(() => {
         loadMoreRecipes();
       }
     },
-    { root: null, rootMargin: "200px", threshold: 0 }  // rootMargin gives a small pre‑fetch buffer
+    { root: null, rootMargin: "200px", threshold: 0 } 
   );
 
   observer.observe(loader.current);
@@ -191,8 +193,10 @@ useEffect(() => {
   return () => observer.disconnect();
 }, [loader, loading, error, loadMoreRecipes]);
 
+  // Begins to map and render the recipe cards
   return (
     <Container maxWidth='md' sx={{ mt:1.3 }}>
+      {/* Displays alert if no results found */}
       {error && (
         <Box
         role="alert"
@@ -204,6 +208,7 @@ useEffect(() => {
         </Box>
       )}
       <Grid container spacing={3}>
+        {/* Maps the recipe cards and also stores their values so that these values can be transferred when clicking on recipe */}
         {recipes.map((item, index) => {
           const { label, image, source, totalTime, calories, url, yield:servings, ingredientLines, totalNutrients} = item.recipe;
           const { VITB12, VITB6A, VITC, VITD, TOCPHA, VITK1, VITA_RAE, FAT, SUGAR, PROCNT, K, CA, CHOLE, FIBTG, FE, NA, FOLDFE, MG, ZN} = totalNutrients;
@@ -255,8 +260,10 @@ useEffect(() => {
         })}
       </Grid>
 
+      {/* When user reaches this part of the page, the page automatically loads more recipes */} 
       <div ref={loader} />
-
+      
+      {/* Old load more button in case automatic scrolling doesn't work */}
       <Grid container justifyContent="center" sx={{ marginTop: '27px', marginBottom: '20px' }}>
         <Button 
           onClick={loadMoreRecipes} 

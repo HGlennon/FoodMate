@@ -9,7 +9,7 @@ export default function Settings() {
     // Will set the theme for the other pages
     const { themeMode, setThemeMode } = useContext(ThemeContext);
 
-    {/* Local storage for font size and dyslexic font */}
+    {/* Retrieves the saved font size when they are used in the settings below [https://www.freecodecamp.org/news/how-to-use-localstorage-with-react-hooks-to-set-and-get-items/] */}
     const getSavedFontSize = () => {
         const savedFontSize = localStorage.getItem("fontSize");
         return savedFontSize ? parseInt(savedFontSize, 10) : 0;
@@ -18,7 +18,9 @@ export default function Settings() {
         return localStorage.getItem("useDyslexicFont") === "true";
     };
 
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+    // Detects if user is on mobile or not
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
     const [tempFontSize, setTempFontSize] = useState(getSavedFontSize());
     const [appliedFontSize, setAppliedFontSize] = useState(getSavedFontSize());
     const [useDyslexicFont, setUseDyslexicFont] = useState(getSavedDyslexicFont());
@@ -47,15 +49,6 @@ export default function Settings() {
         localStorage.setItem("useDyslexicFont", toggled);
         window.dispatchEvent(new Event("storage"));
     };
-
-    // Applies OpenDyslexic font on the text
-    useEffect(() => {
-        if (useDyslexicFont) {
-            document.body.style.fontFamily = "'OpenDyslexic', sans-serif";
-        } else {
-            document.body.style.fontFamily = ""; // Otherwise default font is applied
-        }
-    }, [useDyslexicFont]);
     
    
     // Syncs applied settings so topbar instantly receives the setting configuration
@@ -65,16 +58,17 @@ export default function Settings() {
         setUseDyslexicFont(getSavedDyslexicFont());
     }, []);
 
+    // Alert which resets the settings entirely, if cancelled, returns nothing
     const handleReset = () => {
-        const ok = window.confirm("Are you sure you want to reset all settings to their default values?");
-        if (!ok) return;
+        const reset = window.confirm("Are you sure you want to reset all settings to their default values?");
+        if (!reset) return;
     
         setAppliedFontSize(0); 
         setTempFontSize(0);
         localStorage.setItem("fontSize", 0);  
         localStorage.setItem("useDyslexicFont", false);                                                                 
         setUseDyslexicFont(false); 
-        window.dispatchEvent(new Event("storage")); // Updates topbar                        
+        window.dispatchEvent(new Event("storage"));                       
         setThemeMode("light");
     };
 
@@ -83,6 +77,7 @@ export default function Settings() {
             <CssBaseline/>
             <TopBar/>
                 <GradientSection>
+                    {/* Ensures that content on the screen isn't cramped for smaller devices */}
                     <Container maxWidth='md' sx={{ marginTop: { xs: '30px', sm: '45px' }, px: { xs: 2, sm: 3 } }}>                        
                         <Grid sx={{ alignItems: "center"}}>
                             <Typography
@@ -152,7 +147,7 @@ export default function Settings() {
                                     />
                             </Box>
                             <Grid container alignItems="center" justifyContent="space-between">
-                                {!isSmallScreen && (
+                                {!isMobile && (
                                 <Typography 
                                 id="make-text-bigger-label"
                                 sx={{ 
@@ -164,7 +159,7 @@ export default function Settings() {
                                 </Typography>
                                 )}
                                 <Box sx={{  display: "flex", alignItems: "center", gap: 2  }}>
-                                {!isSmallScreen && (
+                                {!isMobile && (
                                     <Typography 
                                     sx={{ 
                                         color: themeMode === "highContrast" ? "yellow" : "white", 
@@ -174,7 +169,7 @@ export default function Settings() {
                                         A        
                                     </Typography>
                                 )}
-                                {!isSmallScreen && (
+                                {!isMobile && (
                                     <Slider
                                         size="small"
                                         value={tempFontSize}
@@ -188,7 +183,7 @@ export default function Settings() {
                                         valueLabelDisplay="off"
                                     />
                                 )}
-                                {!isSmallScreen && (
+                                {!isMobile && (
                                     <Typography 
                                     sx={{ 
                                         color: themeMode === "highContrast" ? "yellow" : "white", 
@@ -198,7 +193,7 @@ export default function Settings() {
                                         A        
                                     </Typography>
                                 )}
-                                {!isSmallScreen && (
+                                {!isMobile && (
                                     <Box 
                                     sx={{ 
                                         display: "inline-block",  
