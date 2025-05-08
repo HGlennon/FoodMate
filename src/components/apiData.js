@@ -229,7 +229,7 @@ useEffect(() => {
                   <CardMedia component="img" height="180" alt="" aria-hidden="true" role="presentation" image={image}/>
                   <CustomCardContent sx={{ flexGrow: 1 }}>
                     <Typography variant="h6" sx={{fontSize: `${20 + appliedFontSize}px` ,fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", fontWeight: "bold" }}>{label}</Typography>
-                    <Typography variant="subtitle1" color="#6E6E6E" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", flexGrow: 1 }}>By {source}</Typography>
+                    <Typography variant="subtitle1" color="#666666" sx={{fontSize: `${16 + appliedFontSize}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", flexGrow: 1 }}>By {source}</Typography>
                   </CustomCardContent>
                   <Box sx={{ backgroundColor: themeMode === "highContrast" ? "#FFD700" : themeMode === "dark" ? '#6B6B6B' : '#05792d', color: themeMode === "highContrast" ? "#000000" : "#FFFFFF", padding: 1, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 'auto', width: '100%', minHeight: '40px'}}>
                     <AccessTimeIcon sx={{ marginRight: 0.5 }} />

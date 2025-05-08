@@ -29,7 +29,7 @@ export default function Settings() {
     const handleApplySettings = () => {
         setAppliedFontSize(tempFontSize);
         localStorage.setItem("fontSize", tempFontSize);
-        window.dispatchEvent(new Event("storage"));
+        window.dispatchEvent(new Event("storage")); // Will apply font size to current tab, so the font size in the toolbar is changed too [https://stackoverflow.com/a/65348883]
     };
 
     // Toggles dark mode
