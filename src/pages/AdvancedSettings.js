@@ -195,7 +195,6 @@ export default function AdvancedSettings() {
                 {searchError && (
                         <Typography 
                             role="alert"
-                            aria-live="assertive"
                             variant="caption" 
                             sx={{
                             position: 'absolute',

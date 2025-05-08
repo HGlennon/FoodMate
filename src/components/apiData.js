@@ -120,6 +120,7 @@ const buildUrl = () => {
 const fetchPage = (url, replace = false) => {
   setLoading(true);
 
+  // Will fetch the data from Edamam API [https://www.youtube.com/watch?v=qdCHEUaFhBk&ab_channel=NetNinja]
   fetch(url)
     .then((r) => r.json()) // Converts Edamam response into JSON for usability 
     .then((data) => {
@@ -175,7 +176,7 @@ const loadMoreRecipes = useCallback(() => {
   if (nextUrl) fetchPage(nextUrl);
 });
 
-// Allows for infinite scrolling through IntersectionObserver
+// Allows for infinite scrolling through intersection observer [https://www.youtube.com/watch?v=2IbRtjez6ag&ab_channel=WebDevSimplified]
 useEffect(() => {
   if (!loader.current) return;
 
@@ -185,7 +186,7 @@ useEffect(() => {
         loadMoreRecipes();
       }
     },
-    { root: null, rootMargin: "200px", threshold: 0 } 
+    { rootMargin: '100px', threshold: 1 } 
   );
 
   observer.observe(loader.current);
@@ -199,8 +200,7 @@ useEffect(() => {
       {/* Displays alert if no results found */}
       {error && (
         <Box
-        role="alert"
-        aria-live="assertive"
+          role="alert"
         >
           <Typography color="red">
             {error}

@@ -24,8 +24,6 @@ export default function Recipe() {
 
     const [showIngredient, setShowIngredient] = useState(true);
     const [showNutrient, setShowNutrient] = useState(false);
-
-    const navigate = useNavigate();
     
     const emptyFilters = React.useMemo(() => ({}), []);
     const { themeMode } = useContext(ThemeContext);

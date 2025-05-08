@@ -22,10 +22,10 @@ export default function Home() {
 
   // Card titles and images mapped to home page [https://www.youtube.com/watch?v=GmuSz6wGW2E&ab_channel=CalebCurry]
   const cards = [
-    { title: "Breakfast", image: "https://simply-delicious-food.com/wp-content/uploads/2022/09/Breakfast-board28-500x375.jpg", link: "http://foodmate.dev/search?mealType=Breakfast" },
-    { title: "Lunch", image: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/HF_Y23_M_W27_UK_03_3_low-6510a59e.jpg", link: "http://foodmate.dev/search?mealType=Lunch" },
-    { title: "Dinner", image: "https://assets.epicurious.com/photos/59a48f237e283157d14a5a6a/16:9/w_2560%2Cc_limit/How-to-Throw-a-Grocery-Store-Dinner-Party-hero-with-hands-15082017.jpg", link: "http://foodmate.dev/search?mealType=Dinner" },
-    { title: "Dessert", image: "https://imageio.forbes.com/specials-images/imageserve/5dd31d942c886a0007ec71bd/Harry---David-Dessert-of-the-Month-Club/960x0.jpg?height=529&width=711&fit=bounds", link: "http://foodmate.dev/search?mealType=Dessert" },
+    { title: "Breakfast", image: "https://i2-prod.gloucestershirelive.co.uk/news/health/article9428003.ece/ALTERNATES/s810/1_GettyImages-1752620387.jpg", link: "http://foodmate.dev/search?mealType=Breakfast" },
+    { title: "Lunch", image: "https://freerangestock.com/sample/123044/lunch-table-with-food--thanksgiving-.jpg", link: "http://foodmate.dev/search?mealType=Lunch" },
+    { title: "Dinner", image: "https://images.unsplash.com/photo-1608835291093-394b0c943a75?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", link: "http://foodmate.dev/search?mealType=Dinner" },
+    { title: "Dessert", image: "https://images.unsplash.com/photo-1745243997277-14619f9dd96c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", link: "http://foodmate.dev/search?mealType=Dessert" },
   ];
 
   return (
