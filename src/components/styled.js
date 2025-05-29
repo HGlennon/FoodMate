@@ -1,7 +1,6 @@
 import { styled } from "@mui/material/styles";
 import { Card, CardContent, CardMedia, Box } from "@mui/material";
 
-// Template for some of the cards in the program, can switch from light to dark mode colours [https://mui.com/material-ui/customization/dark-mode/]
 export const CustomCard = styled(Card)(({ theme }) => ({ 
   background: theme.palette.mode === "dark" ? "#333131" : "#008654",
   color: theme.palette.text.primary,
@@ -12,7 +11,7 @@ export const CustomCardContent = styled(CardContent)({
 });
 
 export const CustomCardMedia = styled(CardMedia)(({ theme }) => ({
-  paddingTop: "56.25%", // 16:9 ratio [https://css-tricks.com/aspect-ratio-boxes/]
+  paddingTop: "56.25%", 
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   [theme.breakpoints.down('sm')]: {paddingTop: "75%"}

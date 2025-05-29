@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'; 
+import { useState, useContext, useEffect } from 'react'; 
 import { Typography, AppBar, CssBaseline, Toolbar, Button, InputBase, IconButton, Menu, MenuItem, Box, useMediaQuery } from '@mui/material';
 import Images from './image';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { theme } from './themes';
 import { ThemeContext } from "../components/themeProvider";
-import { ariaHidden } from '@mui/material/Modal/ModalManager';
+import InfoIcon from '@mui/icons-material/Info';
+import GavelIcon from '@mui/icons-material/Gavel';
+
 
 export default function TopBar() { // Will display the banner at the top of the page with the search functionality and settings [https://www.youtube.com/watch?v=VRRXPKZu8w8&t=220s&ab_channel=WebDevAssist]
     {/* User settings */}
@@ -197,6 +199,24 @@ export default function TopBar() { // Will display the banner at the top of the 
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                     >
+                        <MenuItem 
+                            href="/about"
+                            component="a"
+                            onClick={close}
+                            sx={{fontSize: `${16 + (appliedFontSize/1.5)}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}
+                        > 
+                            <InfoIcon sx={{ mr: 1, fontSize: `${20 + (appliedFontSize/1.5)}px`}}/> 
+                                About
+                        </MenuItem>
+                        <MenuItem 
+                            href="/terms"
+                            component="a"
+                            onClick={close}
+                            sx={{fontSize: `${16 + (appliedFontSize/1.5)}px`, fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit"}}
+                        > 
+                            <GavelIcon sx={{ mr: 1, fontSize: `${20 + (appliedFontSize/1.5)}px`}}/> 
+                                Terms of Service
+                        </MenuItem>
                         <MenuItem 
                             href="/settings"
                             component="a"

@@ -9,9 +9,8 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { ThemeContext } from './themeProvider';
 import { useNavigate } from 'react-router-dom';
 
-// API apps and keys that are used to access Edamam API [https://www.edamam.com/]
-const EDAMAM_APP_ID = "837155ce"; 
-const EDAMAM_APP_KEY = "76b054a6c99b380eda97058ec73f6069";
+const EdamamID = process.env.EDAMAM_APP_ID;
+const EdamamKey = process.env.EDAMAM_APP_KEY;
 
 // Retrieves the search values from Search.js, passes them to Edamam API where the responses to the search query will be printed as recipe cards  
 const RecipeList = function RecipeList({ mealType, filters, minCalories, maxCalories, minProtein, maxProtein, minCholesterol, maxCholesterol, minSugar, maxSugar, minFat, maxFat, healthType, cuisineType, mealTypes, recipeTerm}) {
@@ -78,7 +77,7 @@ const getDietLabels = () => {
 // Starts building the Edamam URL based on the search inputs and filters made
 const buildUrl = () => {
   const q = encodeURIComponent(recipeTerm || mealType);
-  let url = `https://api.edamam.com/api/recipes/v2?type=public&q=${q}&app_id=${EDAMAM_APP_ID}&app_key=${EDAMAM_APP_KEY}`;
+  let url = `https://api.edamam.com/api/recipes/v2?type=public&q=${q}&app_id=${EdamamID}&app_key=${EdamamKey}`;
 
   // Appends the calories / nutrients values if any
   if (minCalories && maxCalories && !isNaN(minCalories) && !isNaN(maxCalories)) {
