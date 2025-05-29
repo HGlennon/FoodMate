@@ -8,6 +8,7 @@ import Recipe from "./pages/Recipe"
 import NoPage from "./pages/NoPage"
 import About from "./pages/About.js"
 import Terms from "./pages/TermsAndConditions.js"
+import Maintenance from "./pages/Maintenance.js"
 import { ThemeSetting } from "./components/themeProvider.js"
 
 // Gives all the links that lead to the pages in this site [https://www.youtube.com/watch?v=TWz4TjSssbg&ab_channel=KarstenKoerner]
@@ -17,15 +18,8 @@ export default function App() {
             <ThemeSetting>
                 <BrowserRouter>
                     <Routes>
-                        <Route index element={<Home />} />
-                        <Route path ="/home" element={<Home />} />
-                        <Route path ="/search" element={<Search />}/>
-                        <Route path ="/recipe" element={<Recipe />} />
-                        <Route path ="/settings" element={<Settings />} />
-                        <Route path ="/advancedsettings" element={<AdvancedSettings />} />
-                        <Route path ="/about" element={<About />} />
-                        <Route path ="/terms" element={<Terms />} />
-                        <Route path ="*" element={<NoPage />} />
+                        <Route index element={<Maintenance />} />
+                        <Route path ="*" element={<Maintenance />} />
                     </Routes>
                 </BrowserRouter>
             </ThemeSetting>
