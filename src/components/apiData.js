@@ -9,8 +9,8 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { ThemeContext } from './themeProvider';
 import { useNavigate } from 'react-router-dom';
 
-const EdamamID = process.env.EDAMAM_APP_ID;
-const EdamamKey = process.env.EDAMAM_APP_KEY;
+const EdamamID = process.env.REACT_APP_EDAMAM_APP_ID;
+const EdamamKey = process.env.REACT_APP_EDAMAM_APP_KEY;
 
 // Retrieves the search values from Search.js, passes them to Edamam API where the responses to the search query will be printed as recipe cards  
 const RecipeList = function RecipeList({ mealType, filters, minCalories, maxCalories, minProtein, maxProtein, minCholesterol, maxCholesterol, minSugar, maxSugar, minFat, maxFat, healthType, cuisineType, mealTypes, recipeTerm}) {
@@ -148,6 +148,7 @@ const fetchPage = (url, replace = false) => {
 // Loads page whenever the search/filters change
 useEffect(() => {
   const firstUrl = buildUrl();
+  console.log("Fetching:", firstUrl);  // DEBUG
   setRecipes([]);
   setNextUrl(null);
   fetchPage(firstUrl, true);
