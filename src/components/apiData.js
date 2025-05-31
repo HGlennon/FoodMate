@@ -9,8 +9,10 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { ThemeContext } from './themeProvider';
 import { useNavigate } from 'react-router-dom';
 
-const EdamamID = process.env.REACT_APP_EDAMAM_APP_ID;
-const EdamamKey = process.env.REACT_APP_EDAMAM_APP_KEY;
+//const EdamamID = process.env.REACT_APP_EDAMAM_APP_ID;
+//const EdamamKey = process.env.REACT_APP_EDAMAM_APP_KEY;
+const EdamamID = "837155ce";
+const EdamamKey = "76b054a6c99b380eda97058ec73f6069";
 
 // Retrieves the search values from Search.js, passes them to Edamam API where the responses to the search query will be printed as recipe cards  
 const RecipeList = function RecipeList({ mealType, filters, minCalories, maxCalories, minProtein, maxProtein, minCholesterol, maxCholesterol, minSugar, maxSugar, minFat, maxFat, healthType, cuisineType, mealTypes, recipeTerm}) {
