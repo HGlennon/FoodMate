@@ -9,7 +9,6 @@ export default function Settings() {
     // Will set the theme for the other pages
     const { themeMode, setThemeMode } = useContext(ThemeContext);
 
-    {/* Retrieves the saved font size when they are used in the settings below [https://www.freecodecamp.org/news/how-to-use-localstorage-with-react-hooks-to-set-and-get-items/] */}
     const getSavedFontSize = () => {
         const savedFontSize = localStorage.getItem("fontSize");
         return savedFontSize ? parseInt(savedFontSize, 10) : 0;
@@ -18,14 +17,12 @@ export default function Settings() {
         return localStorage.getItem("useDyslexicFont") === "true";
     };
 
-    // Detects if user is on mobile or not
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     const [tempFontSize, setTempFontSize] = useState(getSavedFontSize());
     const [appliedFontSize, setAppliedFontSize] = useState(getSavedFontSize());
     const [useDyslexicFont, setUseDyslexicFont] = useState(getSavedDyslexicFont());
     
-    {/* Handler functions which will apply the settings when submitted */}
     const handleApplySettings = () => {
         setAppliedFontSize(tempFontSize);
         localStorage.setItem("fontSize", tempFontSize);

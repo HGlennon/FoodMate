@@ -10,7 +10,6 @@ export default function Home() {
   {/* User settings */}
   const { themeMode } = useContext(ThemeContext);
   
-  // Retrieves font size and turns it into integer [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt]
   const getSavedFontSize = () =>
     parseInt(localStorage.getItem("fontSize") || "0", 10);
   
@@ -20,12 +19,11 @@ export default function Home() {
   const [appliedFontSize] = useState(getSavedFontSize());
   const [useDyslexicFont] = useState(getSavedDyslexicFont())
 
-  // Card titles and images mapped to home page [https://www.youtube.com/watch?v=GmuSz6wGW2E&ab_channel=CalebCurry]
   const cards = [
-    { title: "Breakfast", image: "https://i2-prod.gloucestershirelive.co.uk/news/health/article9428003.ece/ALTERNATES/s810/1_GettyImages-1752620387.jpg", link: "http://foodmate.dev/search?mealType=Breakfast" },
-    { title: "Lunch", image: "https://freerangestock.com/sample/123044/lunch-table-with-food--thanksgiving-.jpg", link: "http://foodmate.dev/search?mealType=Lunch" },
-    { title: "Dinner", image: "https://images.unsplash.com/photo-1608835291093-394b0c943a75?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", link: "http://foodmate.dev/search?mealType=Dinner" },
-    { title: "Dessert", image: "https://images.unsplash.com/photo-1745243997277-14619f9dd96c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", link: "http://foodmate.dev/search?mealType=Dessert" },
+    { title: "Breakfast", image: "/images/Breakfast.webp", link: "http://foodmate.dev/search?mealType=Breakfast" },
+    { title: "Lunch", image: "/images/Lunch.jpg", link: "http://foodmate.dev/search?mealType=Lunch" },
+    { title: "Dinner", image: "/images/Dinner.jpg", link: "http://foodmate.dev/search?mealType=Dinner" },
+    { title: "Dessert", image: "/images/Dessert.jpg", link: "http://foodmate.dev/search?mealType=Dessert" },
   ];
 
   return (

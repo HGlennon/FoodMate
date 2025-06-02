@@ -10,10 +10,7 @@ export default function Search() {
     // location and queryParams will be used to detect the link and grab specified values from it [https://stackoverflow.com/a/60044858]
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-
-    // Extracts search query from link
     const mealType = queryParams.get("mealType") || ""; 
-    // Extracts the values from the advanced search link
     const minCalories = queryParams.get("minCalories") || ""; 
     const maxCalories = queryParams.get("maxCalories") || ""; 
     const minProtein = queryParams.get("minProtein") || ""; 
@@ -41,30 +38,25 @@ export default function Search() {
 
     const [appliedFilters, setAppliedFilters] = useState({}); // Stores filters applied after clicking "Submit"
 
-    // Handles checkbox change
     const handleFilterChange = (event) => {
         setFilters({ ...filters, [event.target.name]: event.target.checked });
     };
 
-    // Apply filters when clicking "submit"
     const submitFilters = () => {
         setAppliedFilters(filters);
     };
             
-    // Resets filters when clicking "clear filter"
     const clearFilters = () => {
             setFilters(empty);
             setAppliedFilters(empty);
     };
 
-    // Empties filters
     const empty = {
         balanced:false, highProtein:false, lowCarb:false, lowFat:false,
         lowSodium:false, vegan:false, vegetarian:false,
         alcoholFree:false, nutFree:false, lactoseFree:false,
     };
 
-    {/* User settings */}
     const { themeMode } = useContext(ThemeContext);
 
     const getSavedFontSize = () =>
@@ -75,8 +67,6 @@ export default function Search() {
           
     const [appliedFontSize] = useState(getSavedFontSize());
     const [useDyslexicFont] = useState(getSavedDyslexicFont())
-
-    // Retrieves search value passed if user used advanced search, if not its an empty value
     const { recipeTerm } = location.state || {};
 
     return (
@@ -106,7 +96,6 @@ export default function Search() {
                     </Grid>
                     </Container>
                     <div>            
-                        {/* Diet Filters [https://react.school/material-ui/checkbox] */}
                         <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
                         <Grid container justifyContent="center">
                                 <CustomCard 
@@ -147,7 +136,6 @@ export default function Search() {
                             </CustomCard>
                             </Grid>
                         </Container>
-                         {/* Health Options */}
                         <Container maxWidth='md' sx={{ mt: 3, mb: 2 }}>
                         <Grid container justifyContent="center">
                             <CustomCard 
@@ -245,8 +233,6 @@ export default function Search() {
                     </GradientSection>
                 </div>
             </main>
-
-            {/* Will display the search results at the bottom half of the page by calling RecipeList and sending the specific filters to it */}
             <CustomBackground>
                 <RecipeList mealType={mealType} filters={appliedFilters} minCalories={minCalories} maxCalories={maxCalories} minProtein={minProtein} maxProtein={maxProtein} minCholesterol={minCholesterol} maxCholesterol={maxCholesterol} minSugar={minSugar} maxSugar={maxSugar} minFat={minFat} maxFat={maxFat} recipeTerm={recipeTerm}/>   
             </CustomBackground>

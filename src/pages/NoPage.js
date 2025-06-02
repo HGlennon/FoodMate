@@ -6,7 +6,6 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import { CssBaseline } from "@mui/material";
 
   export default function NoPage() {
-    {/* User settings */}
     const getSavedFontSize = () =>
         parseInt(localStorage.getItem("fontSize") || "0", 10);
       

@@ -5,8 +5,8 @@ import { CssBaseline, Typography, InputBase, Box, Button, MenuItem, Select, Form
 import { ThemeContext } from '../components/themeProvider';
 import { useNavigate } from 'react-router-dom';
 
-// Contains the health labels listed in Edamam API for the dropdown lists
-const health = [
+  // Contains the health labels listed in Edamam API for the dropdown lists
+  const health = [
     { label: "Alcohol-free", apiValue: "alcohol-free" },
     { label: "Dairy-free", apiValue: "dairy-free" },
     { label: "Egg-free", apiValue: "egg-free" },
@@ -25,9 +25,7 @@ const health = [
     { label: "Shellfish-free", apiValue: "shellfish-free" }
   ];
 
-
-// Contains all the cuisine types listed in Edamam API
-const cuisine = [
+  const cuisine = [
     { label: "American", apiValue: "american" },
     { label: "Asian", apiValue: "asian" },
     { label: "British", apiValue: "british" },
@@ -51,7 +49,6 @@ const cuisine = [
     { label: "World", apiValue: "world" },
   ];
 
-  // Will give the meal types stored from Edamam API
   const meals = [
     { label: "Breakfast", apiValue: "breakfast" },
     { label: "Brunch", apiValue: "brunch" },
@@ -61,7 +58,6 @@ const cuisine = [
   ];
 
 export default function AdvancedSettings() {
-    // User settings
     const getSavedFontSize = () =>
         parseInt(localStorage.getItem("fontSize") || "0", 10);
             
@@ -119,7 +115,6 @@ export default function AdvancedSettings() {
         }
       };
 
-    // Handles submit button click
     const handleSubmit = () => {
         if (recipeTerm.trim() !== "") { // Will submit the entire advanced search as recipeTerm
             const queryParams = new URLSearchParams();
@@ -164,7 +159,6 @@ export default function AdvancedSettings() {
         }
     };
 
-    // Resets all the inputs in the page 
     const handleReset = () => {
         const reset = window.confirm("Are you sure you want to reset the search?");
         if (!reset) return;

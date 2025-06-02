@@ -12,10 +12,8 @@ import GavelIcon from '@mui/icons-material/Gavel';
 
 
 export default function TopBar() { // Will display the banner at the top of the page with the search functionality and settings [https://www.youtube.com/watch?v=VRRXPKZu8w8&t=220s&ab_channel=WebDevAssist]
-    {/* User settings */}
     const { themeMode } = useContext(ThemeContext);
 
-    // Detects if user is on mobile or not [https://muhimasri.com/blogs/mui-breakpoint/]
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     const getSavedFontSize = () =>
@@ -27,7 +25,6 @@ export default function TopBar() { // Will display the banner at the top of the 
     const [appliedFontSize, setAppliedFontSize] = useState(getSavedFontSize());
     const [useDyslexicFont, setUseDyslexicFont] = useState(getSavedDyslexicFont());
 
-    // Topbar is constantly active so has to update in-sync with when it is changed in the settings page too
     useEffect(() => {
     const handleStorage = () => {
         setAppliedFontSize(getSavedFontSize());
@@ -187,7 +184,6 @@ export default function TopBar() { // Will display the banner at the top of the 
                                     }}/>
                         </IconButton>
                     </Box>
-
                     {/* Menu dropdown list */}
                     <Menu 
                         id="topbar-menu"

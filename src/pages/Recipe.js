@@ -7,8 +7,6 @@ import RecipeList from '../components/apiData';
 import { ThemeContext } from "../components/themeProvider";
 
 export default function Recipe() {
-
-    // User Settings
     const getSavedFontSize = () =>
         parseInt(localStorage.getItem("fontSize") || "0", 10);
           
