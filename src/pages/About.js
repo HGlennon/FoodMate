@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Typography, Container, Grid } from '@mui/material';
 import TopBar from '../components/topbar';
 import { CustomBackground, GradientSection } from '../components/styled';
 import { CssBaseline } from "@mui/material";
+import { ThemeContext } from "../components/themeProvider";
 
 export default function About() {
+    const { themeMode } = useContext(ThemeContext);
+
     const getSavedFontSize = () =>
         parseInt(localStorage.getItem("fontSize") || "0", 10);
 
@@ -17,7 +20,7 @@ export default function About() {
     const textStyle = {
         fontSize: `${16 + appliedFontSize}px`,
         fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
-        color: '#e0dcda',
+        color: themeMode === "highContrast" ? "yellow" : "white",
         marginBottom: '2px',
         maxWidth: '800px',
         textAlign: 'left'
@@ -27,7 +30,7 @@ export default function About() {
         fontSize: `${20 + appliedFontSize}px`,
         fontWeight: 'bold',
         fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
-        color: 'white',
+        color: themeMode === "highContrast" ? "yellow" : "white",
         marginTop: '10px',
         marginBottom: '4px'
     };
@@ -45,7 +48,7 @@ export default function About() {
                                     fontSize: `${34 + appliedFontSize}px`,
                                     fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit",
                                     fontWeight: 'bold',
-                                    color: 'white',
+                                    color: themeMode === "highContrast" ? "yellow" : "white",
                                     marginTop: "15px",
                                     marginBottom: "15px"
                                 }}>

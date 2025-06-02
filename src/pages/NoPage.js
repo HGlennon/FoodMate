@@ -1,11 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Typography, Container, Grid} from '@mui/material';
 import TopBar from '../components/topbar';
 import { CustomBackground, GradientSection } from '../components/styled';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import { CssBaseline } from "@mui/material";
+import { ThemeContext } from "../components/themeProvider";
 
   export default function NoPage() {
+    const { themeMode } = useContext(ThemeContext);
+
     const getSavedFontSize = () =>
         parseInt(localStorage.getItem("fontSize") || "0", 10);
       
@@ -27,7 +30,7 @@ import { CssBaseline } from "@mui/material";
                             <SentimentVeryDissatisfiedIcon 
                             sx={{ 
                                 fontSize: `${150 + (appliedFontSize * 2)}px`, 
-                                color: 'white', 
+                                color: themeMode === "highContrast" ? "yellow" : "white", 
                                 marginTop: "30px" 
                                 }}/>
                                 <Typography variant="h1" 
@@ -35,7 +38,7 @@ import { CssBaseline } from "@mui/material";
                                 fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", 
                                 marginTop: "10px", 
                                 fontWeight: 'bold', 
-                                color: 'white'
+                                color: themeMode === "highContrast" ? "yellow" : "white"
                             }}>
                                 Error: 404
                             </Typography>
@@ -44,7 +47,7 @@ import { CssBaseline } from "@mui/material";
                                 fontSize: `${20 + appliedFontSize}px`, 
                                 fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", 
                                 marginTop: "3px", 
-                                color: 'white'
+                                color: themeMode === "highContrast" ? "yellow" : "white"
                             }}>
                                 Page not found.
                             </Typography>
@@ -53,7 +56,7 @@ import { CssBaseline } from "@mui/material";
                                 fontSize: `${16 + appliedFontSize}px`, 
                                 fontFamily: useDyslexicFont ? "'OpenDyslexic', sans-serif" : "inherit", 
                                 marginTop: "5px", 
-                                color: '#e0dcda', 
+                                color: themeMode === "highContrast" ? "yellow" : "#e0dcda",
                                 maxWidth: '600px'
                             }}>
                                 The link you have followed could be broken, or the page may have been removed or moved somewhere else.
