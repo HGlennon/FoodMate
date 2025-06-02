@@ -24,6 +24,8 @@ export default function App() {
                         <Route path ="/recipe" element={<Recipe />} />
                         <Route path ="/settings" element={<Settings />} />
                         <Route path ="/advancedsettings" element={<AdvancedSettings />} />
+                        <Route path ="/about" element={<About />} />
+                        <Route path ="/terms" element={<Terms />} />
                         <Route path ="*" element={<NoPage />} />
                     </Routes>
                 </BrowserRouter>
