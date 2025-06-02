@@ -76,8 +76,6 @@ export default function TermsAndConditions() {
                                   <ul>
                                       <li>Use FoodMate for any unlawful purpose.</li>
                                       <li>Attempt to gain unauthorized access to the site or its servers.</li>
-                                      <li>Copy, resell, or redistribute any content or code from FoodMate without permission.</li>
-                                      <li>Scrape or mass-download recipe data or API responses.</li>
                                       <li>Use the service in a way that violates Edamam’s terms of use.</li>
                                   </ul>
                               </Typography>
