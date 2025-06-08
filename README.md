@@ -6,7 +6,7 @@
 
 ## Installation
 
-If you wish to run FoodMate locally on your device, you can run: 
+If you wish to run FoodMate locally on your device for whatever reason, you can run: 
 
 ### `npm install --legacy-peer-deps`
 
